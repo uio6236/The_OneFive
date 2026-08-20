@@ -21,6 +21,7 @@ local.properties
 .factorypath
 .buildpath
 .target
+.classpath
 
 ### Intellij ###
 .idea/**/workspace.xml
