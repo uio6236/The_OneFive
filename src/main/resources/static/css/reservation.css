@@ -1,0 +1,569 @@
+/* ======================================================
+   Reservation
+====================================================== */
+
+.reservation-page-title {
+    margin-bottom: 28px;
+}
+
+.reservation-page-title h1 {
+    margin: 0;
+
+    font-size: 28px;
+}
+
+.reservation-page-title p {
+    margin: 8px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* ======================================================
+   객실 상세
+====================================================== */
+
+.room-detail-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.6fr)
+        minmax(360px, 0.8fr);
+
+    gap: 28px;
+
+    align-items: start;
+}
+
+
+.room-detail-card,
+.reservation-option-card {
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+
+.room-detail-card {
+    overflow: hidden;
+}
+
+
+.room-detail-image {
+    position: relative;
+
+    height: 420px;
+
+    overflow: hidden;
+}
+
+.room-detail-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.room-detail-content {
+    padding: 30px;
+}
+
+.room-type-label {
+    display: inline-flex;
+
+    padding: 5px 10px;
+
+    border-radius: 6px;
+
+    color: #244d7a;
+
+    background: #eaf1fb;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.room-detail-content h2 {
+    margin: 12px 0;
+
+    font-size: 27px;
+}
+
+.room-detail-description {
+    margin-bottom: 28px;
+
+    color: var(--text-secondary);
+
+    line-height: 1.7;
+
+    font-size: 13px;
+}
+
+
+.room-detail-info-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 1px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: var(--border);
+}
+
+.room-detail-info-grid > div {
+    padding: 18px;
+
+    background: #fff;
+}
+
+.room-detail-info-grid span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+.room-detail-info-grid strong {
+    font-size: 13px;
+}
+
+
+.room-facilities {
+    margin-top: 28px;
+}
+
+.room-facilities h3 {
+    margin-bottom: 14px;
+
+    font-size: 15px;
+}
+
+.facility-list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.facility-list span {
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    color: var(--text-secondary);
+
+    background: #f4f7fa;
+
+    font-size: 11px;
+}
+
+
+/* ---------- 예약 옵션 ---------- */
+
+.reservation-option-card {
+    padding: 28px;
+
+    position: sticky;
+
+    top: 20px;
+}
+
+.reservation-option-card h2 {
+    margin: 0;
+
+    font-size: 20px;
+}
+
+.reservation-option-description {
+    margin: 8px 0 26px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+
+.guest-count-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+}
+
+
+.reservation-price-summary {
+    margin: 14px 0 24px;
+
+    padding: 18px;
+
+    border-radius: 10px;
+
+    background: #f7f9fc;
+}
+
+.reservation-price-summary > div {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 8px 0;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+.reservation-price-summary strong {
+    color: var(--text-primary);
+}
+
+
+.reservation-total {
+    margin-top: 8px;
+
+    padding-top: 14px !important;
+
+    border-top: 1px solid var(--border);
+}
+
+.reservation-total strong {
+    color: var(--blue);
+
+    font-size: 18px;
+}
+
+.reservation-submit {
+    width: 100%;
+
+    height: 48px;
+}
+
+
+/* ======================================================
+   결제
+====================================================== */
+
+.payment-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(420px, 0.85fr);
+
+    gap: 26px;
+
+    align-items: start;
+}
+
+
+.payment-summary-card,
+.payment-form-card {
+    padding: 30px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+
+.payment-summary-card h2,
+.payment-form-card h2 {
+    margin: 0 0 24px;
+
+    font-size: 19px;
+}
+
+
+.selected-room {
+    display: flex;
+
+    gap: 20px;
+
+    padding-bottom: 24px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.selected-room img {
+    width: 130px;
+    height: 100px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
+
+.selected-room h3 {
+    margin: 7px 0;
+
+    font-size: 17px;
+}
+
+.selected-room p {
+    margin: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+
+.payment-info-list {
+    margin-top: 22px;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.payment-info-list > div {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 9px 0;
+
+    font-size: 12px;
+}
+
+.payment-info-list span {
+    color: var(--text-secondary);
+}
+
+.highlight-text {
+    color: var(--blue);
+}
+
+
+.payment-price-area {
+    margin-top: 18px;
+}
+
+.payment-price-area > div {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 8px 0;
+
+    font-size: 12px;
+}
+
+.payment-price-area span {
+    color: var(--text-secondary);
+}
+
+.discount-text {
+    color: var(--danger);
+}
+
+.payment-total {
+    margin-top: 8px;
+
+    padding-top: 18px !important;
+
+    border-top: 1px dashed var(--border);
+
+    font-size: 14px !important;
+}
+
+.payment-total strong {
+    color: var(--blue);
+
+    font-size: 23px;
+}
+
+
+/* ---------- 결제 입력 ---------- */
+
+.payment-section-title {
+    margin: 20px 0 18px;
+
+    color: var(--blue);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.payment-contact-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+}
+
+.form-divider {
+    margin: 10px 0 20px;
+
+    border: 0;
+    border-top: 1px solid var(--border);
+}
+
+
+.payment-method-tabs {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+.payment-method {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    height: 44px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.payment-method input {
+    display: none;
+}
+
+.payment-method.active {
+    color: #fff;
+
+    background: var(--navy);
+
+    border-color: var(--navy);
+}
+
+
+.payment-submit {
+    width: 100%;
+
+    height: 48px;
+
+    margin-top: 10px;
+}
+
+.payment-policy {
+    margin: 12px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+
+    text-align: center;
+}
+
+
+/* ======================================================
+   responsive
+====================================================== */
+
+@media (max-width: 1000px) {
+
+    .room-detail-layout,
+    .payment-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .reservation-option-card {
+        position: static;
+    }
+
+}
+
+/* ======================================================
+   Admin Reservation
+====================================================== */
+
+.admin-page-action-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.admin-page-action-row h2 {
+    margin: 0;
+
+    font-size: 20px;
+}
+
+.admin-page-action-row p {
+    margin: 6px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+
+/* filter */
+
+.reservation-filter {
+    margin-bottom: 20px;
+}
+
+.reservation-filter-select {
+    width: 150px;
+}
+
+.reservation-date {
+    width: 160px;
+}
+
+
+/* table */
+
+.reservation-table-wrapper {
+    background: #fff;
+}
+
+.table-detail-link {
+    color: var(--blue);
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+.cancelled-row {
+    background: #fffafa;
+}
+
+
+.admin-table-bottom {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 20px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}

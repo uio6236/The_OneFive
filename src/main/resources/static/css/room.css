@@ -1,0 +1,227 @@
+/* ======================================================
+   Admin Room
+====================================================== */
+
+/* 상태 요약 */
+
+.room-status-overview {
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 14px;
+
+    margin-bottom: 22px;
+}
+
+.room-overview-card {
+    padding: 18px 20px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: #fff;
+}
+
+.room-overview-card span {
+    display: block;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+.room-overview-card strong {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--navy-light);
+
+    font-size: 24px;
+}
+
+.room-overview-card.danger strong {
+    color: var(--danger);
+}
+
+
+/* filter */
+
+.room-filter-bar {
+    margin-bottom: 26px;
+}
+
+.room-filter-select {
+    width: 150px;
+}
+
+
+/* floor */
+
+.room-floor-section {
+    margin-bottom: 34px;
+}
+
+.room-floor-title {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 14px;
+}
+
+.room-floor-title h2 {
+    display: inline;
+
+    margin: 0 10px 0 0;
+
+    font-size: 19px;
+}
+
+.room-floor-title span {
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+
+/* 객실 */
+
+.admin-room-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.admin-room-card {
+    min-height: 155px;
+
+    padding: 18px;
+
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--blue);
+
+    border-radius: 10px;
+
+    background: #fff;
+}
+
+
+.room-card-top {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.room-number {
+    color: var(--navy);
+
+    font-size: 20px;
+
+    font-weight: 700;
+}
+
+.room-state {
+    padding: 4px 7px;
+
+    border-radius: 5px;
+
+    color: var(--navy-light);
+
+    background: var(--blue-light);
+
+    font-size: 9px;
+
+    font-weight: 600;
+}
+
+
+.room-type-name {
+    display: block;
+
+    margin-top: 15px;
+
+    font-size: 12px;
+}
+
+
+.room-current-guest {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+
+.room-card-actions {
+    margin-top: 16px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid var(--border);
+}
+
+.room-action-link {
+    color: var(--blue);
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+.room-action-link.danger {
+    color: var(--danger);
+}
+
+
+/* 상태별 미세 차이 */
+
+.room-available-card {
+    border-top-color: #7193be;
+}
+
+.room-occupied-card {
+    border-top-color: var(--navy-light);
+}
+
+.room-cleaning-card {
+    border-top-color: var(--blue);
+}
+
+/* 중요한 상태만 red */
+
+.room-inspection-card {
+    border-top-color: var(--danger);
+}
+
+.room-inspection-card .room-state {
+    color: var(--danger);
+
+    background: #fff0f0;
+}
+
+
+@media (max-width: 1200px) {
+
+    .admin-room-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    .room-status-overview {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}

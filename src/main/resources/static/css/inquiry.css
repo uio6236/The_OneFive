@@ -1,0 +1,306 @@
+/* ======================================================
+   Admin Inquiry
+====================================================== */
+
+.inquiry-summary-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 22px;
+}
+
+.inquiry-summary-card {
+    padding: 20px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.inquiry-summary-card span {
+    display: block;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+.inquiry-summary-card strong {
+    display: block;
+
+    margin-top: 8px;
+
+    color: var(--navy-light);
+
+    font-size: 24px;
+}
+
+
+/* ---------- filter ---------- */
+
+.inquiry-filter {
+    margin-bottom: 22px;
+}
+
+.inquiry-filter-select {
+    width: 150px;
+}
+
+
+/* ---------- layout ---------- */
+
+.inquiry-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(300px, 0.75fr)
+        minmax(0, 1.35fr);
+
+    gap: 22px;
+
+    align-items: start;
+}
+
+
+.inquiry-list-panel,
+.inquiry-detail-panel {
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+
+/* ---------- 문의 목록 ---------- */
+
+.inquiry-panel-title {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.inquiry-panel-title h2 {
+    margin: 0;
+
+    font-size: 16px;
+}
+
+.inquiry-panel-title span {
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+
+.inquiry-list {
+    padding: 10px;
+}
+
+.inquiry-list-item {
+    width: 100%;
+
+    padding: 15px;
+
+    border: 1px solid transparent;
+    border-radius: 9px;
+
+    background: transparent;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.inquiry-list-item + .inquiry-list-item {
+    margin-top: 6px;
+}
+
+.inquiry-list-item:hover {
+    background: #f8fafc;
+}
+
+.inquiry-list-item.active {
+    border-color: #cadcf5;
+
+    background: var(--blue-light);
+}
+
+.inquiry-list-top {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+.inquiry-list-top strong {
+    overflow: hidden;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+.inquiry-list-item p {
+    margin: 8px 0;
+
+    overflow: hidden;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+.inquiry-list-bottom {
+    display: flex;
+
+    justify-content: space-between;
+
+    color: var(--text-muted);
+
+    font-size: 8px;
+}
+
+
+/* ---------- 상세 ---------- */
+
+.inquiry-detail-panel {
+    padding: 26px;
+}
+
+.inquiry-detail-header {
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.inquiry-detail-header h2 {
+    margin: 10px 0 4px;
+
+    font-size: 21px;
+}
+
+.inquiry-detail-header p {
+    margin: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+}
+
+
+.inquiry-customer-info {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1px;
+
+    margin-top: 20px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    background: var(--border);
+}
+
+.inquiry-customer-info > div {
+    padding: 14px;
+
+    background: #fff;
+}
+
+.inquiry-customer-info span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 8px;
+}
+
+.inquiry-customer-info strong {
+    font-size: 10px;
+}
+
+
+/* 문의 내용 */
+
+.inquiry-content-box {
+    margin-top: 20px;
+
+    padding: 20px;
+
+    border-radius: 10px;
+
+    background: #f7f9fc;
+}
+
+.inquiry-content-box > span {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+}
+
+.inquiry-content-box p {
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 11px;
+
+    line-height: 1.8;
+}
+
+
+/* 답변 */
+
+.inquiry-answer-area {
+    margin-top: 22px;
+}
+
+.inquiry-action-row {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+@media (max-width: 1050px) {
+
+    .inquiry-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .inquiry-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

@@ -1,0 +1,756 @@
+/* admin.css */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ---------- Sidebar ---------- */
+
+.admin-sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    padding: 24px 20px;
+
+    background: var(--navy);
+
+    color: #fff;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 100;
+}
+
+.admin-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 36px;
+}
+
+.admin-logo-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--blue);
+
+    border-radius: 8px;
+
+    font-size: 18px;
+}
+
+.admin-logo-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.admin-logo-subtitle {
+    margin-top: 2px;
+
+    color: #aab6c8;
+
+    font-size: 10px;
+}
+
+.admin-menu {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.admin-menu-item a {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 46px;
+
+    padding: 0 14px;
+
+    border-radius: 8px;
+
+    color: #aeb9c9;
+
+    font-size: 14px;
+}
+
+.admin-menu-item a:hover {
+    background: rgba(255, 255, 255, 0.06);
+
+    color: #fff;
+}
+
+.admin-menu-item.active a {
+    background: var(--navy-light);
+
+    color: #fff;
+}
+
+.admin-menu-icon {
+    width: 20px;
+    text-align: center;
+}
+
+/* ---------- 프로필 ---------- */
+
+.admin-profile {
+    margin-top: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: var(--navy-light);
+}
+
+.admin-profile-image {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    background: #fff;
+}
+
+.admin-profile-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.admin-profile-role {
+    margin-top: 2px;
+
+    color: #b9c5d6;
+
+    font-size: 10px;
+}
+
+/* ---------- main ---------- */
+
+.admin-content {
+    width: calc(100% - 260px);
+
+    margin-left: 260px;
+
+    min-height: 100vh;
+}
+
+.admin-header {
+    height: 88px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 40px;
+
+    background: #fff;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-header-title h1 {
+    margin: 0;
+
+    font-size: 28px;
+}
+
+.admin-header-title p {
+    margin: 6px 0 0;
+
+    font-size: 13px;
+
+    color: var(--text-secondary);
+}
+
+.admin-header-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+}
+
+.admin-date {
+    padding: 10px 16px;
+
+    border-radius: 20px;
+
+    background: #f3f6fa;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+.admin-main {
+    padding: 32px 40px 60px;
+}
+
+/* ---------- dashboard card ---------- */
+
+.dashboard-summary-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 18px;
+}
+
+.dashboard-summary-card {
+    min-height: 108px;
+
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.dashboard-summary-title {
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+.dashboard-summary-value {
+    margin-top: 6px;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+/* ======================================================
+   Dashboard
+====================================================== */
+
+.dashboard-summary-sub {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+}
+
+.dashboard-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    color: var(--blue);
+
+    background: var(--blue-light);
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+.dashboard-section,
+.dashboard-panel {
+    margin-top: 24px;
+
+    padding: 24px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+
+.dashboard-section-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.dashboard-section-header h2 {
+    margin: 0;
+
+    font-size: 17px;
+}
+
+.dashboard-section-header p {
+    margin: 6px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+.dashboard-more-link {
+    color: var(--blue);
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* 객실 상태 */
+
+.room-status-summary-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+.room-summary-item {
+    padding: 20px;
+
+    border-radius: 10px;
+
+    background: var(--blue-light);
+
+    color: var(--navy-light);
+}
+
+.room-summary-item span {
+    display: block;
+
+    font-size: 11px;
+}
+
+.room-summary-item strong {
+    display: block;
+
+    margin-top: 10px;
+
+    font-size: 26px;
+}
+
+
+/* 중요한 상태만 빨강 */
+
+.room-summary-inspection {
+    color: var(--danger);
+
+    background: #fff1f1;
+}
+
+
+/* 중단 */
+
+.dashboard-middle-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 24px;
+}
+
+
+/* 도착 예정 */
+
+.dashboard-guest-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.dashboard-guest-item {
+    display: flex;
+
+    align-items: center;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.dashboard-guest-item:last-child {
+    border-bottom: 0;
+}
+
+.guest-avatar {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 12px;
+
+    border-radius: 50%;
+
+    color: var(--blue);
+
+    background: var(--blue-light);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.guest-info {
+    flex: 1;
+}
+
+.guest-info strong {
+    display: block;
+
+    font-size: 12px;
+}
+
+.guest-info span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+.guest-time {
+    color: var(--blue);
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* housekeeping */
+
+.housekeeping-progress-item {
+    margin-bottom: 18px;
+}
+
+.housekeeping-progress-item:last-child {
+    margin-bottom: 0;
+}
+
+.progress-title-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 7px;
+
+    font-size: 11px;
+}
+
+.progress-title-row span {
+    color: var(--text-secondary);
+}
+
+.progress-bar {
+    height: 7px;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background: #edf1f5;
+}
+
+.progress-value {
+    height: 100%;
+
+    border-radius: 10px;
+
+    background: var(--blue);
+}
+
+
+/* 활동 */
+
+.activity-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.activity-item {
+    display: grid;
+
+    grid-template-columns:
+        70px
+        90px
+        1fr
+        100px;
+
+    align-items: center;
+
+    min-height: 52px;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 11px;
+}
+
+.activity-item:last-child {
+    border-bottom: 0;
+}
+
+.activity-time,
+.activity-user {
+    color: var(--text-secondary);
+}
+
+.activity-category {
+    color: var(--blue);
+
+    font-weight: 600;
+}
+
+
+@media (max-width: 1100px) {
+
+    .dashboard-summary-grid,
+    .room-status-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-middle-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* ======================================================
+   Admin MyPage
+====================================================== */
+
+.admin-mypage-layout {
+    display: grid;
+
+    grid-template-columns:
+        280px
+        minmax(0, 1fr);
+
+    gap: 24px;
+
+    align-items: start;
+}
+
+
+/* ---------- profile ---------- */
+
+.admin-mypage-profile-card {
+    padding: 28px;
+
+    text-align: center;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.admin-mypage-profile-image {
+    width: 82px;
+    height: 82px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto;
+
+    border-radius: 50%;
+
+    color: #fff;
+
+    background: var(--navy-light);
+
+    font-size: 24px;
+
+    font-weight: 700;
+}
+
+.admin-mypage-profile-card h2 {
+    margin: 16px 0 9px;
+
+    font-size: 20px;
+}
+
+.admin-role-badge {
+    display: inline-flex;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    color: var(--blue);
+
+    background: var(--blue-light);
+
+    font-size: 9px;
+
+    font-weight: 700;
+}
+
+
+.admin-profile-info-list {
+    margin-top: 26px;
+
+    text-align: left;
+}
+
+.admin-profile-info-list > div {
+    padding: 13px 0;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-profile-info-list > div:last-child {
+    border-bottom: 0;
+}
+
+.admin-profile-info-list span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+}
+
+.admin-profile-info-list strong {
+    font-size: 11px;
+}
+
+
+/* ---------- content ---------- */
+
+.admin-mypage-content-card {
+    padding: 30px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.admin-mypage-section-title {
+    margin-bottom: 22px;
+}
+
+.admin-mypage-section-title h2 {
+    margin: 0;
+
+    font-size: 17px;
+}
+
+.admin-mypage-section-title p {
+    margin: 6px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+
+.admin-form-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 14px;
+}
+
+
+.admin-password-section {
+    margin-top: 26px;
+
+    padding-top: 26px;
+
+    border-top: 1px solid var(--border);
+}
+
+
+.admin-mypage-action-row {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 26px;
+}
+
+
+/* ---------- 위험 영역 ---------- */
+
+.admin-danger-zone {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 34px;
+
+    padding: 20px;
+
+    border: 1px solid #ffd1d1;
+    border-radius: 10px;
+
+    background: #fffafa;
+}
+
+.admin-danger-zone h3 {
+    margin: 0;
+
+    color: var(--danger);
+
+    font-size: 13px;
+}
+
+.admin-danger-zone p {
+    margin: 5px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+}
+
+
+@media (max-width: 950px) {
+
+    .admin-mypage-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

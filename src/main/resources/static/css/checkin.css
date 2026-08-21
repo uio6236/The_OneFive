@@ -1,0 +1,401 @@
+/* ======================================================
+   Checkin / Checkout
+====================================================== */
+
+.checkin-summary-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 24px;
+}
+
+.checkin-summary-card {
+    padding: 20px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    background: #fff;
+}
+
+.checkin-summary-card span {
+    display: block;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+.checkin-summary-card strong {
+    display: block;
+
+    margin-top: 8px;
+
+    color: var(--navy-light);
+
+    font-size: 24px;
+}
+
+
+/* tab */
+
+.checkin-tabs {
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 18px;
+}
+
+.checkin-tab {
+    min-width: 120px;
+
+    padding: 10px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: #fff;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.checkin-tab.active {
+    color: #fff;
+
+    background: var(--navy);
+
+    border-color: var(--navy);
+}
+
+
+/* filter */
+
+.checkin-filter {
+    margin-bottom: 22px;
+}
+
+.checkin-date {
+    width: 170px;
+}
+
+
+/* layout */
+
+.checkin-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(280px, 0.72fr)
+        minmax(0, 1.5fr);
+
+    gap: 22px;
+
+    align-items: start;
+}
+
+.checkin-list-panel,
+.checkin-detail-panel {
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+
+/* 왼쪽 */
+
+.checkin-panel-title {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.checkin-panel-title h2 {
+    margin: 0;
+
+    font-size: 16px;
+}
+
+.checkin-panel-title span {
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+
+.checkin-customer-list {
+    padding: 10px;
+}
+
+.checkin-customer-item {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px;
+
+    border: 1px solid transparent;
+    border-radius: 9px;
+
+    background: transparent;
+
+    text-align: left;
+}
+
+.checkin-customer-item:hover {
+    background: #f8fafc;
+}
+
+.checkin-customer-item.active {
+    border-color: #cddcf3;
+
+    background: var(--blue-light);
+}
+
+.checkin-customer-item strong {
+    display: block;
+
+    font-size: 12px;
+}
+
+.checkin-customer-item span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+}
+
+.checkin-item-right {
+    text-align: right;
+}
+
+.checkin-item-right strong {
+    color: var(--blue);
+}
+
+
+/* 상세 */
+
+.checkin-detail-panel {
+    padding: 26px;
+}
+
+.checkin-detail-header {
+    padding-bottom: 22px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.checkin-detail-header h2 {
+    margin: 10px 0 4px;
+
+    font-size: 22px;
+}
+
+.checkin-detail-header p {
+    margin: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+
+.checkin-info-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 1px;
+
+    margin-top: 22px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: var(--border);
+}
+
+.checkin-info-grid > div {
+    padding: 16px;
+
+    background: #fff;
+}
+
+.checkin-info-grid span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+}
+
+.checkin-info-grid strong {
+    font-size: 11px;
+}
+
+
+/* section */
+
+.room-assignment-section,
+.key-section {
+    margin-top: 28px;
+}
+
+.checkin-section-title h3 {
+    margin: 0;
+
+    font-size: 14px;
+}
+
+.checkin-section-title p {
+    margin: 5px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+}
+
+
+/* 객실 */
+
+.available-room-list {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+.available-room-item {
+    padding: 15px;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.available-room-item input {
+    display: none;
+}
+
+.available-room-item.selected {
+    border-color: var(--blue);
+
+    background: var(--blue-light);
+}
+
+.available-room-item strong {
+    display: block;
+
+    font-size: 14px;
+}
+
+.available-room-item span,
+.available-room-item small {
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+}
+
+
+/* key */
+
+.key-type-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+.key-type-card {
+    padding: 15px;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    cursor: pointer;
+}
+
+.key-type-card input {
+    display: none;
+}
+
+.key-type-card.active {
+    border-color: var(--blue);
+
+    background: var(--blue-light);
+}
+
+.key-type-card strong {
+    display: block;
+
+    font-size: 11px;
+}
+
+.key-type-card span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+}
+
+
+.checkin-action-row {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 28px;
+}
+
+
+@media (max-width: 1100px) {
+
+    .checkin-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .checkin-layout {
+        grid-template-columns: 1fr;
+    }
+
+}
