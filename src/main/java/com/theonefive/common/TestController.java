@@ -26,4 +26,9 @@ public class TestController {
     public String loginTest() {
         return "login";
     }
+    
+    @GetMapping("/test/reservation")
+    public String reservationTest() {
+        return "admin/reservation/list";
+    }
 }
