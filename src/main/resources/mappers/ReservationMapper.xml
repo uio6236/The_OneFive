@@ -12,4 +12,15 @@
         FROM RESERVATION
         ORDER BY CREATED_AT DESC
     </select>
+    
+    <select id="findById" parameterType="long" resultType="ReservationDTO">
+        SELECT
+            ID, CODE, GUEST_ID, ROOM_TYPE_ID, ROOM_ID,
+            CHECKIN, CHECKOUT, GUEST_COUNT, STATUS,
+            ROOM_AMOUNT, DISCOUNT_AMOUNT, TOTAL_AMOUNT,
+            PAYMENT_METHOD, REQUEST, CREATED_BY, CREATED_AT
+        FROM RESERVATION
+        WHERE ID = #{id}
+    </select>
 </mapper>
+
