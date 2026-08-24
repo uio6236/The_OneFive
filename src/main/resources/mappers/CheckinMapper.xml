@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="package com.theonefive.checkin.model.mapper.CheckinMapper">
 	<select id="selectTodayCheckinList" parameterType="" resultType="CheckinDTO">
-	
+		
 	</select>
 	<select id="selectTodayCheckoutList" parameterType="" resultType="CheckinDTO">
 	

@@ -3,6 +3,7 @@ package com.theonefive.room.model.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.theonefive.room.model.dto.RoomDTO;
 
@@ -15,11 +16,11 @@ public interface RoomMapper {
 	RoomDTO selectRoomById(int roomId);
 	
 	// 층/상태 조건 조회
-	List<RoomDTO> selectRoomByFilter(Integer floor, String status);
+	List<RoomDTO> selectRoomByFilter(@Param("floor") int floor, @Param("status") String status);
 	
 	// 체크인 가능 객실 조회
 	List<RoomDTO> selectAvailableRooms(int roomTypeId);
 	
 	// 객실 상태 변경
-	int updateRoomStatus(int room, String status);
+	int updateRoomStatus(@Param("roomId") int roomId, @Param("status") String status);
 }

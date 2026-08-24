@@ -1,8 +1,5 @@
 package com.theonefive.room.model.dto;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -12,7 +12,7 @@ public interface RoomService {
 	RoomDTO getRoomDetail(int roomId);
 
 	// 층/상태 조건 조회
-	List<RoomDTO> searchRooms(Integer floor, String status);
+	List<RoomDTO> searchRooms(int floor, String status);
 	
 	// 체크인 가능 객실 조회
 	List<RoomDTO> getAvailableRooms(int roomTypeId);

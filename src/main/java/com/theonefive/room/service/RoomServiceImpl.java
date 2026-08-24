@@ -16,31 +16,31 @@ public class RoomServiceImpl implements RoomService{
 	
 	@Override
 	public List<RoomDTO> getRoomList() {
-		// TODO Auto-generated method stub
+		// 전체 객실 조회
 		return roomMapper.selectRoomList();
 	}
 
 	@Override
 	public RoomDTO getRoomDetail(int roomId) {
-		// TODO Auto-generated method stub
+		// 객실 상세 조회
 		return roomMapper.selectRoomById(roomId);
 	}
 
 	@Override
-	public List<RoomDTO> searchRooms(Integer floor, String status) {
-		// TODO Auto-generated method stub
+	public List<RoomDTO> searchRooms(int floor, String status) {
+		// 층/상태 조건 조회
 		return roomMapper.selectRoomByFilter(floor, status);
 	}
 
 	@Override
 	public List<RoomDTO> getAvailableRooms(int roomTypeId) {
-		// TODO Auto-generated method stub
+		// 체크인 가능 객실 조회
 		return roomMapper.selectAvailableRooms(roomTypeId);
 	}
 
 	@Override
 	public boolean changeroomStatus(int roomId, String status) {
-		// TODO Auto-generated method stub
+		// 객실 상태 변경
 		return roomMapper.updateRoomStatus(roomId, status) > 0;
 	}
 

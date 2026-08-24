@@ -1,7 +1,6 @@
 package com.theonefive.checkin.model.dto;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,16 +14,16 @@ import lombok.ToString;
 @Getter
 @Setter
 public class CheckinDTO {
-	private Long id; // 체크인 ID
-    private Long reservationId; // 연결된 예약 ID
-    private Long guestId; // 고객 ID
-    private Long roomId; // 실제 투숙 객실 ID
+	private int id; // 체크인 ID
+    private int reservationId; // 연결된 예약 ID
+    private int guestId; // 고객 ID
+    private int roomId; // 실제 투숙 객실 ID
     
-    private LocalDateTime checkin; // 실제 체크인 시간
-    private LocalDateTime checkout; // 실제 체크아웃 시간
+    private LocalDateTime checkinTime; // 실제 체크인 시간
+    private LocalDateTime checkoutTime; // 실제 체크아웃 시간
     private String keyType; // 키 발급 유형
-    private Long checkinEmployee; // 체크인 담당 직원
-    private Long checkoutEmployee; // 체크아웃 담당 직원
+    private int checkinEmployee; // 체크인 담당 직원
+    private int checkoutEmployee; // 체크아웃 담당 직원
     
     private String memo; // 투숙 메모
     

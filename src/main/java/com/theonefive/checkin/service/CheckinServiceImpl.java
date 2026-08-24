@@ -19,29 +19,33 @@ public class CheckinServiceImpl implements CheckinService {
 	
 	@Override
 	public List<CheckinDTO> getTodayCheckinList() {
-		// TODO Auto-generated method stub
+		// 금일 체크인 예정
 		return checkinMapper.selectTodayCheckinList();
 	}
 	@Override
 	public List<CheckinDTO> getTodayCheckoutList() {
-		// TODO Auto-generated method stub
+		// 금일 체크아웃 예정
 		return checkinMapper.selectTodayCheckoutList();
 	}
 	@Override
-	public CheckinDTO getCheckinDatail(int reservationId) {
-		// TODO Auto-generated method stub
+	public CheckinDTO getCheckinDetail(int reservationId) {
+		// 체크인 상세
 		return checkinMapper.selectCheckinDetail(reservationId);
 	}
 	@Transactional
 	@Override
 	public boolean checkin(CheckinDTO checkin) {
-		// TODO Auto-generated method stub
-		return false;
+		// 체크인 처리
+		int result = checkinMapper.insertCheckin(checkin);
+		roomMapper.updateRoomStatus(checkin.getRoomId(), "투숙중");
+		return result > 0;
 	}
 	@Transactional
 	@Override
 	public boolean checkout(CheckinDTO checkin) {
-		// TODO Auto-generated method stub
-		return false;
+		// 체크아웃 처리
+		int result = checkinMapper.updateCheckout(checkin);
+		roomMapper.updateRoomStatus(checkin.getRoomId(), "투숙중");
+		return result > 0;
 	}
 }

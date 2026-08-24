@@ -12,7 +12,7 @@ public interface CheckinService {
 	List<CheckinDTO> getTodayCheckoutList();
 	
 	// 체크인 상세
-	CheckinDTO getCheckinDatail(int reservationId);
+	CheckinDTO getCheckinDetail(int reservationId);
 		
 	// 체크인 처리
 	boolean checkin(CheckinDTO checkin);

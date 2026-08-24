@@ -21,7 +21,7 @@ public interface CheckinMapper {
 	int insertCheckin(CheckinDTO checkin);
 	
 	// 체크아웃 처리
-	int updateCheckin(CheckinDTO checkin);
+	int updateCheckout(CheckinDTO checkin);
 	
 	// 체크인 기록 조회
 	CheckinDTO selectCheckinById(int checkinId);

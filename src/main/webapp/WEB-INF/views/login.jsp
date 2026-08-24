@@ -126,8 +126,11 @@
                         <input type="checkbox" name="remember">
                         로그인 상태 유지
                     </label>
+					<a href="/password/reset" class="text-link">
+					    아이디 찾기
+					</a>
                     <a href="/password/reset" class="text-link">
-                        비밀번호 재설정
+                        비밀번호 찾기
                     </a>
                 </div>
 
@@ -138,9 +141,9 @@
 
             <div class="auth-bottom-link">
                 <span>
-                    계정을 잊으셨나요?
+                    계정이 없으신가요?
                 </span>
-                <a href="/customer/signup">고객센터 문의</a>
+                <a href="/customer/signup">회원가입</a>
             </div>
         </div>
 
