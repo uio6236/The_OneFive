@@ -1,14 +1,22 @@
 package com.theonefive.checkin.service;
 
+import java.util.List;
+
 import com.theonefive.checkin.model.dto.CheckinDTO;
 
 public interface CheckinService {
-	// 체크인 목록 조회
+	// 금일 체크인 예정
+	List<CheckinDTO> getTodayCheckinList();
+		
+	// 금일 체크아웃 예정
+	List<CheckinDTO> getTodayCheckoutList();
 	
-	// 체크인 추가
-	Long addCheckin(CheckinDTO checkin);
-	// 체크인 수정
-	CheckinDTO updateCheckin(Long id);
-	// 체크인 삭제
-	void deleteCheckin(Long id);
+	// 체크인 상세
+	CheckinDTO getCheckinDatail(int reservationId);
+		
+	// 체크인 처리
+	boolean checkin(CheckinDTO checkin);
+	
+	// 체크아웃 처리
+	boolean checkout(CheckinDTO checkin);
 }
