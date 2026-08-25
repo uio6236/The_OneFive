@@ -1,4 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -13,7 +17,7 @@
     <link rel="stylesheet" href="/css/reservation.css">
 </head>
 
-<body>
+<body data-context-path="${pageContext.request.contextPath}">
 
 <div class="admin-layout">
 
@@ -49,7 +53,7 @@
             </div>
 
 
-            <!-- 검색 -->
+            <!-- 검색 : 지금은 화면만, 실제 검색 기능은 나중에 연결 예정 -->
             <div class="filter-bar reservation-filter">
 
                 <div class="search-box">
@@ -65,20 +69,20 @@
 
                 <select class="form-control reservation-filter-select">
 
-                    <option>
+                    <option value="">
                         전체 상태
                     </option>
 
-                    <option>
+                    <option value="예약확정">
                         예약 확정
                     </option>
 
-                    <option>
-                        입금 대기
+                    <option value="예약취소">
+                        예약 취소
                     </option>
 
-                    <option>
-                        예약 취소
+                    <option value="이용완료">
+                        이용 완료
                     </option>
 
                 </select>
@@ -96,6 +100,9 @@
 
             </div>
 
+
+            <!-- 예약 목록 + 우측 상세패널 -->
+            <div class="reservation-main-layout">
 
             <!-- 예약 테이블 -->
             <div class="table-wrapper reservation-table-wrapper">
@@ -122,166 +129,85 @@
 
                     <tbody>
 
-                    <tr>
+                    <c:forEach var="r" items="${reservationList}">
 
-                        <td>
-                            RS-20260811-01
-                        </td>
+                        <tr class="${r.status == '예약취소' ? 'cancelled-row' : ''}">
 
-                        <td>
-                            김우현
-                        </td>
+                            <td>
+                                    ${r.code}
+                            </td>
 
-                        <td>
-                            405호
-                        </td>
+                            <td>
+                                    ${r.guestName}
+                            </td>
 
-                        <td>
-                            디럭스 더블
-                        </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${r.roomNum != null}">${r.roomNum}호</c:when>
+                                    <c:otherwise>미배정</c:otherwise>
+                                </c:choose>
+                            </td>
 
-                        <td>
-                            2026.08.11
-                        </td>
+                            <td>
+                                    ${r.typeName}
+                            </td>
 
-                        <td>
-                            2026.08.14
-                        </td>
+                            <td>
+                                <fmt:formatDate value="${r.checkin}" pattern="yyyy.MM.dd"/>
+                            </td>
 
-                        <td>
-                            2명
-                        </td>
+                            <td>
+                                <fmt:formatDate value="${r.checkout}" pattern="yyyy.MM.dd"/>
+                            </td>
 
-                        <td>
-                            <span class="badge badge-blue">
-                                예약 확정
-                            </span>
-                        </td>
+                            <td>
+                                    ${r.guestCount}명
+                            </td>
 
-                        <td>
-                            ₩540,000
-                        </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${r.status == '예약확정'}">
+                                        <span class="badge badge-blue">예약 확정</span>
+                                    </c:when>
+                                    <c:when test="${r.status == '예약취소'}">
+                                        <span class="badge badge-danger">예약 취소</span>
+                                    </c:when>
+                                    <c:when test="${r.status == '이용완료'}">
+                                        <span class="badge badge-gray">이용 완료</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="badge">${r.status}</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
 
-                        <td>
+                            <td>
+                                <fmt:formatNumber value="${r.totalAmount}" pattern="#,###"/>원
+                            </td>
 
-                            <a
-                                href="/admin/reservations/1"
-                                class="table-detail-link"
-                            >
-                                상세
-                            </a>
+                            <td>
 
-                        </td>
+                                <a
+                                    href="#"
+                                    class="table-detail-link js-detail-link"
+                                    data-id="${r.reservationId}"
+                                >
+                                    상세
+                                </a>
 
-                    </tr>
+                            </td>
 
+                        </tr>
 
-                    <tr>
+                    </c:forEach>
 
-                        <td>
-                            RS-20260811-02
-                        </td>
-
-                        <td>
-                            박서연
-                        </td>
-
-                        <td>
-                            미배정
-                        </td>
-
-                        <td>
-                            프리미어 킹
-                        </td>
-
-                        <td>
-                            2026.08.11
-                        </td>
-
-                        <td>
-                            2026.08.13
-                        </td>
-
-                        <td>
-                            2명
-                        </td>
-
-                        <td>
-                            <span class="badge badge-dark">
-                                입금 대기
-                            </span>
-                        </td>
-
-                        <td>
-                            ₩520,000
-                        </td>
-
-                        <td>
-
-                            <a
-                                href="/admin/reservations/2"
-                                class="table-detail-link"
-                            >
-                                상세
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr class="cancelled-row">
-
-                        <td>
-                            RS-20260810-05
-                        </td>
-
-                        <td>
-                            최수진
-                        </td>
-
-                        <td>
-                            -
-                        </td>
-
-                        <td>
-                            디럭스 트윈
-                        </td>
-
-                        <td>
-                            2026.08.15
-                        </td>
-
-                        <td>
-                            2026.08.17
-                        </td>
-
-                        <td>
-                            2명
-                        </td>
-
-                        <td>
-                            <span class="badge badge-danger">
-                                예약 취소
-                            </span>
-                        </td>
-
-                        <td>
-                            ₩390,000
-                        </td>
-
-                        <td>
-
-                            <a
-                                href="/admin/reservations/3"
-                                class="table-detail-link"
-                            >
-                                상세
-                            </a>
-
-                        </td>
-
-                    </tr>
+                    <c:if test="${empty reservationList}">
+                        <tr>
+                            <td colspan="10" style="text-align:center;">
+                                등록된 예약이 없습니다.
+                            </td>
+                        </tr>
+                    </c:if>
 
                     </tbody>
 
@@ -290,36 +216,74 @@
             </div>
 
 
+            <!-- 우측 상세 패널 : 처음엔 비어있고, "상세" 클릭하면 JS가 채움 -->
+            <aside class="reservation-detail-panel" id="detailPanel">
+
+                <h3>예약 상세 정보</h3>
+                <p>선택한 예약의 상세정보를 확인하고 관리하세요.</p>
+
+                <div id="detailEmpty">
+                    좌측 목록에서 예약을 선택하세요.
+                </div>
+
+                <div id="detailContent" style="display:none;">
+
+                    <dl>
+                        <dt>예약 번호</dt>
+                        <dd id="detailCode"></dd>
+
+                        <dt>고객명</dt>
+                        <dd id="detailGuestName"></dd>
+
+                        <dt>객실</dt>
+                        <dd id="detailRoom"></dd>
+
+                        <dt>체크인</dt>
+                        <dd id="detailCheckin"></dd>
+
+                        <dt>체크아웃</dt>
+                        <dd id="detailCheckout"></dd>
+
+                        <dt>인원</dt>
+                        <dd id="detailGuestCount"></dd>
+
+                        <dt>예약 상태</dt>
+                        <dd id="detailStatus"></dd>
+
+                        <dt>총 예약금액</dt>
+                        <dd id="detailTotalAmount"></dd>
+                    </dl>
+
+                    <div class="detail-panel-buttons">
+                        <button type="button" class="btn btn-outline">예약 수정</button>
+
+                        <form id="cancelForm" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('이 예약을 취소하시겠습니까?');">
+                                예약 취소
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </aside>
+
+            </div>
+            <!-- // 예약 목록 + 우측 상세패널 -->
+
+
             <!-- 하단 -->
             <div class="admin-table-bottom">
 
                 <span>
-                    전체 124건 중 1-10 표시
+                    전체 ${fn:length(reservationList)}건
                 </span>
 
 
                 <div class="pagination">
-
-                    <a href="#">
-                        ‹
-                    </a>
-
-                    <a href="#" class="active">
-                        1
-                    </a>
-
-                    <a href="#">
-                        2
-                    </a>
-
-                    <a href="#">
-                        3
-                    </a>
-
-                    <a href="#">
-                        ›
-                    </a>
-
+                    <!-- 페이지네이션은 지금은 화면만, 실제 페이징 기능은 나중에 연결 예정 -->
+                    <a href="#" class="active">1</a>
                 </div>
 
             </div>
@@ -329,6 +293,8 @@
     </main>
 
 </div>
+
+<script src="/js/reservation.js"></script>
 
 </body>
 </html>

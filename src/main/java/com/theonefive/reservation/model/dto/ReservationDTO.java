@@ -22,11 +22,11 @@ public class ReservationDTO {
     private Long roomId;           
     private Date checkin;          
     private Date checkout;         
-    private int guestCount;
+    private Integer guestCount;
     private String status;        
-    private int roomAmount;      
-    private int discountAmount;  
-    private int totalAmount;    
+    private Integer roomAmount;      
+    private Integer discountAmount;  
+    private Integer totalAmount;    
     private String paymentMethod;
     private String request;       
     private Long createdBy;       
