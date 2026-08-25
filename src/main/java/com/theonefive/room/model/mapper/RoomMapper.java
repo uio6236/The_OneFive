@@ -15,8 +15,8 @@ public interface RoomMapper {
 	// 객실 상세 조회
 	RoomDTO selectRoomById(int roomId);
 	
-	// 층/상태 조건 조회
-	List<RoomDTO> selectRoomByFilter(@Param("floor") int floor, @Param("status") String status);
+	// 층별 조회
+	List<RoomDTO> selectRoomByFloor(int floor);
 	
 	// 체크인 가능 객실 조회
 	List<RoomDTO> selectAvailableRooms(int roomTypeId);

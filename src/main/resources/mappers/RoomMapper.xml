@@ -2,20 +2,33 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="package com.theonefive.room.model.mapper.RoomMapper">
-	<select id="selectRoomList" parameterType="" resultType="RoomDTO">
-	
+<mapper namespace="com.theonefive.room.model.mapper.RoomMapper">
+	<select id="selectRoomList" resultType="RoomDTO">
+		SELECT R.ID AS id, R.ROOM_NUM AS roomNum, R.TYPE_ID AS typeId, R.FLOOR AS floor, R.STATUS AS status, R.MEMO AS memo, RT.NAME AS typeName
+		FROM ROOM R JOIN ROOM_TYPE RT ON R.TYPE_ID = RT.ID
+		ORDER BY R.FLOOR DESC, R.ROOM_NUM ASC
 	</select>
 	<select id="selectRoomById" parameterType="int" resultType="RoomDTO">
-	
+		SELECT R.ID AS id, R.ROOM_NUM AS roomNum, R.TYPE_ID AS typeId, R.FLOOR AS floor, R.STATUS AS status, R.MEMO AS memo, RT.NAME AS typeName
+		FROM ROOM R JOIN ROOM_TYPE RT ON R.TYPE_ID = RT.ID
+		WHERE R.ID = #{roomId}
 	</select>
-	<select id="selectRoomByFilter" parameterType="" resultType="RoomDTO">
-	
+	<select id="selectRoomByFloor" parameterType="int" resultType="RoomDTO">
+		SELECT R.ID AS id, R.ROOM_NUM AS roomNum, R.TYPE_ID AS typeId, R.FLOOR AS floor, R.STATUS AS status, R.MEMO AS memo, RT.NAME AS typeName
+    	FROM ROOM R JOIN ROOM_TYPE RT ON R.TYPE_ID = RT.ID
+    	WHERE FLOOR = #{floor}
+    	ORDER BY R.ROOM_NUM ASC
 	</select>
 	<select id="selectAvailableRooms" parameterType="int" resultType="RoomDTO">
-	
+		SELECT R.ID AS id, R.ROOM_NUM AS roomNum, R.TYPE_ID AS typeId, R.FLOOR AS floor, R.STATUS AS status, R.MEMO AS memo, RT.NAME AS typeName
+		FROM ROOM R JOIN ROOM_TYPE RT ON R.TYPE_ID = RT.ID
+		WHERE R.TYPE_ID = #{roomTypeId} 
+		AND R.STATUS = '이용가능'
+		ORDER BY R.FLOOR DESC, R.ROOM_NUM ASC
 	</select>
-	<update id="updateRoomStatus" parameterType="">
-	
+	<update id="updateRoomStatus">
+		UPDATE ROOM
+    	SET STATUS = #{status}
+    	WHERE ID = #{roomId}
 	</update>
 </mapper>

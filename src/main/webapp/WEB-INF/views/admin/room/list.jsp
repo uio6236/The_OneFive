@@ -1,522 +1,380 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
-
     <title>The OneFive - 객실 현황</title>
-
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/admin.css">
     <link rel="stylesheet" href="/css/room.css">
+	<script src="/js/room.js"></script>
 </head>
-
 <body>
-
 <div class="admin-layout">
-
+    <!-- 관리자 사이드바 -->
     <jsp:include page="/WEB-INF/views/common/adminSidebar.jsp"/>
-
+    <!-- 관리자 메인 영역 -->
     <main class="admin-content">
-
+        <!-- 관리자 헤더 -->
         <jsp:include page="/WEB-INF/views/common/adminHeader.jsp"/>
-
         <section class="admin-main">
-
-            <!-- 상태 요약 -->
+            <!-- 객실 상태 요약 -->
             <section class="room-status-overview">
-
                 <div class="room-overview-card">
-
-                    <span>
-                        전체 객실
-                    </span>
-
-                    <strong>
-                        130
-                    </strong>
-
+                    <span>전체 객실</span>
+                    <strong>${totalCount}</strong>
                 </div>
-
-
                 <div class="room-overview-card">
-
-                    <span>
-                        이용 가능
-                    </span>
-
-                    <strong>
-                        32
-                    </strong>
-
+                    <span>이용 가능</span>
+                    <strong>${availableCount}</strong>
                 </div>
-
-
                 <div class="room-overview-card">
-
-                    <span>
-                        투숙 중
-                    </span>
-
-                    <strong>
-                        89
-                    </strong>
-
+                    <span>투숙 중</span>
+                    <strong>${occupiedCount}</strong>
                 </div>
-
-
                 <div class="room-overview-card">
-
-                    <span>
-                        청소 중
-                    </span>
-
-                    <strong>
-                        7
-                    </strong>
-
+                    <span>청소 중</span>
+                    <strong>${cleaningCount}</strong>
                 </div>
-
-
                 <div class="room-overview-card danger">
-
-                    <span>
-                        점검 중
-                    </span>
-
-                    <strong>
-                        2
-                    </strong>
-
+                    <span>점검 중</span>
+                    <strong>${inspectionCount}</strong>
                 </div>
-
             </section>
-
-
-            <!-- 검색 -->
-            <div class="filter-bar room-filter-bar">
-
-                <select class="form-control room-filter-select">
-
-                    <option>
+            <!-- 층 필터 -->
+            <form action="/admin/room" method="get" class="filter-bar room-filter-bar">
+                <select name="floor" class="form-control room-filter-select">
+                    <option value="0" ${selectedFloor == 0 ? 'selected' : ''}>
                         전체 층
                     </option>
-
-                    <option>
+                    <option value="2" ${selectedFloor == 2 ? 'selected' : ''}>
+                        2층
+                    </option>
+                    <option value="3" ${selectedFloor == 3 ? 'selected' : ''}>
                         3층
                     </option>
-
-                    <option>
+                    <option value="4" ${selectedFloor == 4 ? 'selected' : ''}>
                         4층
                     </option>
-
-                    <option>
+                    <option value="5" ${selectedFloor == 5 ? 'selected' : ''}>
                         5층
                     </option>
-
                 </select>
-
-
-                <select class="form-control room-filter-select">
-
-                    <option>
-                        전체 상태
-                    </option>
-
-                    <option>
-                        이용 가능
-                    </option>
-
-                    <option>
-                        투숙 중
-                    </option>
-
-                    <option>
-                        청소 중
-                    </option>
-
-                    <option>
-                        점검 중
-                    </option>
-
-                </select>
-
-
-                <div class="search-box">
-
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="객실 번호 검색"
-                    >
-
-                </div>
-
-
-                <button class="btn btn-dark">
+                <button type="submit" class="btn btn-dark">
                     조회
                 </button>
+            </form>
 
-            </div>
-
-
-            <!-- 층 -->
-            <section class="room-floor-section">
-
-                <div class="room-floor-title">
-
-                    <div>
-                        <h2>
-                            5층
-                        </h2>
-
-                        <span>
-                            총 10개 객실
-                        </span>
+            <!-- 조회 결과 없음 -->
+            <c:if test="${empty roomList}">
+                <div class="card">
+                    <div class="card-body">
+                        조회된 객실이 없습니다.
                     </div>
-
                 </div>
-
-
-                <div class="admin-room-grid">
-
-                    <article class="admin-room-card room-available-card">
-
-                        <div class="room-card-top">
-
-                            <span class="room-number">
-                                501
-                            </span>
-
-                            <span class="room-state">
-                                이용 가능
-                            </span>
-
-                        </div>
-
-
-                        <strong class="room-type-name">
-                            디럭스 더블
-                        </strong>
-
-
-                        <span class="room-current-guest">
-                            현재 투숙객 없음
-                        </span>
-
-
-                        <div class="room-card-actions">
-
-                            <a
-                                href="/admin/rooms/501"
-                                class="room-action-link"
-                            >
-                                세부 정보
-                            </a>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="admin-room-card room-occupied-card">
-
-                        <div class="room-card-top">
-
-                            <span class="room-number">
-                                502
-                            </span>
-
-                            <span class="room-state">
-                                투숙 중
-                            </span>
-
-                        </div>
-
-
-                        <strong class="room-type-name">
-                            디럭스 트윈
-                        </strong>
-
-
-                        <span class="room-current-guest">
-                            이준혁
-                        </span>
-
-
-                        <div class="room-card-actions">
-
-                            <a
-                                href="/admin/rooms/502"
-                                class="room-action-link"
-                            >
-                                세부 정보
-                            </a>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="admin-room-card room-cleaning-card">
-
-                        <div class="room-card-top">
-
-                            <span class="room-number">
-                                503
-                            </span>
-
-                            <span class="room-state">
-                                청소 중
-                            </span>
-
-                        </div>
-
-
-                        <strong class="room-type-name">
-                            프리미어 킹
-                        </strong>
-
-
-                        <span class="room-current-guest">
-                            담당자 김민지
-                        </span>
-
-
-                        <div class="room-card-actions">
-
-                            <a
-                                href="/admin/rooms/503"
-                                class="room-action-link"
-                            >
-                                세부 정보
-                            </a>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="admin-room-card room-inspection-card">
-
-                        <div class="room-card-top">
-
-                            <span class="room-number">
-                                504
-                            </span>
-
-                            <span class="room-state">
-                                점검 중
-                            </span>
-
-                        </div>
-
-
-                        <strong class="room-type-name">
-                            디럭스 더블
-                        </strong>
-
-
-                        <span class="room-current-guest">
-                            시설 점검
-                        </span>
-
-
-                        <div class="room-card-actions">
-
-                            <a
-                                href="/admin/rooms/504"
-                                class="room-action-link danger"
-                            >
-                                세부 정보
-                            </a>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="admin-room-card room-available-card">
-
-                        <div class="room-card-top">
-
-                            <span class="room-number">
-                                505
-                            </span>
-
-                            <span class="room-state">
-                                이용 가능
-                            </span>
-
-                        </div>
-
-
-                        <strong class="room-type-name">
-                            디럭스 더블
-                        </strong>
-
-
-                        <span class="room-current-guest">
-                            현재 투숙객 없음
-                        </span>
-
-
-                        <div class="room-card-actions">
-
-                            <a
-                                href="/admin/rooms/505"
-                                class="room-action-link"
-                            >
-                                세부 정보
-                            </a>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </section>
-
-
-            <!-- 4층 -->
-            <section class="room-floor-section">
-
-                <div class="room-floor-title">
-
-                    <div>
-                        <h2>
-                            4층
-                        </h2>
-
-                        <span>
-                            총 10개 객실
-                        </span>
-                    </div>
-
-                </div>
-
-
-                <div class="admin-room-grid">
-
-                    <article class="admin-room-card room-occupied-card">
-
-                        <div class="room-card-top">
-
-                            <span class="room-number">
-                                401
-                            </span>
-
-                            <span class="room-state">
-                                투숙 중
-                            </span>
-
-                        </div>
-
-                        <strong class="room-type-name">
-                            디럭스 트윈
-                        </strong>
-
-                        <span class="room-current-guest">
-                            박서연
-                        </span>
-
-                        <div class="room-card-actions">
-
-                            <a
-                                href="/admin/rooms/401"
-                                class="room-action-link"
-                            >
-                                세부 정보
-                            </a>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="admin-room-card room-available-card">
-
-                        <div class="room-card-top">
-
-                            <span class="room-number">
-                                402
-                            </span>
-
-                            <span class="room-state">
-                                이용 가능
-                            </span>
-
-                        </div>
-
-                        <strong class="room-type-name">
-                            디럭스 더블
-                        </strong>
-
-                        <span class="room-current-guest">
-                            현재 투숙객 없음
-                        </span>
-
-                        <div class="room-card-actions">
-
-                            <a
-                                href="/admin/rooms/402"
-                                class="room-action-link"
-                            >
-                                세부 정보
-                            </a>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="admin-room-card room-occupied-card">
-
-                        <div class="room-card-top">
-
-                            <span class="room-number">
-                                405
-                            </span>
-
-                            <span class="room-state">
-                                투숙 중
-                            </span>
-
-                        </div>
-
-                        <strong class="room-type-name">
-                            디럭스 더블
-                        </strong>
-
-                        <span class="room-current-guest">
-                            김우현
-                        </span>
-
-                        <div class="room-card-actions">
-
-                            <a
-                                href="/admin/rooms/405"
-                                class="room-action-link"
-                            >
-                                세부 정보
-                            </a>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </section>
-
-        </section>
-
-    </main>
-
-</div>
-
+            </c:if>
+
+			<div class="room-content-layout">
+				<div class="room-list-area">
+		            <!-- 객실 목록 -->
+		            <c:if test="${not empty roomList}">
+		                <!-- 5층 -->
+		                <c:if test="${selectedFloor == 0 || selectedFloor == 5}">
+		                    <section class="room-floor-section">
+		                        <div class="room-floor-title">
+		                            <div>
+		                                <h2>5층</h2>
+		                            </div>
+		                        </div>
+		                        <div class="admin-room-grid">
+		                            <c:forEach var="room" items="${roomList}">
+		                                <c:if test="${room.floor == 5}">
+		                                    <c:set var="roomClass" value="room-available-card"/>
+		                                    <c:if test="${room.status == '투숙중'}">
+		                                        <c:set var="roomClass" value="room-occupied-card"/>
+		                                    </c:if>
+		                                    <c:if test="${room.status == '청소중'}">
+		                                        <c:set var="roomClass" value="room-cleaning-card"/>
+		                                    </c:if>
+		                                    <c:if test="${room.status == '점검중'}">
+		                                        <c:set var="roomClass" value="room-inspection-card"/>
+		                                    </c:if>
+		                                    <article class="admin-room-card ${roomClass}">
+		                                        <div class="room-card-top">
+		                                            <span class="room-number">
+		                                                ${room.roomNum}
+		                                            </span>
+		                                            <span class="room-state">
+		                                                ${room.status}
+		                                            </span>
+		                                        </div>
+		                                        <strong class="room-type-name">
+		                                            ${room.typeName}
+		                                        </strong>
+		                                        <span class="room-current-guest">
+		                                            <c:choose>
+		                                                <c:when test="${room.status == '이용가능'}">현재 투숙객 없음</c:when>
+		                                                <c:when test="${room.status == '투숙중'}">현재 투숙 중</c:when>
+		                                                <c:when test="${room.status == '청소중'}">객실 청소 진행 중</c:when>
+		                                                <c:when test="${room.status == '점검중'}">시설 점검 중</c:when>
+		                                                <c:otherwise>상태 확인 필요</c:otherwise>
+		                                            </c:choose>
+		                                        </span>
+		                                        <c:if test="${not empty room.memo}">
+		                                            <span class="room-current-guest">
+		                                                ${room.memo}
+		                                            </span>
+		                                        </c:if>
+												<div class="room-card-actions">
+													<a href="/admin/room/${room.id}" class="room-action-link room-detail-link" data-room-id="${room.id}">
+													    세부 정보
+													</a>
+												</div>
+		                                    </article>
+		                                </c:if>
+		                            </c:forEach>
+		                        </div>
+		                    </section>
+		                </c:if>
+						
+		                <!-- 4층 -->
+		                <c:if test="${selectedFloor == 0 || selectedFloor == 4}">
+		                    <section class="room-floor-section">
+		                        <div class="room-floor-title">
+		                            <div>
+		                                <h2>4층</h2>
+		                            </div>
+		                        </div>
+		                        <div class="admin-room-grid">
+		                            <c:forEach var="room" items="${roomList}">
+		                                <c:if test="${room.floor == 4}">
+		                                    <c:set var="roomClass" value="room-available-card"/>
+		                                    <c:if test="${room.status == '투숙중'}">
+		                                        <c:set var="roomClass" value="room-occupied-card"/>
+		                                    </c:if>
+		                                    <c:if test="${room.status == '청소중'}">
+		                                        <c:set var="roomClass" value="room-cleaning-card"/>
+		                                    </c:if>
+		                                    <c:if test="${room.status == '점검중'}">
+		                                        <c:set var="roomClass" value="room-inspection-card"/>
+		                                    </c:if>
+											
+		                                    <article class="admin-room-card ${roomClass}">
+		                                        <div class="room-card-top">
+		                                            <span class="room-number">
+		                                                ${room.roomNum}
+		                                            </span>
+		                                            <span class="room-state">
+		                                                ${room.status}
+		                                            </span>
+		                                        </div>
+		                                        <strong class="room-type-name">
+		                                            ${room.typeName}
+		                                        </strong>
+		                                        <span class="room-current-guest">
+													<c:choose>
+													    <c:when test="${room.status == '이용가능'}">현재 투숙객 없음</c:when>
+													    <c:when test="${room.status == '투숙중'}">현재 투숙 중</c:when>
+													    <c:when test="${room.status == '청소중'}">객실 청소 진행 중</c:when>
+													    <c:when test="${room.status == '점검중'}">시설 점검 중</c:when>
+													    <c:otherwise>상태 확인 필요</c:otherwise>
+													</c:choose>
+		                                        </span>
+		                                        <c:if test="${not empty room.memo}">
+		                                            <span class="room-current-guest">
+		                                                ${room.memo}
+		                                            </span>
+		                                        </c:if>
+												<div class="room-card-actions">
+													<a href="/admin/room/${room.id}" class="room-action-link room-detail-link" data-room-id="${room.id}">
+													    세부 정보
+													</a>
+												</div>
+		                                    </article>
+		                                </c:if>
+		                            </c:forEach>
+		                        </div>
+		                    </section>
+		                </c:if>
+		
+		                <!-- 3층 -->
+		                <c:if test="${selectedFloor == 0 || selectedFloor == 3}">
+		                    <section class="room-floor-section">
+		                        <div class="room-floor-title">
+		                            <div>
+		                                <h2>3층</h2>
+		                            </div>
+		                        </div>
+		                        <div class="admin-room-grid">
+		                            <c:forEach var="room" items="${roomList}">
+		                                <c:if test="${room.floor == 3}">
+		                                    <c:set var="roomClass" value="room-available-card"/>
+		                                    <c:if test="${room.status == '투숙중'}">
+		                                        <c:set var="roomClass" value="room-occupied-card"/>
+		                                    </c:if>
+		                                    <c:if test="${room.status == '청소중'}">
+		                                        <c:set var="roomClass" value="room-cleaning-card"/>
+		                                    </c:if>
+		                                    <c:if test="${room.status == '점검중'}">
+		                                        <c:set var="roomClass" value="room-inspection-card"/>
+		                                    </c:if>
+		
+		                                    <article class="admin-room-card ${roomClass}">
+		                                        <div class="room-card-top">
+		                                            <span class="room-number">
+		                                                ${room.roomNum}
+		                                            </span>
+		                                            <span class="room-state">
+		                                                ${room.status}
+		                                            </span>
+		                                        </div>
+		                                        <strong class="room-type-name">
+		                                            ${room.typeName}
+		                                        </strong>
+		                                        <span class="room-current-guest">
+													<c:choose>
+													    <c:when test="${room.status == '이용가능'}">현재 투숙객 없음</c:when>
+													    <c:when test="${room.status == '투숙중'}">현재 투숙 중</c:when>
+													    <c:when test="${room.status == '청소중'}">객실 청소 진행 중</c:when>
+													    <c:when test="${room.status == '점검중'}">시설 점검 중</c:when>
+													    <c:otherwise>상태 확인 필요</c:otherwise>
+													</c:choose>
+		                                        </span>
+		                                        <c:if test="${not empty room.memo}">
+		                                            <span class="room-current-guest">
+		                                                ${room.memo}
+		                                            </span>
+		                                        </c:if>
+												<div class="room-card-actions">
+													<a href="/admin/room/${room.id}" class="room-action-link room-detail-link" data-room-id="${room.id}">
+													    세부 정보
+													</a>
+												</div>
+		                                    </article>
+		                                </c:if>
+		                            </c:forEach>
+		                        </div>
+		                    </section>
+		                </c:if>
+		
+		                <!-- 2층 -->
+		                <c:if test="${selectedFloor == 0 || selectedFloor == 2}">
+		                    <section class="room-floor-section">
+		                        <div class="room-floor-title">
+		                            <div>
+		                                <h2>2층</h2>
+		                            </div>
+		                        </div>
+		                        <div class="admin-room-grid">
+		                            <c:forEach var="room" items="${roomList}">
+		                                <c:if test="${room.floor == 2}">
+		                                    <c:set var="roomClass" value="room-available-card"/>
+		                                    <c:if test="${room.status == '투숙중'}">
+		                                        <c:set var="roomClass" value="room-occupied-card"/>
+		                                    </c:if>
+		                                    <c:if test="${room.status == '청소중'}">
+		                                        <c:set var="roomClass" value="room-cleaning-card"/>
+		                                    </c:if>
+		                                    <c:if test="${room.status == '점검중'}">
+		                                        <c:set var="roomClass" value="room-inspection-card"/>
+		                                    </c:if>
+		                                    <article class="admin-room-card ${roomClass}">
+		                                        <div class="room-card-top">
+		                                            <span class="room-number">
+		                                                ${room.roomNum}
+		                                            </span>
+		                                            <span class="room-state">
+		                                                ${room.status}
+		                                            </span>
+		                                        </div>
+		                                        <strong class="room-type-name">
+		                                            ${room.typeName}
+		                                        </strong>
+		                                        <span class="room-current-guest">
+													<c:choose>
+													    <c:when test="${room.status == '이용가능'}">현재 투숙객 없음</c:when>
+													    <c:when test="${room.status == '투숙중'}">현재 투숙 중</c:when>
+													    <c:when test="${room.status == '청소중'}">객실 청소 진행 중</c:when>
+													    <c:when test="${room.status == '점검중'}">시설 점검 중</c:when>
+													    <c:otherwise>상태 확인 필요</c:otherwise>
+													</c:choose>
+		                                        </span>
+		                                        <c:if test="${not empty room.memo}">
+		                                            <span class="room-current-guest">
+		                                                ${room.memo}
+		                                            </span>
+		                                        </c:if>
+		                                        <div class="room-card-actions">
+													<a href="/admin/room/${room.id}" class="room-action-link room-detail-link" data-room-id="${room.id}">
+													    세부 정보
+													</a>
+		                                        </div>
+		                                    </article>
+		                                </c:if>
+		                            </c:forEach>
+		                        </div>
+		                    </section>
+		                </c:if>
+		            </c:if>
+				</div>
+				<aside id="roomDetailPanel" class="room-detail-panel">
+				    <!-- 아무 객실도 선택하지 않았을 때 -->
+				    <div id="roomDetailEmpty" class="room-detail-empty">
+				        <div class="room-detail-empty-icon">▦</div>
+				        <h3>객실 상세 정보</h3>
+				        <p>
+				            객실의 세부 정보를 확인하려면<br>
+				            객실의 '세부 정보'를 선택하세요.
+				        </p>
+				    </div>
+				    <!-- 객실 선택 후 표시 -->
+				    <div id="roomDetailContent"
+				         class="room-detail-content">
+				        <div class="room-detail-header">
+				            <div>
+				                <span id="detailFloor" class="room-detail-floor"></span>
+				                <h2 id="detailRoomNum">객실 정보</h2>
+				                <p id="detailRoomType"></p>
+				            </div>
+				            <span id="detailStatus" class="room-detail-status"></span>
+				        </div>
+
+				        <div class="room-detail-info-grid">
+				            <div class="room-detail-info-item">
+				                <span>객실 번호</span>
+				                <strong id="detailRoomNumber"></strong>
+				            </div>
+				            <div class="room-detail-info-item">
+				                <span>객실 타입</span>
+				                <strong id="detailTypeName"></strong>
+				            </div>
+				            <div class="room-detail-info-item">
+				                <span>층</span>
+				                <strong id="detailFloorInfo"></strong>
+				            </div>
+				            <div class="room-detail-info-item">
+				                <span>현재 상태</span>
+				                <strong id="detailStatusText"></strong>
+				            </div>
+				        </div>
+
+				        <div class="room-detail-memo">
+				            <span>객실 메모</span>
+				            <p id="detailMemo">등록된 메모가 없습니다.</p>
+				        </div>
+				        <div class="room-detail-actions">
+				            <button type="button" class="btn btn-primary">
+				                객실 정비
+				            </button>
+				        </div>
+				    </div>
+				</aside>
+			</div>
+		</section> 
+	</main>
+</div> 
 </body>
 </html>

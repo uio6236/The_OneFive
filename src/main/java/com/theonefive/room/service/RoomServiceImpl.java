@@ -27,9 +27,9 @@ public class RoomServiceImpl implements RoomService{
 	}
 
 	@Override
-	public List<RoomDTO> searchRooms(int floor, String status) {
-		// 층/상태 조건 조회
-		return roomMapper.selectRoomByFilter(floor, status);
+	public List<RoomDTO> getRoomByFloor(int floor) {
+		// 층별 조회
+		return roomMapper.selectRoomByFloor(floor);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class RoomServiceImpl implements RoomService{
 	}
 
 	@Override
-	public boolean changeroomStatus(int roomId, String status) {
+	public boolean changeRoomStatus(int roomId, String status) {
 		// 객실 상태 변경
 		return roomMapper.updateRoomStatus(roomId, status) > 0;
 	}

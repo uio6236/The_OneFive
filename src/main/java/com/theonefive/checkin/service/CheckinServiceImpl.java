@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class CheckinServiceImpl implements CheckinService {
 	private final CheckinMapper checkinMapper;
 	private final RoomMapper roomMapper;
+	// private final HousekeepingMapper housekeepingMapper;
 	
 	@Override
 	public List<CheckinDTO> getTodayCheckinList() {
@@ -45,7 +46,8 @@ public class CheckinServiceImpl implements CheckinService {
 	public boolean checkout(CheckinDTO checkin) {
 		// 체크아웃 처리
 		int result = checkinMapper.updateCheckout(checkin);
-		roomMapper.updateRoomStatus(checkin.getRoomId(), "투숙중");
+		roomMapper.updateRoomStatus(checkin.getRoomId(), "청소중");
+		// housekeepingMapper.updateStatus(checkin.getRoomId(), "청소대기");
 		return result > 0;
 	}
 }

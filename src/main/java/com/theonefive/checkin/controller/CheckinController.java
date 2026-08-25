@@ -54,7 +54,7 @@ public class CheckinController {
 	}
 	
 	// 체크아웃
-	@PostMapping
+	@PostMapping("/checkout")
 	public String checkout(CheckinDTO checkin) {
 		checkinService.checkout(checkin);
 		return "redirect:/admin/checkin";
