@@ -22,28 +22,40 @@
         <jsp:include page="/WEB-INF/views/common/adminHeader.jsp"/>
         <section class="admin-main">
             <!-- 객실 상태 요약 -->
-            <section class="room-status-overview">
-                <div class="room-overview-card">
-                    <span>전체 객실</span>
-                    <strong>${totalCount}</strong>
-                </div>
-                <div class="room-overview-card">
-                    <span>이용 가능</span>
-                    <strong>${availableCount}</strong>
-                </div>
-                <div class="room-overview-card">
-                    <span>투숙 중</span>
-                    <strong>${occupiedCount}</strong>
-                </div>
-                <div class="room-overview-card">
-                    <span>청소 중</span>
-                    <strong>${cleaningCount}</strong>
-                </div>
-                <div class="room-overview-card danger">
-                    <span>점검 중</span>
-                    <strong>${inspectionCount}</strong>
-                </div>
-            </section>
+			<section class="room-status-overview">
+			    <div class="room-overview-card">
+			        <div class="room-overview-line available"></div>
+			        <div class="room-overview-content">
+			            <span class="room-overview-label">이용가능 (Clean)</span>
+			            <strong>${availableCount} <small>객실</small></strong>
+			        </div>
+			        <span class="room-overview-rate">${availableRate}%</span>
+			    </div>
+			    <div class="room-overview-card">
+			        <div class="room-overview-line occupied"></div>
+			        <div class="room-overview-content">
+			            <span class="room-overview-label">투숙중 (Occupied)</span>
+			            <strong>${occupiedCount} <small>객실</small></strong>
+			        </div>
+			        <span class="room-overview-rate">${occupiedRate}%</span>
+			    </div>
+			    <div class="room-overview-card">
+			        <div class="room-overview-line cleaning"></div>
+			        <div class="room-overview-content">
+			            <span class="room-overview-label">청소중 (Dirty)</span>
+			            <strong>${cleaningCount} <small>객실</small></strong>
+			        </div>
+			        <span class="room-overview-rate">${cleaningRate}%</span>
+			    </div>
+			    <div class="room-overview-card">
+			        <div class="room-overview-line inspection"></div>
+			        <div class="room-overview-content">
+			            <span class="room-overview-label">점검중 (Out of Order)</span>
+			            <strong>${inspectionCount} <small>객실</small></strong>
+			        </div>
+			        <span class="room-overview-rate danger">${inspectionRate}%</span>
+			    </div>
+			</section>
             <!-- 층 필터 -->
             <form action="/admin/room" method="get" class="filter-bar room-filter-bar">
                 <select name="floor" class="form-control room-filter-select">
@@ -115,19 +127,14 @@
 		                                            ${room.typeName}
 		                                        </strong>
 		                                        <span class="room-current-guest">
-		                                            <c:choose>
-		                                                <c:when test="${room.status == '이용가능'}">현재 투숙객 없음</c:when>
-		                                                <c:when test="${room.status == '투숙중'}">현재 투숙 중</c:when>
-		                                                <c:when test="${room.status == '청소중'}">객실 청소 진행 중</c:when>
-		                                                <c:when test="${room.status == '점검중'}">시설 점검 중</c:when>
-		                                                <c:otherwise>상태 확인 필요</c:otherwise>
-		                                            </c:choose>
+													<c:choose>
+													    <c:when test="${room.status == '이용가능'}">공실</c:when>
+													    <c:when test="${room.status == '투숙중'}">투숙객: ${room.guestName}</c:when>
+													    <c:when test="${room.status == '청소중'}">청소중</c:when>
+													    <c:when test="${room.status == '점검중'}">점검중</c:when>
+													    <c:otherwise>상태 확인 필요</c:otherwise>
+													</c:choose>
 		                                        </span>
-		                                        <c:if test="${not empty room.memo}">
-		                                            <span class="room-current-guest">
-		                                                ${room.memo}
-		                                            </span>
-		                                        </c:if>
 												<div class="room-card-actions">
 													<a href="/admin/room/${room.id}" class="room-action-link room-detail-link" data-room-id="${room.id}">
 													    세부 정보
@@ -176,18 +183,13 @@
 		                                        </strong>
 		                                        <span class="room-current-guest">
 													<c:choose>
-													    <c:when test="${room.status == '이용가능'}">현재 투숙객 없음</c:when>
-													    <c:when test="${room.status == '투숙중'}">현재 투숙 중</c:when>
-													    <c:when test="${room.status == '청소중'}">객실 청소 진행 중</c:when>
-													    <c:when test="${room.status == '점검중'}">시설 점검 중</c:when>
+													    <c:when test="${room.status == '이용가능'}">공실</c:when>
+													    <c:when test="${room.status == '투숙중'}">투숙객: ${room.guestName}</c:when>
+													    <c:when test="${room.status == '청소중'}">청소중</c:when>
+													    <c:when test="${room.status == '점검중'}">점검중</c:when>
 													    <c:otherwise>상태 확인 필요</c:otherwise>
 													</c:choose>
 		                                        </span>
-		                                        <c:if test="${not empty room.memo}">
-		                                            <span class="room-current-guest">
-		                                                ${room.memo}
-		                                            </span>
-		                                        </c:if>
 												<div class="room-card-actions">
 													<a href="/admin/room/${room.id}" class="room-action-link room-detail-link" data-room-id="${room.id}">
 													    세부 정보
@@ -236,18 +238,13 @@
 		                                        </strong>
 		                                        <span class="room-current-guest">
 													<c:choose>
-													    <c:when test="${room.status == '이용가능'}">현재 투숙객 없음</c:when>
-													    <c:when test="${room.status == '투숙중'}">현재 투숙 중</c:when>
-													    <c:when test="${room.status == '청소중'}">객실 청소 진행 중</c:when>
-													    <c:when test="${room.status == '점검중'}">시설 점검 중</c:when>
+													    <c:when test="${room.status == '이용가능'}">공실</c:when>
+													    <c:when test="${room.status == '투숙중'}">투숙객: ${room.guestName}</c:when>
+													    <c:when test="${room.status == '청소중'}">청소중</c:when>
+													    <c:when test="${room.status == '점검중'}">점검중</c:when>
 													    <c:otherwise>상태 확인 필요</c:otherwise>
 													</c:choose>
 		                                        </span>
-		                                        <c:if test="${not empty room.memo}">
-		                                            <span class="room-current-guest">
-		                                                ${room.memo}
-		                                            </span>
-		                                        </c:if>
 												<div class="room-card-actions">
 													<a href="/admin/room/${room.id}" class="room-action-link room-detail-link" data-room-id="${room.id}">
 													    세부 정보
@@ -295,18 +292,13 @@
 		                                        </strong>
 		                                        <span class="room-current-guest">
 													<c:choose>
-													    <c:when test="${room.status == '이용가능'}">현재 투숙객 없음</c:when>
-													    <c:when test="${room.status == '투숙중'}">현재 투숙 중</c:when>
-													    <c:when test="${room.status == '청소중'}">객실 청소 진행 중</c:when>
-													    <c:when test="${room.status == '점검중'}">시설 점검 중</c:when>
+													    <c:when test="${room.status == '이용가능'}">공실</c:when>
+													    <c:when test="${room.status == '투숙중'}">투숙객: ${room.guestName}</c:when>
+													    <c:when test="${room.status == '청소중'}">청소중</c:when>
+													    <c:when test="${room.status == '점검중'}">점검중</c:when>
 													    <c:otherwise>상태 확인 필요</c:otherwise>
 													</c:choose>
 		                                        </span>
-		                                        <c:if test="${not empty room.memo}">
-		                                            <span class="room-current-guest">
-		                                                ${room.memo}
-		                                            </span>
-		                                        </c:if>
 		                                        <div class="room-card-actions">
 													<a href="/admin/room/${room.id}" class="room-action-link room-detail-link" data-room-id="${room.id}">
 													    세부 정보

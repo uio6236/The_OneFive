@@ -20,4 +20,5 @@ public class RoomDTO {
 	private String memo; // 객실 관련 메모
 	
 	private String typeName; // 객실 타입명
+	private String guestName; // 현재 투숙객 이름
 }

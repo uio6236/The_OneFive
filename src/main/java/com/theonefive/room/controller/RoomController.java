@@ -50,7 +50,25 @@ public class RoomController {
 		model.addAttribute("occupiedCount", occupiedCount);
 		model.addAttribute("cleaningCount", cleaningCount);
 		model.addAttribute("inspectionCount", inspectionCount);
+		
+		int totalCount = availableCount + occupiedCount + cleaningCount + inspectionCount;
+		int availableRate = 0;
+		int occupiedRate = 0;
+		int cleaningRate = 0;
+		int inspectionRate = 0;
 
+		if (totalCount > 0) {
+		    availableRate = (int) Math.round(availableCount * 100.0 / totalCount);
+		    occupiedRate = (int) Math.round(occupiedCount * 100.0 / totalCount);
+		    cleaningRate = (int) Math.round(cleaningCount * 100.0 / totalCount);
+		    inspectionRate = (int) Math.round(inspectionCount * 100.0 / totalCount);
+		}
+
+		model.addAttribute("availableRate", availableRate);
+		model.addAttribute("occupiedRate", occupiedRate);
+		model.addAttribute("cleaningRate", cleaningRate);
+		model.addAttribute("inspectionRate", inspectionRate);
+		
 		model.addAttribute("pageTitle", "객실 현황");
 		model.addAttribute("pageDescription", "호텔 전체 객실 상태 확인");
 		
