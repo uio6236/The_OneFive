@@ -1,9 +1,11 @@
 package com.theonefive.reservation.service;
 
-import com.theonefive.reservation.model.dto.ReservationDTO;
-import com.theonefive.reservation.model.dto.ReservationViewDTO;
-
 import java.util.List;
+
+import com.theonefive.reservation.model.dto.ReservationDTO;
+import com.theonefive.reservation.model.dto.ReservationSearchDTO;
+import com.theonefive.reservation.model.dto.ReservationViewDTO;
+import com.theonefive.reservation.model.dto.RoomTypeListDTO;
 
 public interface ReservationService {
 
@@ -15,10 +17,12 @@ public interface ReservationService {
 
     void cancelReservation(Long id);
 
-    List<ReservationViewDTO> findReservationList();
+    List<ReservationViewDTO> findReservationList(ReservationSearchDTO condition);
     
     ReservationViewDTO findDetailById(Long id);
     
     List<ReservationViewDTO> findByGuestId(Long guestId);
+    
+    List<RoomTypeListDTO> findRoomTypeList();
 
 }

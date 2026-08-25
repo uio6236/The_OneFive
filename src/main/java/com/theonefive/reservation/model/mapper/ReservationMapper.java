@@ -1,10 +1,13 @@
 package com.theonefive.reservation.model.mapper;
 
-import com.theonefive.reservation.model.dto.ReservationDTO;
-import com.theonefive.reservation.model.dto.ReservationViewDTO;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
+import com.theonefive.reservation.model.dto.ReservationDTO;
+import com.theonefive.reservation.model.dto.ReservationSearchDTO;
+import com.theonefive.reservation.model.dto.ReservationViewDTO;
+import com.theonefive.reservation.model.dto.RoomTypeListDTO;
 
 @Mapper
 public interface ReservationMapper {
@@ -22,11 +25,14 @@ public interface ReservationMapper {
     int cancelReservation(Long id);
 
     // 관리자 예약 목록 조회 (CUSTOMER, ROOM, ROOM_TYPE join)
-    List<ReservationViewDTO> findReservationList();
+    List<ReservationViewDTO> findReservationList(ReservationSearchDTO condition);
 
     // 예약 상세 1건 조회 (join 포함, 우측 패널용)
     ReservationViewDTO findDetailById(Long id);
 
     // 특정 고객 한 명의 예약 목록 조회 (마이페이지용)
     List<ReservationViewDTO> findByGuestId(Long guestId);
+    
+    // 방 정보
+    List<RoomTypeListDTO> findRoomTypeList();
 }

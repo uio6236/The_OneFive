@@ -1,14 +1,21 @@
 package com.theonefive.reservation.controller;
 
-import com.theonefive.reservation.model.dto.ReservationDTO;
-import com.theonefive.reservation.model.dto.ReservationViewDTO;
-import com.theonefive.reservation.service.ReservationService;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
+import com.theonefive.reservation.model.dto.ReservationDTO;
+import com.theonefive.reservation.model.dto.ReservationSearchDTO;
+import com.theonefive.reservation.model.dto.ReservationViewDTO;
+import com.theonefive.reservation.service.ReservationService;
 
 /*
  * 관리자 예약 관리 화면 이동, 등록/취소 처리를 담당할 컨트롤러
@@ -27,9 +34,10 @@ public class AdminReservationController {
     // 화면 이동 요청
     // URL : [GET] /admin/reservations
     @GetMapping
-    public String list(Model model) {
-        List<ReservationViewDTO> reservationList = service.findReservationList();
+    public String list(@ModelAttribute ReservationSearchDTO condition, Model model) {
+        List<ReservationViewDTO> reservationList = service.findReservationList(condition);
         model.addAttribute("reservationList", reservationList);
+        model.addAttribute("condition", condition);   // 검색값 유지용
         return "admin/reservation/list";
     }
 

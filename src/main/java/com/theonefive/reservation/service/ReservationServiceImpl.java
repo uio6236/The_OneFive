@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.theonefive.reservation.model.dto.ReservationDTO;
+import com.theonefive.reservation.model.dto.ReservationSearchDTO;
 import com.theonefive.reservation.model.dto.ReservationViewDTO;
+import com.theonefive.reservation.model.dto.RoomTypeListDTO;
 import com.theonefive.reservation.model.mapper.ReservationMapper;
 
 @Service
@@ -50,10 +52,9 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public List<ReservationViewDTO> findReservationList() {
-		return reservationMapper.findReservationList();
+	public List<ReservationViewDTO> findReservationList(ReservationSearchDTO condition) {
+	    return reservationMapper.findReservationList(condition);
 	}
-
 	@Override
 	public List<ReservationViewDTO> findByGuestId(Long guestId) {
 		return reservationMapper.findByGuestId(guestId);
@@ -64,6 +65,9 @@ public class ReservationServiceImpl implements ReservationService {
 		return reservationMapper.findDetailById(id);
 	}
 	
-    
+	@Override
+	public List<RoomTypeListDTO> findRoomTypeList() {
+	    return reservationMapper.findRoomTypeList();
+	}
 
 }

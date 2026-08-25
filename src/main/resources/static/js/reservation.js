@@ -57,5 +57,15 @@ document.addEventListener('DOMContentLoaded', function () {
         var dd = String(d.getDate()).padStart(2, '0');
         return yyyy + '.' + mm + '.' + dd;
     }
-
+	
 });
+
+function openCreateModal() {
+    document.querySelector('#createModalBackdrop').style.display = 'block';
+    document.querySelector('#createModal').style.display = 'block';
+}
+
+function closeCreateModal() {
+    document.querySelector('#createModalBackdrop').style.display = 'none';
+    document.querySelector('#createModal').style.display = 'none';
+}

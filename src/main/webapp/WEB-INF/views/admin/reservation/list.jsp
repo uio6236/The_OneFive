@@ -41,64 +41,84 @@
                         고객 예약정보를 조회하고 관리합니다.
                     </p>
                 </div>
+				<!-- 새 예약 등록 모달 -->
+				<div class="modal-backdrop" id="createModalBackdrop" style="display:none;"></div>
 
+				<div class="modal-box" id="createModal" style="display:none;">
 
-                <a
-                    href="/admin/reservations/new"
-                    class="btn btn-primary"
-                >
-                    + 새 예약 등록
-                </a>
+				    <h3>새 예약 등록</h3>
 
-            </div>
+				    <form method="post" action="${pageContext.request.contextPath}/admin/reservations">
 
+				        <label>고객 ID</label>
+				        <input type="number" name="guestId" class="form-control" required>
+				        <!-- 지금은 ID 직접 입력, 시간 되면 고객검색으로 교체 -->
 
-            <!-- 검색 : 지금은 화면만, 실제 검색 기능은 나중에 연결 예정 -->
-            <div class="filter-bar reservation-filter">
+				        <label>객실 타입 ID</label>
+				        <input type="number" name="roomTypeId" class="form-control" required>
 
-                <div class="search-box">
+				        <label>객실 ID (선택, 미배정 가능)</label>
+				        <input type="number" name="roomId" class="form-control">
 
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="예약번호 또는 고객명을 검색하세요"
-                    >
+				        <label>체크인</label>
+				        <input type="date" name="checkin" class="form-control" required>
 
-                </div>
+				        <label>체크아웃</label>
+				        <input type="date" name="checkout" class="form-control" required>
 
+				        <label>인원</label>
+				        <input type="number" name="guestCount" class="form-control" value="2" required>
 
-                <select class="form-control reservation-filter-select">
+				        <label>객실 요금</label>
+				        <input type="number" name="roomAmount" class="form-control" required>
 
-                    <option value="">
-                        전체 상태
-                    </option>
+				        <label>결제 수단</label>
+				        <select name="paymentMethod" class="form-control">
+				            <option value="CARD">신용카드</option>
+				            <option value="TRANSFER">계좌이체</option>
+				        </select>
 
-                    <option value="예약확정">
-                        예약 확정
-                    </option>
+				        <label>요청사항</label>
+				        <textarea name="request" class="form-control"></textarea>
 
-                    <option value="예약취소">
-                        예약 취소
-                    </option>
+				        <div class="modal-buttons">
+				            <button type="button" class="btn btn-outline" onclick="closeCreateModal()">취소</button>
+				            <button type="submit" class="btn btn-primary">등록</button>
+				        </div>
 
-                    <option value="이용완료">
-                        이용 완료
-                    </option>
+				    </form>
 
-                </select>
+				</div>
 
-
-                <input
-                    type="date"
-                    class="form-control reservation-date"
-                >
-
-
-                <button class="btn btn-dark">
-                    검색
-                </button>
+				<button type="button" class="btn btn-primary" onclick="openCreateModal()">+ 새 예약 등록</button>
 
             </div>
+
+
+			<form method="get" action="${pageContext.request.contextPath}/admin/reservations">
+
+			    <div class="filter-bar reservation-filter">
+
+			        <div class="search-box">
+			            <input type="text" name="keyword" class="form-control"
+			                   placeholder="예약번호 또는 고객명을 검색하세요" value="${condition.keyword}">
+			        </div>
+
+			        <select name="status" class="form-control reservation-filter-select">
+			            <option value="" ${empty condition.status ? 'selected' : ''}>전체 상태</option>
+			            <option value="예약확정" ${condition.status == '예약확정' ? 'selected' : ''}>예약 확정</option>
+			            <option value="예약취소" ${condition.status == '예약취소' ? 'selected' : ''}>예약 취소</option>
+			            <option value="이용완료" ${condition.status == '이용완료' ? 'selected' : ''}>이용 완료</option>
+			        </select>
+
+			        <input type="date" name="checkinDate" class="form-control reservation-date"
+			               value="${condition.checkinDate}">
+
+			        <button type="submit" class="btn btn-dark">검색</button>
+
+			    </div>
+
+			</form>
 
 
             <!-- 예약 목록 + 우측 상세패널 -->
