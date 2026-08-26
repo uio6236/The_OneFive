@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!--
 	실제 기능 연결 때는 로그인한 계정 유형에 따라 이동 경로를 나눠야 함.
 	CUSTOMER
@@ -20,15 +20,10 @@
 
     <title>The OneFive - 로그인</title>
 
-    <link
-        rel="stylesheet"
-        href="/css/common.css"
-    >
+    <link rel="stylesheet" href="/css/common.css">
 
-    <link
-        rel="stylesheet"
-        href="/css/customer.css"
-    >
+    <link rel="stylesheet" href="/css/customer.css">
+	
 </head>
 
 <body>
@@ -41,7 +36,6 @@
         <div class="auth-brand-overlay">
 
             <a href="/" class="auth-logo">
-
                 <span class="auth-logo-icon">
                     ▣
                 </span>
@@ -151,49 +145,28 @@
             </div>
 
 
-            <form
-                action="/login"
-                method="post"
-            >
+            <form action="/login" method="post">
 
                 <div class="form-group">
 
-                    <label
-                        for="loginId"
-                        class="form-label"
-                    >
+                    <label for="loginId" class="form-label">
                         아이디
                     </label>
 
-                    <input
-                        type="text"
-                        id="loginId"
-                        name="loginId"
-                        class="form-control"
-                        placeholder="아이디를 입력하세요"
-                        required
-                    >
+                    <input type="text" id="loginId" name="loginId" 
+					class="form-control" placeholder="아이디를 입력하세요" required />
 
                 </div>
 
 
                 <div class="form-group">
 
-                    <label
-                        for="password"
-                        class="form-label"
-                    >
+                    <label for="password" class="form-label">
                         비밀번호
                     </label>
 
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        class="form-control"
-                        placeholder="비밀번호를 입력하세요"
-                        required
-                    >
+                    <input type="password" id="password" name="password"
+					 class="form-control" placeholder="비밀번호를 입력하세요" required>
 
                 </div>
 
@@ -201,31 +174,18 @@
                 <div class="login-option-row">
 
                     <label class="login-remember">
-
-                        <input
-                            type="checkbox"
-                            name="remember"
-                        >
-
+                        <input type="checkbox" name="remember">
                         로그인 상태 유지
-
                     </label>
 
-
-                    <a
-                        href="/password/reset"
-                        class="text-link"
-                    >
-                        비밀번호 재설정
-                    </a>
+					<a href="/password/reset" class="text-link"> 아이디 찾기 </a>
+					
+                    <a href="/password/reset" class="text-link"> 비밀번호 찾기 </a>
 
                 </div>
 
 
-                <button
-                    type="submit"
-                    class="btn btn-primary auth-submit"
-                >
+                <button type="submit" class="btn btn-primary auth-submit">
                     로그인
                 </button>
 
@@ -235,11 +195,11 @@
             <div class="auth-bottom-link">
 
                 <span>
-                    계정을 잊으셨나요?
+                    계정이 없으신가요?
                 </span>
 
                 <a href="/customer/signup">
-                    고객센터 문의
+                    회원 가입
                 </a>
 
             </div>

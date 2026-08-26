@@ -128,6 +128,22 @@
     background: #f7f9fc;
 }
 
+/* 메세지가 강제로 화면에 표시되도록 설정 */
+.form-tip {
+    display: block !important;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* 오류 메세지 (빨간색) */
+.form-tip-error {
+    color: #ff4d4f !important;
+}
+
+/* 통과 메세지 (초록색) */
+.form-tip-ok {
+    color: #52c41a !important;
+}
 
 /* ---------- 왼쪽 브랜드 ---------- */
 
