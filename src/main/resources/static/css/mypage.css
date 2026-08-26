@@ -1,0 +1,151 @@
+/* 관리자 마이페이지 전용 스타일 */
+
+.mypage-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.mypage-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+}
+
+/* 왼쪽 - 프로필 카드 */
+.mypage-profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+}
+
+.mypage-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 700;
+    border: 3px solid var(--blue-light);
+    margin-bottom: 8px;
+}
+
+.mypage-profile-card h2 {
+    font-size: 20px;
+    margin: 4px 0 0;
+}
+
+.mypage-profile-card .mypage-position {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin: 0 0 12px;
+}
+
+/* 오른쪽 - 정보/비밀번호/계정작업을 담는 컬럼 */
+.mypage-right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* 카드 안 섹션 타이틀 (정보수정 버튼 포함) */
+.mypage-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.mypage-section-header h3 {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* 폼 2단 그리드 */
+.mypage-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 20px;
+}
+
+.mypage-form-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.mypage-form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--surface);
+    box-sizing: border-box;
+}
+
+.mypage-form-group input:disabled,
+.mypage-form-group input[readonly] {
+    background: var(--background);
+    color: var(--text-muted);
+}
+
+.mypage-form-group input:focus {
+    outline: none;
+    border-color: var(--blue);
+}
+
+/* 비밀번호 변경 카드는 세로 1단 */
+.mypage-password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mypage-submit-row {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* 계정 작업 카드 */
+.mypage-account-actions p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin: 0 0 16px;
+}
+
+/* 안내 메시지 */
+.mypage-message {
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.mypage-message.success {
+    background: var(--blue-light);
+    color: var(--navy-light);
+}
+
+.mypage-message.error {
+    background: #fdecec;
+    color: var(--danger);
+}
+
+@media (max-width: 900px) {
+    .mypage-layout {
+        grid-template-columns: 1fr;
+    }
+}
