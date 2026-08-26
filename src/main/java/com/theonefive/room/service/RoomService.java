@@ -16,7 +16,4 @@ public interface RoomService {
 	
 	// 체크인 가능 객실 조회
 	List<RoomDTO> getAvailableRooms(int roomTypeId);
-	
-	// 객실 상태 변경
-	boolean changeRoomStatus(int roomId, String status);
 }

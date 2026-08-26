@@ -45,7 +45,7 @@ public class RoomController {
 		model.addAttribute("roomList", roomList);
 		model.addAttribute("selectedFloor", floor);
 		
-		model.addAttribute("totalCount", allRoomList.size());
+		// model.addAttribute("totalCount", allRoomList.size());
 		model.addAttribute("availableCount", availableCount);
 		model.addAttribute("occupiedCount", occupiedCount);
 		model.addAttribute("cleaningCount", cleaningCount);

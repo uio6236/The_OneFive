@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.theonefive.checkin.model.dto.CheckinDTO;
 import com.theonefive.checkin.service.CheckinService;
@@ -31,19 +32,17 @@ public class CheckinController {
 		model.addAttribute("checkinList", checkinList);
 		model.addAttribute("checkoutList", checkoutList);
 		
+		model.addAttribute("pageTitle", "체크인 / 체크아웃");
+		model.addAttribute("pageDescription", "금일 객실 입퇴실 처리 및 신속 체크인을 지원합니다");
+		
 		return "admin/checkin/list";
 	}
 	
 	// 체크인 상세
 	@GetMapping("/detail")
-	public String checkinDetail(@RequestParam int reservationId,
-								Model model) {
-		CheckinDTO checkin = checkinService.getCheckinDetail(reservationId);
-		List<RoomDTO> roomList = roomService.getAvailableRooms(1); //roomTypeId
-		model.addAttribute("checkin", checkin);
-		model.addAttribute("availableRoomList", roomList);
-		
-		return "admin/checkin/detail";
+	@ResponseBody
+	public CheckinDTO checkinDetail(@RequestParam int reservationId) {
+		return checkinService.getCheckinDetail(reservationId);
 	}
 	
 	// 체크인

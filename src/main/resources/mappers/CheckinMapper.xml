@@ -4,22 +4,18 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.theonefive.checkin.model.mapper.CheckinMapper">
 	<select id="selectTodayCheckinList" resultType="CheckinDTO">
-		SELECT R.ID AS reservationId, R.CODE AS reservationCode, R.GUEST_ID AS guestId, R.ROOM_ID AS roomId, C.NAME AS guestName, R.GUEST_COUNT AS guestCount, R.CHECKIN AS checkin, R.CHECKOUT AS checkout, RT.NAME AS roomTypeName, RM.ROOM_NUM AS roomNum, R.REQUEST AS memo
+		SELECT R.ID AS reservationId, R.CODE AS reservationCode, R.GUEST_ID AS guestId, R.ROOM_ID AS roomId, R.ROOM_TYPE_ID AS roomTypeId, C.NAME AS guestName, R.GUEST_COUNT AS guestCount, R.CHECKIN AS checkinTime, R.CHECKOUT AS checkoutTime, RT.NAME AS roomTypeName, RM.ROOM_NUM AS roomNum, RM.STATUS AS roomStatus, R.REQUEST AS memo
 		FROM RESERVATION R
 		JOIN CUSTOMER C ON R.GUEST_ID = C.ID
 		JOIN ROOM_TYPE RT ON R.ROOM_TYPE_ID = RT.ID
 		LEFT JOIN ROOM RM ON R.ROOM_ID = RM.ID
 		WHERE TRUNC(R.CHECKIN) = TRUNC(SYSDATE)
-		AND R.STATUS = '예약완료'
-		AND NOT EXISTS (
-			SELECT 1
-			FROM CHECKIN_STATUS CS
-			WHERE CS.RESERVATION_ID = R.ID
-		)
+		AND R.STATUS = '예약확정'
+		AND NOT EXISTS (SELECT 1 FROM CHECKIN_STATUS CS WHERE CS.RESERVATION_ID = R.ID)
 		ORDER BY R.CHECKIN ASC
 	</select>
 	<select id="selectTodayCheckoutList" resultType="CheckinDTO">
-		SELECT CS.ID AS id, CS.RESERVATION_ID AS reservationId, CS.GUEST_ID AS guestId, CS.ROOM_ID AS roomId, CS.CHECKIN AS checkin, CS.CHECKOUT AS checkout, CS.KEY_TYPE AS keyType, CS.CHECKIN_EMPLOYEE AS checkinEmployee, CS.CHECKOUT_EMPLOYEE AS checkoutEmployee, CS.MEMO AS memo, C.NAME AS guestName, R.CODE AS reservationCode, RM.ROOM_NUM AS roomNum, RT.NAME AS roomTypeName, R.GUEST_COUNT AS guestCount
+		SELECT CS.ID AS id, CS.RESERVATION_ID AS reservationId, CS.GUEST_ID AS guestId, CS.ROOM_ID AS roomId, R.ROOM_TYPE_ID AS roomTypeId, CS.CHECKIN AS checkinTime, CS.CHECKOUT AS checkoutTime, CS.KEY_TYPE AS keyType, CS.CHECKIN_EMPLOYEE AS checkinEmployee, CS.CHECKOUT_EMPLOYEE AS checkoutEmployee, CS.MEMO AS memo, C.NAME AS guestName, R.CODE AS reservationCode, RM.ROOM_NUM AS roomNum, RM.STATUS AS roomStatus, RT.NAME AS roomTypeName, R.GUEST_COUNT AS guestCount
 		FROM CHECKIN_STATUS CS
 		JOIN RESERVATION R ON CS.RESERVATION_ID = R.ID
 		JOIN CUSTOMER C ON CS.GUEST_ID = C.ID
@@ -30,7 +26,7 @@
 		ORDER BY R.CHECKOUT ASC
 	</select>
 	<select id="selectCheckinDetail" parameterType="int" resultType="CheckinDTO">
-		SELECT CS.ID AS id, R.ID AS reservationId, R.CODE AS reservationCode, R.GUEST_ID AS guestId, NVL(CS.ROOM_ID, R.ROOM_ID) AS roomId, C.NAME AS guestName, R.GUEST_COUNT AS guestCount, R.CHECKIN AS checkin, R.CHECKOUT AS checkout, RT.NAME AS roomTypeName, RM.ROOM_NUM AS roomNum, CS.KEY_TYPE AS keyType, CS.CHECKIN_EMPLOYEE AS checkinEmployee, CS.CHECKOUT_EMPLOYEE AS checkoutEmployee, NVL(CS.MEMO, R.REQUEST) AS memo
+		SELECT CS.ID AS id, R.ID AS reservationId, R.CODE AS reservationCode, R.GUEST_ID AS guestId, NVL(CS.ROOM_ID, R.ROOM_ID) AS roomId, R.ROOM_TYPE_ID AS roomTypeId, C.NAME AS guestName, R.GUEST_COUNT AS guestCount, R.CHECKIN AS checkinTime, R.CHECKOUT AS checkoutTime, RT.NAME AS roomTypeName, RM.ROOM_NUM AS roomNum, CS.KEY_TYPE AS keyType, CS.CHECKIN_EMPLOYEE AS checkinEmployee, CS.CHECKOUT_EMPLOYEE AS checkoutEmployee, NVL(CS.MEMO, R.REQUEST) AS memo
 		FROM RESERVATION R
 		JOIN CUSTOMER C ON R.GUEST_ID = C.ID
 		JOIN ROOM_TYPE RT ON R.ROOM_TYPE_ID = RT.ID

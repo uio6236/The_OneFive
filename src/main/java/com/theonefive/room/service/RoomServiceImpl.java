@@ -37,11 +37,4 @@ public class RoomServiceImpl implements RoomService{
 		// 체크인 가능 객실 조회
 		return roomMapper.selectAvailableRooms(roomTypeId);
 	}
-
-	@Override
-	public boolean changeRoomStatus(int roomId, String status) {
-		// 객실 상태 변경
-		return roomMapper.updateRoomStatus(roomId, status) > 0;
-	}
-
 }

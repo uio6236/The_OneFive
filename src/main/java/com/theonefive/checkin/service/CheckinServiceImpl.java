@@ -38,16 +38,16 @@ public class CheckinServiceImpl implements CheckinService {
 	public boolean checkin(CheckinDTO checkin) {
 		// 체크인 처리
 		int result = checkinMapper.insertCheckin(checkin);
-		roomMapper.updateRoomStatus(checkin.getRoomId(), "투숙중");
-		return result > 0;
+		int roomResult = roomMapper.updateRoomStatus(checkin.getRoomId(), "투숙중");
+		return result > 0 && roomResult > 0;
 	}
 	@Transactional
 	@Override
 	public boolean checkout(CheckinDTO checkin) {
 		// 체크아웃 처리
 		int result = checkinMapper.updateCheckout(checkin);
-		roomMapper.updateRoomStatus(checkin.getRoomId(), "청소중");
+		int roomResult =  roomMapper.updateRoomStatus(checkin.getRoomId(), "청소중");
 		// housekeepingMapper.updateStatus(checkin.getRoomId(), "청소대기");
-		return result > 0;
+		return result > 0 && roomResult > 0;
 	}
 }
