@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
+@Configuration	
 @EnableWebSecurity
 public class SecurityConfig {
 	@Bean	// 해당 메소드가 반환하는 객체(SecurityFilterChain)를 스프링 빈으로 등록
@@ -28,17 +28,29 @@ public class SecurityConfig {
 		 * - authorizeHttpRequests : 인증 여부에 따른 접근 제어
 		 */
 		
-		http.csrf(AbstractHttpConfigurer::disable)
-			.formLogin(AbstractHttpConfigurer::disable)
-			.httpBasic(AbstractHttpConfigurer::disable)
-			.logout(AbstractHttpConfigurer::disable)
+		http.csrf(AbstractHttpConfigurer::disable)			// 사이트 간 요청 위조 방지 off
+			.formLogin(AbstractHttpConfigurer::disable)		// 스프링이 제공하는 로그인 화면 기능 off
+			.httpBasic(AbstractHttpConfigurer::disable)		// 직접 만든 jsp를 사용하기 위해 기능 off
+			.logout(AbstractHttpConfigurer::disable)		// 스프링이 제공하는 로그아웃 화면 기능 off
 			.authorizeHttpRequests(auth -> auth.anyRequest().permitAll()); // 모든 요청 허용
 		
 		return http.build();
 	}
 	
-	@Bean
+	@Bean	// 해당 메소드가 반환하는 객체(PasswordEncoder)를 스프링 빈으로 등록
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 }
+
+
+/*
+ 	*  @Configuration		
+ 		해당 어노테이션은 이 클래스는 스프링 설정 파일이다 라고 알려주는 표시.
+ 		스프링이 앱을 실행할 때 이 클래스를 읽고 그 안의 설정을 적용
+ 		
+ 	* @EnableWebSecurity
+	  Spring Security 기능을 켜는 스위치
+  
+ */
+ 

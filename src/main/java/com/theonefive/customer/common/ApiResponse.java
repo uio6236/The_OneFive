@@ -1,4 +1,4 @@
-package com.theonefive.customer.common.dto;
+package com.theonefive.customer.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,8 +11,8 @@ import lombok.Getter;
  * 
  * 제네릭을 사용하는 이유 : 응답데이터는 그때그때 타입이 다르기 때문
  */
-@Getter
-@AllArgsConstructor
+@Getter    // getSuccess, getMessage, getDate 와 같은 메서드를 자동 생성
+@AllArgsConstructor  // 하기 필드 3개를 모두 받는 생성자를 생성
 public class ApiResponse<T> {
 	
 	private boolean success;   // 성공 여부
