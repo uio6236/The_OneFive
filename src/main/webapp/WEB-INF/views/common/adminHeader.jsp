@@ -21,13 +21,6 @@
             ${today}
         </div>
 
-        <button
-            type="button"
-            class="btn btn-outline"
-        >
-            🔔
-        </button>
-
     </div>
 
 </header>

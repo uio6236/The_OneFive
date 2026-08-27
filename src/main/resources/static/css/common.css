@@ -1,21 +1,21 @@
 /* common.css */
 
 :root {
-    --navy: #101a2d;
-    --navy-light: #234a7a;
-    --blue: #2864e8;
-    --blue-light: #eaf1fb;
+    --navy: #172235;
+    --navy-light: #2f5275;
 
-    --background: #f5f7fa;
+    --blue: #3f6f9f;
+    --blue-light: #e8f0f7;
+
+    --background: #f5f7f9;
     --surface: #ffffff;
+    --border: #dbe2e9;
 
-    --border: #dce3ec;
+    --text-primary: #202b3c;
+    --text-secondary: #667589;
+    --text-muted: #98a5b5;
 
-    --text-primary: #182133;
-    --text-secondary: #64748b;
-    --text-muted: #94a3b8;
-
-    --danger: #ef4444;
+    --danger: #b85450;
 
     --radius-sm: 6px;
     --radius-md: 10px;

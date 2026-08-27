@@ -50,22 +50,7 @@ public class AdminReservationController {
 	 public ReservationViewDTO detail(@PathVariable Long id) {
 	     return service.findDetailById(id);
 	 }
-    // 새 예약 등록 (모달 폼 제출 처리)
-    // URL : [POST] /admin/reservations
-    @PostMapping
-    public String create(@ModelAttribute ReservationDTO reservation,
-                          RedirectAttributes redirectAttr) {
-        try {
-            service.createReservation(reservation);
-        } catch (Exception e) {
-            e.printStackTrace();
-            redirectAttr.addFlashAttribute("error", "예약 등록에 실패했습니다.");
-            return "redirect:/admin/reservations";
-        }
 
-        redirectAttr.addFlashAttribute("success", "예약이 등록되었습니다.");
-        return "redirect:/admin/reservations";
-    }
 
     // 예약 취소 처리
     // URL : [POST] /admin/reservations/{id}/cancel

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.theonefive.reservation.model.dto.ReservationDTO;
 import com.theonefive.reservation.model.dto.ReservationSearchDTO;
 import com.theonefive.reservation.model.dto.ReservationViewDTO;
+import com.theonefive.reservation.model.dto.RoomSearchDTO;
 import com.theonefive.reservation.model.dto.RoomTypeListDTO;
 
 @Mapper
@@ -34,5 +35,9 @@ public interface ReservationMapper {
     List<ReservationViewDTO> findByGuestId(Long guestId);
     
     // 방 정보
-    List<RoomTypeListDTO> findRoomTypeList();
+    List<RoomTypeListDTO> findRoomTypeList(RoomSearchDTO condition);
+    
+    RoomTypeListDTO findRoomTypeDetail(Long roomTypeId);
+    
+    int countAvailableRooms(RoomSearchDTO condition);
 }

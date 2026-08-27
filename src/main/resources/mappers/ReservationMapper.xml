@@ -130,7 +130,7 @@
 	    LEFT JOIN ROOM R ON R.ID = RES.ROOM_ID
 	    WHERE RES.ID = #{id}
 	</select>
-	<!-- 고객 객실조회(rooms.jsp) : ROOM_TYPE별로 지금 이용가능한 객실이 몇 개인지 같이 조회 -->
+	<!-- 고객 객실조회(rooms.jsp) : 선택한 기간에 실제로 남은 방 개수 계산 + 인원수 초과 타입은 0으로 처리 -->
 	<select id="findRoomTypeList" resultType="RoomTypeListDTO">
 	    SELECT
 	        RT.ID           AS typeId,
@@ -141,11 +141,48 @@
 	        RT.PRICE        AS price,
 	        RT.MAX_PRICE    AS maxPrice,
 	        RT.IMAGE_URL    AS imageUrl,
-	        (SELECT COUNT(*) FROM ROOM R
-	         WHERE R.TYPE_ID = RT.ID AND R.STATUS = '이용가능') AS availableRoomCount
+	        CASE
+	            WHEN RT.MAX_CAPACITY &lt; #{guestCount} THEN 0
+	            ELSE (
+	                (SELECT COUNT(*) FROM ROOM R WHERE R.TYPE_ID = RT.ID)
+	                -
+	                (SELECT COUNT(*) FROM RESERVATION RES
+	                 WHERE RES.ROOM_TYPE_ID = RT.ID
+	                   AND RES.STATUS != '예약취소'
+	                   AND RES.CHECKIN &lt; TO_DATE(#{checkoutDate}, 'YYYY-MM-DD')
+	                   AND RES.CHECKOUT &gt; TO_DATE(#{checkinDate}, 'YYYY-MM-DD'))
+	            )
+	        END AS availableRoomCount
 	    FROM ROOM_TYPE RT
 	    ORDER BY RT.PRICE
 	</select>
-
+	
+	<!-- 고객 객실상세(detail.jsp) : 타입 1건 -->
+	<select id="findRoomTypeDetail" parameterType="long" resultType="RoomTypeListDTO">
+	    SELECT
+	        RT.ID           AS typeId,
+	        RT.NAME         AS typeName,
+	        RT.DESCRIPTION  AS description,
+	        RT.CAPACITY     AS capacity,
+	        RT.MAX_CAPACITY AS maxCapacity,
+	        RT.PRICE        AS price,
+	        RT.MAX_PRICE    AS maxPrice,
+	        RT.IMAGE_URL    AS imageUrl
+	    FROM ROOM_TYPE RT
+	    WHERE RT.ID = #{roomTypeId}
+	</select>
+	
+	<!-- 특정 타입 + 특정 기간에 실제로 예약 가능한 방이 있는지 (0이면 마감) -->
+	<select id="countAvailableRooms" resultType="int">
+	    SELECT
+	        (SELECT COUNT(*) FROM ROOM WHERE TYPE_ID = #{roomTypeId})
+	        -
+	        (SELECT COUNT(*) FROM RESERVATION
+	         WHERE ROOM_TYPE_ID = #{roomTypeId}
+	           AND STATUS != '예약취소'
+	           AND CHECKIN &lt; TO_DATE(#{checkoutDate}, 'YYYY-MM-DD')
+	           AND CHECKOUT &gt; TO_DATE(#{checkinDate}, 'YYYY-MM-DD'))
+	    FROM DUAL
+	</select>
 </mapper>
 

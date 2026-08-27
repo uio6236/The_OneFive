@@ -5,6 +5,7 @@ import java.util.List;
 import com.theonefive.reservation.model.dto.ReservationDTO;
 import com.theonefive.reservation.model.dto.ReservationSearchDTO;
 import com.theonefive.reservation.model.dto.ReservationViewDTO;
+import com.theonefive.reservation.model.dto.RoomSearchDTO;
 import com.theonefive.reservation.model.dto.RoomTypeListDTO;
 
 public interface ReservationService {
@@ -23,6 +24,10 @@ public interface ReservationService {
     
     List<ReservationViewDTO> findByGuestId(Long guestId);
     
-    List<RoomTypeListDTO> findRoomTypeList();
+    RoomTypeListDTO findRoomTypeDetail(Long roomTypeId);
+    
+    List<RoomTypeListDTO> findRoomTypeList(RoomSearchDTO condition);
+    
+    int countAvailableRooms(RoomSearchDTO condition);
 
 }

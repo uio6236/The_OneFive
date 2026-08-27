@@ -225,3 +225,24 @@
     }
 
 }
+.room-search-bar {
+    display: flex;
+    align-items: end;
+    gap: 16px;
+    margin: 24px 0 32px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.room-search-bar .form-group {
+    flex: 1;
+}
+
+.room-search-bar label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+}

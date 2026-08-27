@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.theonefive.reservation.model.dto.ReservationDTO;
 import com.theonefive.reservation.model.dto.ReservationSearchDTO;
 import com.theonefive.reservation.model.dto.ReservationViewDTO;
+import com.theonefive.reservation.model.dto.RoomSearchDTO;
 import com.theonefive.reservation.model.dto.RoomTypeListDTO;
 import com.theonefive.reservation.model.mapper.ReservationMapper;
 
@@ -65,9 +66,19 @@ public class ReservationServiceImpl implements ReservationService {
 		return reservationMapper.findDetailById(id);
 	}
 	
-	@Override
-	public List<RoomTypeListDTO> findRoomTypeList() {
-	    return reservationMapper.findRoomTypeList();
-	}
 
+	@Override
+	public RoomTypeListDTO findRoomTypeDetail(Long roomTypeId) {
+	    return reservationMapper.findRoomTypeDetail(roomTypeId);
+	}
+	
+	@Override
+	public List<RoomTypeListDTO> findRoomTypeList(RoomSearchDTO condition) {
+	    return reservationMapper.findRoomTypeList(condition);
+	}
+	
+	@Override
+	public int countAvailableRooms(RoomSearchDTO condition) {
+	    return reservationMapper.countAvailableRooms(condition);
+	}
 }
