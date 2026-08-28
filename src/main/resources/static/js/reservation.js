@@ -38,8 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function fillDetail(data) {
         document.querySelector('#detailCode').textContent = data.code;
         document.querySelector('#detailGuestName').textContent = data.guestName;
-        document.querySelector('#detailRoom').textContent =
-            (data.roomNum ? data.roomNum + '호' : '미배정') + ' (' + data.typeName + ')';
+		document.querySelector('#detailTypeName').textContent = data.typeName;
         document.querySelector('#detailCheckin').textContent = formatDate(data.checkin);
         document.querySelector('#detailCheckout').textContent = formatDate(data.checkout);
         document.querySelector('#detailGuestCount').textContent = data.guestCount + '명';

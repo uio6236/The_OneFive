@@ -87,7 +87,6 @@
                     <tr>
                         <th>예약번호</th>
                         <th>고객명</th>
-                        <th>객실</th>
                         <th>객실 타입</th>
                         <th>체크인</th>
                         <th>체크아웃</th>
@@ -114,12 +113,6 @@
                                     ${r.guestName}
                             </td>
 
-                            <td>
-                                <c:choose>
-                                    <c:when test="${r.roomNum != null}">${r.roomNum}호</c:when>
-                                    <c:otherwise>미배정</c:otherwise>
-                                </c:choose>
-                            </td>
 
                             <td>
                                     ${r.typeName}
@@ -208,8 +201,8 @@
                         <dt>고객명</dt>
                         <dd id="detailGuestName"></dd>
 
-                        <dt>객실</dt>
-                        <dd id="detailRoom"></dd>
+						<dt>객실 타입</dt>
+						<dd id="detailTypeName"></dd>
 
                         <dt>체크인</dt>
                         <dd id="detailCheckin"></dd>
