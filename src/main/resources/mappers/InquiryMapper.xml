@@ -45,7 +45,14 @@
         FROM INQUIRY I
         JOIN CUSTOMER C ON I.GUEST_ID = C.ID
         <include refid="inquirySearchCondition" />
-        ORDER BY I.CREATED_AT DESC
+        <choose>
+            <when test="sortOrder == 'oldest'">
+                ORDER BY I.CREATED_AT ASC
+            </when>
+            <otherwise>
+                ORDER BY I.CREATED_AT DESC
+            </otherwise>
+        </choose>
         OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
     </select>
  
@@ -119,6 +126,5 @@
     </insert>
  
 </mapper>
- 
- 
+	 
  

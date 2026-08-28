@@ -26,39 +26,38 @@
 
         <section class="admin-main">
 
+            <c:if test="${not empty message}">
+                <p class="mypage-message success">${message}</p>
+            </c:if>
+
+            <c:if test="${not empty error}">
+                <p class="mypage-message error">${error}</p>
+            </c:if>
+
             <section class="mypage-layout">
 
-                <!-- 왼쪽: 프로필 카드 -->
-                <div class="mypage-card mypage-profile-card">
+                <!-- 왼쪽 컬럼: 프로필 + 개인 기본 정보 -->
+                <div class="mypage-left-column">
 
-                    <div class="mypage-avatar">
-                        ${fn:substring(employee.name, 0, 1)}
+                    <div class="mypage-card mypage-profile-card">
+
+                        <div class="mypage-avatar">
+                            ${fn:substring(employee.name, 0, 1)}
+                        </div>
+
+                        <h2>${employee.name}</h2>
+                        <p class="mypage-position">${employee.position}</p>
+
                     </div>
 
-                    <h2>${employee.name}</h2>
-                    <p class="mypage-position">${employee.position}</p>
 
-                </div>
+                    <div class="mypage-card">
 
-
-                <!-- 오른쪽: 정보수정 + 비밀번호 변경 + 계정작업 -->
-                <div class="mypage-right-column">
-
-                    <c:if test="${not empty message}">
-                        <p class="mypage-message success">${message}</p>
-                    </c:if>
-
-                    <c:if test="${not empty error}">
-                        <p class="mypage-message error">${error}</p>
-                    </c:if>
-
-                    <form action="${pageContext.request.contextPath}/admin/mypage/update" method="post">
-
-                        <!-- 개인 기본 정보 -->
-                        <div class="mypage-card">
+                        <form action="${pageContext.request.contextPath}/admin/mypage/update-info" method="post">
 
                             <div class="mypage-section-header">
                                 <h3>개인 기본 정보</h3>
+                                <button type="submit" class="btn btn-outline btn-sm">정보 수정</button>
                             </div>
 
                             <div class="mypage-form-grid">
@@ -85,15 +84,19 @@
 
                             </div>
 
-                            <div class="mypage-submit-row">
-                                <button type="submit" class="btn btn-primary">정보 수정 저장</button>
-                            </div>
+                        </form>
 
-                        </div>
+                    </div>
+
+                </div>
 
 
-                        <!-- 비밀번호 변경 -->
-                        <div class="mypage-card">
+                <!-- 오른쪽 컬럼: 비밀번호 변경 + 계정 작업 -->
+                <div class="mypage-right-column">
+
+                    <div class="mypage-card">
+
+                        <form action="${pageContext.request.contextPath}/admin/mypage/update-password" method="post">
 
                             <div class="mypage-section-header">
                                 <h3>비밀번호 변경</h3>
@@ -107,18 +110,16 @@
                                            placeholder="현재 비밀번호 입력">
                                 </div>
 
-                                <div class="mypage-form-grid">
-                                    <div class="mypage-form-group">
-                                        <label for="newPassword">새 비밀번호</label>
-                                        <input type="password" id="newPassword" name="newPassword"
-                                               placeholder="새로운 비밀번호 입력">
-                                    </div>
+                                <div class="mypage-form-group">
+                                    <label for="newPassword">새 비밀번호</label>
+                                    <input type="password" id="newPassword" name="newPassword"
+                                           placeholder="새로운 비밀번호 입력">
+                                </div>
 
-                                    <div class="mypage-form-group">
-                                        <label for="newPasswordCheck">새 비밀번호 확인</label>
-                                        <input type="password" id="newPasswordCheck" name="newPasswordCheck"
-                                               placeholder="새로운 비밀번호 재입력">
-                                    </div>
+                                <div class="mypage-form-group">
+                                    <label for="newPasswordCheck">새 비밀번호 확인</label>
+                                    <input type="password" id="newPasswordCheck" name="newPasswordCheck"
+                                           placeholder="새로운 비밀번호 재입력">
                                 </div>
 
                             </div>
@@ -127,12 +128,11 @@
                                 <button type="submit" class="btn btn-primary">비밀번호 변경 적용</button>
                             </div>
 
-                        </div>
+                        </form>
 
-                    </form>
+                    </div>
 
 
-                    <!-- 계정 작업 (로그아웃) -->
                     <div class="mypage-card mypage-account-actions">
 
                         <div class="mypage-section-header">
@@ -141,7 +141,7 @@
 
                         <p>안전한 로그아웃으로 관리 시스템 세션을 완전 종료할 수 있습니다.</p>
 
-                        <a href="/logout" class="btn btn-danger-outline">시스템 로그아웃</a>
+                        <a href="/logout" class="btn btn-danger-outline">로그아웃</a>
 
                     </div>
 

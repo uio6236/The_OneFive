@@ -19,4 +19,8 @@ public interface EmployeeMapper {
  
     // 비밀번호 변경
     int updatePassword(@Param("id") Long id, @Param("newPassword") String newPassword);
+ 
+    // 본인을 제외한 다른 직원이 이 이메일을 이미 쓰고 있는지 확인 (있으면 1 이상, 없으면 0)
+    int countEmployeeByEmailExcludingSelf(@Param("email") String email, @Param("id") Long id);
 }
+ 

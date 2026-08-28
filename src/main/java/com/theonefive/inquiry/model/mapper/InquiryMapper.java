@@ -9,12 +9,14 @@ import com.theonefive.inquiry.model.dto.InquiryDTO;
 
 @Mapper
 public interface  InquiryMapper {
-    // ===== 관리자 =====
+	// ===== 관리자 =====
 	 
     // 검색/필터/페이지네이션이 적용된 문의 목록 (고객명 조인 포함)
     // keyword, status가 null이면 조건 없이 전체 대상
+    // sortOrder: "latest"(최신순, 기본) 또는 "oldest"(오래된순)
     List<InquiryDTO> selectInquiryList(@Param("keyword") String keyword,
                                         @Param("status") String status,
+                                        @Param("sortOrder") String sortOrder,
                                         @Param("offset") int offset,
                                         @Param("pageSize") int pageSize);
  

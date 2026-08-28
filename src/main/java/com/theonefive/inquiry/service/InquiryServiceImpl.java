@@ -10,15 +10,17 @@ import java.util.List;
 @Service
 public class InquiryServiceImpl implements InquiryService {
  
+   
+ 
     @Autowired
     private InquiryMapper inquiryMapper;
  
     // ===== 관리자 =====
  
     @Override
-    public List<InquiryDTO> getInquiryList(String keyword, String status, int page, int pageSize) {
+    public List<InquiryDTO> getInquiryList(String keyword, String status, String sortOrder, int page, int pageSize) {
         int offset = (page - 1) * pageSize;
-        return inquiryMapper.selectInquiryList(keyword, status, offset, pageSize);
+        return inquiryMapper.selectInquiryList(keyword, status, sortOrder, offset, pageSize);
     }
  
     @Override

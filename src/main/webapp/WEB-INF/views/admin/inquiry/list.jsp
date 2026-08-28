@@ -65,6 +65,11 @@
                     <option value="답변완료" ${status == '답변완료' ? 'selected' : ''}>답변완료</option>
                 </select>
 
+                <select name="sortOrder" class="form-control inquiry-filter-select">
+                    <option value="latest" ${empty sortOrder || sortOrder == 'latest' ? 'selected' : ''}>작성일 기준: 최신순</option>
+                    <option value="oldest" ${sortOrder == 'oldest' ? 'selected' : ''}>작성일 기준: 오래된순</option>
+                </select>
+
                 <button type="submit" class="btn btn-dark">검색</button>
 
             </form>
@@ -81,39 +86,49 @@
                         <span>총 ${filteredCount}건</span>
                     </div>
 
-                    <div class="inquiry-list">
+                    <div class="inquiry-table-wrapper">
+                        <table class="inquiry-table">
+                            <thead>
+                                <tr>
+                                    <th>문의번호</th>
+                                    <th>문의 제목</th>
+                                    <th>고객명</th>
+                                    <th>작성일</th>
+                                    <th>상태</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                        <c:forEach items="${inquiryList}" var="inq">
-                            <a href="${pageContext.request.contextPath}/admin/inquiries?id=${inq.id}"
-                               class="inquiry-list-item ${selectedInquiry.id == inq.id ? 'active' : ''}">
+                                <c:forEach items="${inquiryList}" var="inq">
+                                    <tr class="${selectedInquiry.id == inq.id ? 'active' : ''}"
+                                        onclick="location.href='${pageContext.request.contextPath}/admin/inquiries?id=${inq.id}'">
 
-                                <div class="inquiry-list-top">
-                                    <strong>${inq.title}</strong>
+                                        <td class="inquiry-table-no">${inq.inquiryNo}</td>
+                                        <td class="inquiry-table-title">${inq.title}</td>
+                                        <td>${inq.guestName}</td>
+                                        <td class="inquiry-table-date"><fmt:formatDate value="${inq.createdAt}" pattern="yyyy-MM-dd"/></td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${inq.status == '대기중'}">
+                                                    <span class="badge badge-blue">대기중</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="badge badge-dark">답변완료</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
 
-                                    <c:choose>
-                                        <c:when test="${inq.status == '대기중'}">
-                                            <span class="badge badge-blue">답변 대기</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span class="badge badge-dark">답변 완료</span>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
+                                    </tr>
+                                </c:forEach>
 
-                                <p>${inq.content}</p>
+                                <c:if test="${empty inquiryList}">
+                                    <tr>
+                                        <td colspan="5" class="inquiry-empty">등록된 문의가 없습니다.</td>
+                                    </tr>
+                                </c:if>
 
-                                <div class="inquiry-list-bottom">
-                                    <span>${inq.guestName}</span>
-                                    <span><fmt:formatDate value="${inq.createdAt}" pattern="yyyy.MM.dd"/></span>
-                                </div>
-
-                            </a>
-                        </c:forEach>
-
-                        <c:if test="${empty inquiryList}">
-                            <p class="inquiry-empty">등록된 문의가 없습니다.</p>
-                        </c:if>
-
+                            </tbody>
+                        </table>
                     </div>
 
                     <!-- 페이지네이션 -->
@@ -127,20 +142,20 @@
                         <div class="pagination">
 
                             <c:if test="${currentPage > 1}">
-                                <a href="${pageContext.request.contextPath}/admin/inquiries?page=${currentPage - 1}&keyword=${keyword}&status=${status}">
+                                <a href="${pageContext.request.contextPath}/admin/inquiries?page=${currentPage - 1}&keyword=${keyword}&status=${status}&sortOrder=${sortOrder}">
                                     &lsaquo;
                                 </a>
                             </c:if>
 
                             <c:forEach begin="1" end="${totalPages}" var="p">
-                                <a href="${pageContext.request.contextPath}/admin/inquiries?page=${p}&keyword=${keyword}&status=${status}"
+                                <a href="${pageContext.request.contextPath}/admin/inquiries?page=${p}&keyword=${keyword}&status=${status}&sortOrder=${sortOrder}"
                                    class="${p == currentPage ? 'active' : ''}">
                                     ${p}
                                 </a>
                             </c:forEach>
 
                             <c:if test="${currentPage < totalPages}">
-                                <a href="${pageContext.request.contextPath}/admin/inquiries?page=${currentPage + 1}&keyword=${keyword}&status=${status}">
+                                <a href="${pageContext.request.contextPath}/admin/inquiries?page=${currentPage + 1}&keyword=${keyword}&status=${status}&sortOrder=${sortOrder}">
                                     &rsaquo;
                                 </a>
                             </c:if>
@@ -205,7 +220,12 @@
                         </div>
 
                         <div class="inquiry-action-row">
-                            <button type="submit" class="btn btn-primary">답변 등록</button>
+                            <button type="submit" class="btn btn-primary">
+                                <c:choose>
+                                    <c:when test="${selectedInquiry.status == '답변완료'}">답변 수정</c:when>
+                                    <c:otherwise>답변 등록</c:otherwise>
+                                </c:choose>
+                            </button>
                         </div>
                     </form>
 

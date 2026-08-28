@@ -19,8 +19,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
  
     @Override
-    public void updateEmployeeInfo(EmployeeDTO dto) {
+    public boolean updateEmployeeInfo(EmployeeDTO dto) {
+ 
+        int duplicated = employeeMapper.countEmployeeByEmailExcludingSelf(dto.getEmail(), dto.getId());
+        if (duplicated > 0) {
+            return false;   // 이미 다른 직원이 쓰는 이메일 -> 저장 안 하고 실패로 리턴
+        }
+ 
         employeeMapper.updateEmployeeInfo(dto);
+        return true;
     }
  
     @Override

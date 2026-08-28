@@ -41,4 +41,12 @@
         WHERE ID = #{id}
     </update>
  
+    <!-- 본인(id)을 제외하고 같은 이메일을 쓰는 직원이 있는지 -->
+    <select id="countEmployeeByEmailExcludingSelf" resultType="int">
+        SELECT COUNT(*)
+        FROM EMPLOYEE
+        WHERE EMAIL = #{email}
+          AND ID != #{id}
+    </select>
+ 
 </mapper>

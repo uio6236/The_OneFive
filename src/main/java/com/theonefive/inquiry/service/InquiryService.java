@@ -5,8 +5,8 @@ import java.util.List;
 import com.theonefive.inquiry.model.dto.InquiryDTO;
 
 public interface InquiryService {
-	 // 관리자
-    List<InquiryDTO> getInquiryList(String keyword, String status, int page, int pageSize);
+	  // 관리자
+    List<InquiryDTO> getInquiryList(String keyword, String status, String sortOrder, int page, int pageSize);
     int getInquiryCount(String keyword, String status);
     InquiryDTO getInquiryDetail(Long id);
     void answerInquiry(InquiryDTO dto);
