@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -83,13 +84,14 @@ public class CustomerController {
             CustomerDTO loginCustomer = customerService.login(loginId, password);
             
             // 로그인 성공 시 세션(Session)에 회원 정보 저장 (로그인 상태 유지)
-            session.setAttribute("loginCustomer", loginCustomer);
+            session.setAttribute("loginId", loginCustomer.getLoginId());
             
             return "redirect:/mypage/index"; // 로그인 성공 후 메인 페이지로 이동
+            
         } catch (IllegalStateException e) {
             // 로그인 실패 시 (아이디 불일치 or 비밀번호 틀림)
             model.addAttribute("errorMessage", e.getMessage());
-            return "customer/login"; // 다시 로그인 페이지로 돌아감
+            return "redirect:/login"; // 다시 로그인 페이지로 돌아감
         }
     }
 
@@ -111,11 +113,41 @@ public class CustomerController {
     }
     
     // ==========================================
-    // 3.마이페이지 테스트 
+    // 4.마이페이지 
     // ==========================================
     
-    @GetMapping("/test/login")
-    public String loginTest() {
+    @GetMapping("/mypage/index")
+    public String myPage(HttpSession session, Model model) {
+    	String loginId = (String) session.getAttribute("loginId");
+    	if(loginId == null) {
+    		return "redirect:login";
+    	}
+    	
+    	CustomerDTO customer = customerService.getCustomerByLoginId(loginId);
+    	model.addAttribute("customer", customer);
         return "customer/mypage/index";
+    }
+    
+    @PostMapping("/mypage/update")
+    @ResponseBody
+    public ApiResponse<?> updateMyPage(@RequestBody CustomerDTO form, HttpSession session) {
+    	String loginId = (String) session.getAttribute("loginId");
+    	if(loginId == null) {
+    		return ApiResponse.fail("로그인이 필요합니다.");
+    }
+    	
+    	 form.setLoginId(loginId);
+
+         try {
+             customerService.updateCustomerInfo(form);
+             return ApiResponse.success("회원정보가 수정되었습니다.", null);
+         } catch (IllegalStateException e) {
+             return ApiResponse.fail(e.getMessage());
+         }
+    }
+    
+    @GetMapping("/test/custo")
+    public String listTest() {
+        return "admin/customer/list";
     }
 }

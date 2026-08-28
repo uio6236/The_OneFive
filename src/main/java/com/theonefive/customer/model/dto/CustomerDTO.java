@@ -14,15 +14,16 @@ import lombok.ToString;
 @Getter
 @Setter
 public class CustomerDTO {
-	private int id;
+	private Integer id;
 	private String loginId;
 	private String password;
+	private String newPassword;
 	private String name;
 	private String phone;
 	private String email;
 	private String membershipGrade;
-	private int point;
-	private int totalVisitCount;
+	private Integer point;
+	private Integer totalVisitCount;
 	private LocalDate lastVisitDate;
 	private String memo;
 	

@@ -25,5 +25,18 @@
 				#{email})
 	</insert>
 
-
+<!-- 회원정보 수정 -->
+	<update id="updateCustomer" parameterType="CustomerDTO">
+		UPDATE CUSTOMER
+		SET NAME = #{name},
+			PHONE = #{phone}
+		WHERE LOGIN_ID = #{loginId}
+	</update>
+	
+<!-- 비밀번호 변경 -->
+	<update id="updatePassword" parameterType="CustomerDTO">
+		UPDATE CUSTOMER
+		SET PASSWORD = #{newPassword}
+		WHERE LOGIN_ID = #{loginId}
+	</update>
 </mapper>

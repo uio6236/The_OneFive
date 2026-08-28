@@ -44,7 +44,7 @@ public class AdminServiceImpl implements AdminService {
 		
 		// 조회된 정보 중 암호문과 전달된 평문이 일지하는지 확인
 		if (employee == null || !passwordEncoder.matches(password, employee.getPassword())) {
-			throw new IllegalStateException("아이디 또는 비밀번호가 일치하지 않습니다.");
+			throw new IllegalStateException("사번 또는 비밀번호가 일치하지 않습니다.");
 		}
 		
 		return employee;

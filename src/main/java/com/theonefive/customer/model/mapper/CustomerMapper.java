@@ -15,4 +15,10 @@ public interface CustomerMapper {
 	// 회원가입 데이터 저장
 	int insertCustomer(CustomerDTO customer);
 	
+	// 회원 정보 수정
+	int updateCustomer(CustomerDTO customer);
+	int updatePassword(CustomerDTO customer);
 }
+/*
+ 	* SQL문의 행의 개수를 반환하기 때문에 int 사용 
+ */

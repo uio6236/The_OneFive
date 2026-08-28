@@ -74,21 +74,21 @@
 
 
                 <form
-                    action="/customer/mypage/update"
+                    action="/mypage/update"
                     method="post"
                 >
 
                     <div class="form-group">
 
                         <label class="form-label">
-                            고객 이메일 (계정 ID)
+                            고객 계정 ID
                         </label>
 
                         <input
-                            type="email"
-                            name="email"
+                            type="text"
+                            name="loginId"
                             class="form-control"
-                            value="gildong@gmail.com"
+                            value="${customer.loginId}"
                         >
 
                     </div>
@@ -102,9 +102,9 @@
 
                         <input
                             type="text"
-                            name="customerName"
+                            name="name"
                             class="form-control"
-                            value="홍길동"
+                            value="${customer.name}"
                         >
 
                     </div>
@@ -117,10 +117,10 @@
                         </label>
 
                         <input
-                            type="tel"
+                            type="text"
                             name="phone"
                             class="form-control"
-                            value="010-1234-5678"
+                            value="${customer.phone}"
                         >
 
                     </div>
@@ -383,10 +383,11 @@
 
     </main>
 
-
+	
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 </div>
 
+<script src="/js/mypage.js"></script>
 </body>
 </html>

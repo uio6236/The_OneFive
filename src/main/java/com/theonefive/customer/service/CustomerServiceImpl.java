@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 public class CustomerServiceImpl implements CustomerService {
 	
 	private final CustomerMapper customerMapper;
-	
 	private final PasswordEncoder passwordEncoder;
 	
 	public void signup(CustomerDTO customer) throws IOException {
@@ -49,4 +48,28 @@ public class CustomerServiceImpl implements CustomerService {
 		return customer;
 	
 	}
+	
+	@Override
+	public CustomerDTO getCustomerByLoginId(String loginId) {
+		return customerMapper.selectCustomerByLoginId(loginId);
+	}
+	
+	@Override
+	public boolean updateCustomerInfo(CustomerDTO update) {
+		CustomerDTO current = customerMapper.selectCustomerByLoginId(update.getLoginId());
+		if (current == null) {
+			throw new IllegalStateException("존재하지 않는 회원입니다.");
+		}
+		customerMapper.updateCustomer(update);
+		
+		if (update.getNewPassword() != null && !update.getNewPassword().isBlank()) {
+			if (update.getPassword() == null || !passwordEncoder.matches(update.getPassword(), current.getPassword())) {
+				throw new IllegalStateException("현재 비밀번호와 일치하지 않습니다.");
+			}
+			update.setNewPassword(passwordEncoder.encode(update.getNewPassword()));
+			customerMapper.updatePassword(update);
+		}
+		return true;
+	}
+	
 }

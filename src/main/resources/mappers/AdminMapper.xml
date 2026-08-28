@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper 
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.theonefive.admin.model.mapper.AdminMapper">
-	
+
 	<select id="countByCode" parameterType="string" resultType="int">
 		SELECT COUNT(*)
 		FROM EMPLOYEE
 		WHERE CODE = #{code}
 	</select>
-	
+
 	<!-- 회원 조회 -->
-	<select id="selectCustomerByCode" parameterType="string" resultType="EmployeeDTO">
+	<select id="selectCustomerByCode" parameterType="string"
+		resultType="EmployeeDTO">
 		SELECT ID, CODE,NAME, PASSWORD, POSITION, PHONE, EMAIL
 		FROM EMPLOYEE
 		WHERE CODE = #{code}
 	</select>
-	
+
 	<insert id="insertEmployee" parameterType="EmployeeDTO">
 		INSERT INTO EMPLOYEE (ID, CODE, NAME, PASSWORD, POSITION, PHONE, EMAIL)
-		VALUES (EMPLOYEE_SEQ.NEXTVAL, #{code}, #{name}, #{password}, #{position}, #{phone},
-				#{email})
+		VALUES (EMPLOYEE_SEQ.NEXTVAL, #{code}, #{name}, #{password},
+		#{position}, #{phone},
+		#{email})
 	</insert>
 
 

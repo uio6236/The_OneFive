@@ -14,4 +14,10 @@ public interface CustomerService {
 	
 	//로그인 처리
 	CustomerDTO login(String loginId, String password);
+	
+	//회원 정보
+	CustomerDTO getCustomerByLoginId(String loginId);
+	
+	//회원 정보 및 비밀번호 수정
+	boolean updateCustomerInfo(CustomerDTO update);
 }

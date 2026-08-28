@@ -40,14 +40,6 @@
 
                 </div>
 
-
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                >
-                    + 고객 등록
-                </button>
-
             </div>
 
 
@@ -64,36 +56,20 @@
 
                 </div>
 
-
+				<div>멤버십 </div>
+				
                 <select class="form-control customer-filter-select">
 
+					<option>
+					   전체
+					</option>
+					
                     <option>
-                        전체 등급
-                    </option>
-
-                    <option>
-                        일반
+                        NORMAL
                     </option>
 
                     <option>
                         VIP
-                    </option>
-
-                </select>
-
-
-                <select class="form-control customer-filter-select">
-
-                    <option>
-                        전체 방문
-                    </option>
-
-                    <option>
-                        첫 방문
-                    </option>
-
-                    <option>
-                        재방문
                     </option>
 
                 </select>
@@ -123,9 +99,8 @@
                         <th>등급</th>
                         <th>총 방문</th>
                         <th>최근 방문일</th>
-                        <th>재방문</th>
-                        <th>특이사항</th>
                         <th></th>
+                      
                     </tr>
 
                     </thead>
@@ -158,16 +133,6 @@
                         </td>
 
                         <td>
-                            2026.08.11
-                        </td>
-
-                        <td>
-                            <span class="badge badge-dark">
-                                REVISIT
-                            </span>
-                        </td>
-
-                        <td>
                             고층 객실 선호
                         </td>
 
@@ -177,7 +142,7 @@
                                 href="/admin/customers/1"
                                 class="table-detail-link"
                             >
-                                상세
+                                수정
                             </a>
 
                         </td>
@@ -201,22 +166,12 @@
 
                         <td>
                             <span class="badge badge-dark">
-                                일반
+                                NORMAL
                             </span>
                         </td>
 
                         <td>
                             3회
-                        </td>
-
-                        <td>
-                            2026.06.18
-                        </td>
-
-                        <td>
-                            <span class="badge badge-blue">
-                                REVISIT
-                            </span>
                         </td>
 
                         <td>
@@ -229,7 +184,7 @@
                                 href="/admin/customers/2"
                                 class="table-detail-link"
                             >
-                                상세
+                                수정
                             </a>
 
                         </td>
@@ -253,7 +208,7 @@
 
                         <td>
                             <span class="badge badge-dark">
-                                일반
+                                NORMAL
                             </span>
                         </td>
 
@@ -261,15 +216,7 @@
                             1회
                         </td>
 
-                        <td>
-                            2026.08.11
-                        </td>
-
-                        <td>
-                            <span class="badge badge-blue">
-                                FIRST
-                            </span>
-                        </td>
+                        
 
                         <td>
                             -
@@ -281,7 +228,7 @@
                                 href="/admin/customers/3"
                                 class="table-detail-link"
                             >
-                                상세
+                                수정
                             </a>
 
                         </td>
@@ -292,14 +239,10 @@
 
                 </table>
 
-            </div>
+            </div><br>
 
 
             <div class="admin-table-bottom">
-
-                <span>
-                    전체 482명 중 1-10 표시
-                </span>
 
 
                 <div class="pagination">

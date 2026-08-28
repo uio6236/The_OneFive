@@ -235,7 +235,7 @@
 				<div class="dept-radio-group">
 				    <label class="radio-item">
 				        <input type="radio" id="dept_front" name="position" value="프론트" checked required>
-				        <span>프론트</span>
+				        <span>프런트</span>
 				    </label>
 				    
 				    <label class="radio-item">

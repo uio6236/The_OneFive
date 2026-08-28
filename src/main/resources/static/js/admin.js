@@ -38,7 +38,7 @@ checkCodeBtn.addEventListener("click", async function() {
 	const employeeId = employeeIdInput.value.trim();
 	// 아이디 값이 입력되지 않았을 경우, 요청 x
 	if (employeeId.length === 0) {
-		checkCodeResult.textContent = "아이디를 입력해주세요.";
+		checkCodeResult.textContent = "사번을 입력해주세요.";
 		checkCodeResult.className = "form-tip form-tip-error";
 		checkCode = null;
 		return;
@@ -92,7 +92,7 @@ signupForm.addEventListener("submit", function(e) {
 	
 	if (!checkCode) {
 		e.preventDefault();
-		alert("아이디 중복확인을 진행해주세요.");
+		alert("사번 중복확인을 진행해주세요.");
 		return;
 	}
 	
