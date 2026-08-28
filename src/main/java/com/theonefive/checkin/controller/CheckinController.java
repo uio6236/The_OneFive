@@ -29,6 +29,7 @@ public class CheckinController {
 	public String checkinlist(Model model) {
 		List<CheckinDTO> checkinList = checkinService.getTodayCheckinList();
 		List<CheckinDTO> checkoutList = checkinService.getTodayCheckoutList();
+		
 		model.addAttribute("checkinList", checkinList);
 		model.addAttribute("checkoutList", checkoutList);
 		
@@ -43,6 +44,13 @@ public class CheckinController {
 	@ResponseBody
 	public CheckinDTO checkinDetail(@RequestParam int reservationId) {
 		return checkinService.getCheckinDetail(reservationId);
+	}
+	
+	// 체크인 가능 객실 조회
+	@GetMapping("/available-rooms")
+	@ResponseBody
+	public List<RoomDTO> availableRooms(@RequestParam int roomTypeId) {
+		return roomService.getAvailableRooms(roomTypeId);
 	}
 	
 	// 체크인

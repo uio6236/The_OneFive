@@ -31,4 +31,9 @@ public class TestController {
     public String reservationTest() {
         return "admin/reservation/list";
     }
+    
+    @GetMapping("/test/mypage")
+    public String mypageTest() {
+        return "customer/mypage/index";
+    }
 }

@@ -173,6 +173,13 @@
     cursor: pointer;
 }
 
+.available-room-item.active {
+	border-color: var(--navy);
+	background: var(--blue-light);
+	color: var(--navy);
+	font-weight: 600;
+}
+
 .available-room-item input {
     display: none;
 }

@@ -122,6 +122,43 @@
 							</tbody>
 						</table>
 					</div>
+					<div class="checkin-table-wrap">
+						<table class="checkin-table">
+							<thead>
+								<tr>
+									<th>객실</th>
+									<th>고객명</th>
+									<th>예약번호</th>
+									<th>인원</th>
+									<th>객실상태</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<c:forEach var="checkout" items="${checkoutList}">
+									<tr class="checkout-row"
+										data-reservation-id="${checkout.reservationId}"
+										data-checkin-id="${checkout.id}">
+										<td>${checkout.roomNum}호</td>
+										<td>${checkout.guestName}</td>
+										<td>${checkout.reservationCode}</td>
+										<td>${checkout.guestCount}명</td>
+										<td>
+											<span class="room-state">투숙중</span>
+										</td>
+									</tr>
+								</c:forEach>
+
+								<c:if test="${empty checkoutList}">
+									<tr>
+										<td colspan="5" class="empty-row">
+											오늘 체크아웃 예정 고객이 없습니다.
+										</td>
+									</tr>
+								</c:if>
+							</tbody>
+						</table>
+					</div>
                 </div>
 
 				<!-- 오른쪽 상세 -->
@@ -170,8 +207,8 @@
 						</div>
 
 						<div class="key-type-grid">
-							<label class="key-type-card active">
-								<input type="radio" name="keyType" value="실물 키" checked>
+							<label class="key-type-card">
+								<input type="radio" name="keyType" value="실물 키">
 								<strong>실물 카드키</strong>
 								<span>프런트에서 카드키 발급</span>
 							</label>
