@@ -9,11 +9,97 @@ document.addEventListener("DOMContentLoaded", function () {
 	const availableRoomList = document.querySelector("#availableRoomList");
 	const keyTypeCards = document.querySelectorAll(".key-type-card");
 	const checkinBtn = document.querySelector("#checkinBtn");
-
+	const checkinTab = document.querySelector("#checkinTab");
+	const checkoutTab = document.querySelector("#checkoutTab");
+	const checkinSearchInput = document.querySelector("#checkinSearchInput");
+	const checkinSearchBtn = document.querySelector("#checkinSearchBtn");
+	const checkinListArea = document.querySelector("#checkinListArea");
+	const checkoutListArea = document.querySelector("#checkoutListArea");
+	const listTitle = document.querySelector("#listTitle");
+	const listCount = document.querySelector("#listCount");
+	const checkoutRows = document.querySelectorAll(".checkout-row");
+	const roomAssignmentSection = document.querySelector("#roomAssignmentSection");
+	const keySection = document.querySelector("#keySection");
+	const checkoutBtn = document.querySelector("#checkoutBtn");
+	
 	let selectedReservationId = null;
 	let selectedGuestId = null;
 	let selectedRoomId = null;
+	let selectedCheckinId = null;
+	
+	checkinTab.addEventListener("click", function () {
+		checkinTab.classList.add("active");
+		checkoutTab.classList.remove("active");
 
+		checkinListArea.style.display = "block";
+		checkoutListArea.style.display = "none";
+
+		listTitle.textContent = "체크인 예정 고객";
+		listCount.textContent = "총 " + document.querySelectorAll(".checkin-row").length + "건";
+		
+		roomAssignmentSection.style.display = "block";
+		keySection.style.display = "block";
+		checkinBtn.style.display = "block";
+		checkoutBtn.style.display = "none";
+		checkinSearchInput.value = "";
+		resetSearchRows();
+		resetDetailPanel();
+	});
+
+	checkoutTab.addEventListener("click", function () {
+		checkoutTab.classList.add("active");
+		checkinTab.classList.remove("active");
+
+		checkoutListArea.style.display = "block";
+		checkinListArea.style.display = "none";
+
+		listTitle.textContent = "체크아웃 예정 고객";
+		listCount.textContent = "총 " + document.querySelectorAll(".checkout-row").length + "건";
+		
+		roomAssignmentSection.style.display = "none";
+		keySection.style.display = "none";
+		checkinBtn.style.display = "none";
+		checkoutBtn.style.display = "block";
+		checkinSearchInput.value = "";
+		resetSearchRows();
+		resetDetailPanel();
+	});
+	
+	function resetSearchRows() {
+		rows.forEach(function (row) {
+			row.style.display = "";
+		});
+
+		checkoutRows.forEach(function (row) {
+			row.style.display = "";
+		});
+	}
+	
+	function resetDetailPanel() {
+		detailGuestName.textContent = "고객을 선택하세요";
+		detailReservationCode.textContent = "예약번호";
+		detailRoomType.textContent = "-";
+		detailStayPeriod.textContent = "-";
+		detailGuestCount.textContent = "-";
+		detailMemo.textContent = "-";
+
+		availableRoomList.innerHTML = "";
+
+		selectedReservationId = null;
+		selectedGuestId = null;
+		selectedRoomId = null;
+		selectedCheckinId = null;
+		resetKeySelection();
+
+		rows.forEach(function (row) {
+			row.classList.remove("active");
+		});
+
+		document.querySelectorAll(".checkout-row").forEach(function (row) {
+			row.classList.remove("active");
+		});
+	}
+	
 	function resetKeySelection() {
 		keyTypeCards.forEach(function (card) {
 			card.classList.remove("active");
@@ -122,6 +208,46 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		});
 	});
+	checkoutRows.forEach(function (row) {
+		row.addEventListener("click", async function () {
+			const reservationId = row.dataset.reservationId;
+			const checkinId = row.dataset.checkinId;
+
+			try {
+				const response = await fetch("/admin/checkin/detail?reservationId=" + reservationId);
+
+				if (!response.ok) {
+					alert("체크아웃 상세 정보를 불러오지 못했습니다.");
+					return;
+				}
+
+				const checkout = await response.json();
+
+				selectedReservationId = checkout.reservationId;
+				selectedGuestId = checkout.guestId;
+				selectedRoomId = checkout.roomId;
+				selectedCheckinId = checkinId;
+
+				checkoutRows.forEach(function (item) {
+					item.classList.remove("active");
+				});
+				row.classList.add("active");
+
+				detailGuestName.textContent = checkout.guestName;
+				detailReservationCode.textContent = "예약번호 " + checkout.reservationCode;
+				detailRoomType.textContent = checkout.roomTypeName;
+				detailGuestCount.textContent = checkout.guestCount + "명";
+				detailMemo.textContent = checkout.memo ? checkout.memo : "-";
+
+				const checkinDate = formatDate(checkout.checkinTime);
+				const checkoutDate = formatDate(checkout.checkoutTime);
+				detailStayPeriod.textContent = checkinDate + " ~ " + checkoutDate;
+			} catch (error) {
+				console.error(error);
+				alert("체크아웃 상세 정보를 불러오는 중 오류가 발생했습니다.");
+			}
+		});
+	});
 
 	checkinBtn.addEventListener("click", async function () {
 		if (selectedReservationId === null) {
@@ -162,7 +288,69 @@ document.addEventListener("DOMContentLoaded", function () {
 			alert("체크인 처리 중 오류가 발생했습니다.");
 		}
 	});
+	
+	checkoutBtn.addEventListener("click", async function () {
+		if (selectedCheckinId === null) {
+			alert("체크아웃할 고객을 선택해주세요.");
+			return;
+		}
 
+		if (selectedRoomId === null) {
+			alert("객실 정보를 확인할 수 없습니다.");
+			return;
+		}
+
+		const data = new URLSearchParams();
+		data.append("id", selectedCheckinId);
+		data.append("roomId", selectedRoomId);
+
+		try {
+			const response = await fetch("/admin/checkin/checkout", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded"
+				},
+				body: data
+			});
+
+			if (!response.ok) {
+				alert("체크아웃 처리에 실패했습니다.");
+				return;
+			}
+
+			alert("체크아웃이 완료되었습니다.");
+			location.href = "/admin/checkin";
+		} catch (error) {
+			console.error(error);
+			alert("체크아웃 처리 중 오류가 발생했습니다.");
+		}
+	});
+	function searchRows(targetRows, keyword) {
+		targetRows.forEach(function (row) {
+			const roomNum = row.children[0].textContent.trim();
+			const guestName = row.children[1].textContent.trim();
+
+			if (roomNum.includes(keyword) || guestName.includes(keyword)) {
+				row.style.display = "";
+			} else {
+				row.style.display = "none";
+			}
+		});
+	}
+	checkinSearchBtn.addEventListener("click", function () {
+		const keyword = checkinSearchInput.value.trim();
+
+		if (checkinTab.classList.contains("active")) {
+			searchRows(rows, keyword);
+		} else {
+			searchRows(checkoutRows, keyword);
+		}
+	});
+	checkinSearchInput.addEventListener("keydown", function (event) {
+		if (event.key === "Enter") {
+			checkinSearchBtn.click();
+		}
+	});
 	function formatDate(dateTime) {
 		if (!dateTime) {
 			return "-";
@@ -175,4 +363,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		return year + "." + month + "." + day;
 	}
+	availableRoomList.addEventListener("wheel", function (event) {
+		if (event.deltaY === 0) {
+			return;
+		}
+
+		event.preventDefault();
+		availableRoomList.scrollLeft += event.deltaY;
+	}, { passive: false });
 });

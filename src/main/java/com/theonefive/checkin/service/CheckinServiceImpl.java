@@ -17,6 +17,9 @@ public class CheckinServiceImpl implements CheckinService {
 	private final CheckinMapper checkinMapper;
 	private final RoomMapper roomMapper;
 	// private final HousekeepingMapper housekeepingMapper;
+	// private final ReservationMapper reservationMapper;
+	
+	// private final HousekeepingMapper housekeepingMapper;
 	
 	@Override
 	public List<CheckinDTO> getTodayCheckinList() {
@@ -48,6 +51,7 @@ public class CheckinServiceImpl implements CheckinService {
 		int result = checkinMapper.updateCheckout(checkin);
 		int roomResult =  roomMapper.updateRoomStatus(checkin.getRoomId(), "청소중");
 		// housekeepingMapper.updateStatus(checkin.getRoomId(), "청소대기");
+		// int reservationResult = reservationMapper.updateReservationStatus(checkin.getReservationId(), "이용완료");
 		return result > 0 && roomResult > 0;
 	}
 }

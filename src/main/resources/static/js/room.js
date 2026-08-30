@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
+	const roomGrids = document.querySelectorAll(".admin-room-grid");
+
+	roomGrids.forEach(function (grid) {
+		grid.addEventListener("wheel", function (event) {
+			if (event.deltaY === 0) {
+				return;
+			}
+
+			event.preventDefault();
+			grid.scrollLeft += event.deltaY;
+		}, { passive: false });
+	});
     const detailLinks = document.querySelectorAll(".room-detail-link");
     const emptyArea = document.querySelector("#roomDetailEmpty");
     const detailContent = document.querySelector("#roomDetailContent");

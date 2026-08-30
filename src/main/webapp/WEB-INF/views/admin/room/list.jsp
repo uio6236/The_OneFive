@@ -56,41 +56,42 @@
 			        <span class="room-overview-rate danger">${inspectionRate}%</span>
 			    </div>
 			</section>
-            <!-- 층 필터 -->
-            <form action="/admin/room" method="get" class="filter-bar room-filter-bar">
-                <select name="floor" class="form-control room-filter-select">
-                    <option value="0" ${selectedFloor == 0 ? 'selected' : ''}>
-                        전체 층
-                    </option>
-                    <option value="2" ${selectedFloor == 2 ? 'selected' : ''}>
-                        2층
-                    </option>
-                    <option value="3" ${selectedFloor == 3 ? 'selected' : ''}>
-                        3층
-                    </option>
-                    <option value="4" ${selectedFloor == 4 ? 'selected' : ''}>
-                        4층
-                    </option>
-                    <option value="5" ${selectedFloor == 5 ? 'selected' : ''}>
-                        5층
-                    </option>
-                </select>
-                <button type="submit" class="btn btn-dark">
-                    조회
-                </button>
-            </form>
 
-            <!-- 조회 결과 없음 -->
-            <c:if test="${empty roomList}">
-                <div class="card">
-                    <div class="card-body">
-                        조회된 객실이 없습니다.
-                    </div>
-                </div>
-            </c:if>
 
 			<div class="room-content-layout">
-				<div class="room-list-area">
+				<div class="room-left-area">
+					<!-- 층 필터 -->
+					<form action="/admin/room" method="get" class="filter-bar room-filter-bar">
+					    <select name="floor" class="form-control room-filter-select">
+					        <option value="0" ${selectedFloor == 0 ? 'selected' : ''}>
+					            전체 층
+					        </option>
+					        <option value="2" ${selectedFloor == 2 ? 'selected' : ''}>
+					            2층
+					        </option>
+					        <option value="3" ${selectedFloor == 3 ? 'selected' : ''}>
+					            3층
+					        </option>
+					        <option value="4" ${selectedFloor == 4 ? 'selected' : ''}>
+					            4층
+					        </option>
+					        <option value="5" ${selectedFloor == 5 ? 'selected' : ''}>
+					            5층
+					        </option>
+					    </select>
+					    <button type="submit" class="btn btn-dark">
+					        조회
+					    </button>
+					</form>
+
+					<!-- 조회 결과 없음 -->
+					<c:if test="${empty roomList}">
+					    <div class="card">
+					        <div class="card-body">
+					            조회된 객실이 없습니다.
+					        </div>
+					    </div>
+					</c:if>
 		            <!-- 객실 목록 -->
 		            <c:if test="${not empty roomList}">
 		                <!-- 5층 -->

@@ -17,70 +17,35 @@
     <main class="admin-content">
         <jsp:include page="/WEB-INF/views/common/adminHeader.jsp"/>
         <section class="admin-main">
-            <!-- 상태 요약 -->
-            <section class="checkin-summary-grid">
-                <div class="checkin-summary-card">
-                    <span>
-                        오늘 체크인 예정
-                    </span>
-                    <strong>
-                        12건
-                    </strong>
-                </div>
-                <div class="checkin-summary-card">
-                    <span>
-                        체크인 완료
-                    </span>
-                    <strong>
-                        7건
-                    </strong>
-                </div>
-                <div class="checkin-summary-card">
-                    <span>
-                        오늘 체크아웃 예정
-                    </span>
-                    <strong>
-                        8건
-                    </strong>
-                </div>
-                <div class="checkin-summary-card">
-                    <span>
-                        체크아웃 완료
-                    </span>
-                    <strong>
-                        5건
-                    </strong>
-                </div>
-            </section>
-
             <!-- 탭 -->
             <nav class="checkin-tabs">
-                <button type="button" class="checkin-tab active">
-                    체크인 예정
+                <button type="button" class="checkin-tab active" id="checkinTab">
+                    금일 체크인 예정 ${checkinList.size()}건
                 </button>
-                <button type="button" class="checkin-tab">
-                    체크아웃 예정
+                <button type="button" class="checkin-tab" id="checkoutTab">
+                    금일 체크아웃 예정 ${checkoutList.size()}건
                 </button>
             </nav>
 
-            <!-- 검색 -->
-            <div class="filter-bar checkin-filter">
-                <div class="search-box">
-                    <input type="text" class="form-control" placeholder="고객명 또는 객실번호 검색">
-                </div>
-                <button type="button" id="checkinSearchBtn" class="btn btn-dark">
-                    검색
-                </button>
-            </div>
+
             <!-- 체크인 대상 -->
             <section class="checkin-layout">
                 <!-- 왼쪽 목록 -->
-                <div class="checkin-list-panel">
+                <div class="checkin-left-area">
+					<!-- 검색 -->
+					<div class="filter-bar checkin-filter">
+					    <div class="search-box">
+					        <input type="text" id="checkinSearchInput" class="form-control" placeholder="고객명 또는 객실번호 검색">
+					    </div>
+					    <button type="button" id="checkinSearchBtn" class="btn btn-dark">
+					        검색
+					    </button>
+					</div>
                     <div class="checkin-panel-title">
-                        <h2>체크인 예정 고객</h2>
-                        <span>총 12건</span>
+						<h2 id="listTitle">체크인 예정 고객</h2>
+						<span id="listCount">총 ${checkinList.size()}건</span>
                     </div>
-
+					<div id="checkinListArea">
 					<div class="checkin-table-wrap">
 						<table class="checkin-table">
 							<thead>
@@ -122,6 +87,8 @@
 							</tbody>
 						</table>
 					</div>
+					</div>
+					<div id="checkoutListArea" style="display: none;">
 					<div class="checkin-table-wrap">
 						<table class="checkin-table">
 							<thead>
@@ -159,6 +126,7 @@
 							</tbody>
 						</table>
 					</div>
+					</div>
                 </div>
 
 				<!-- 오른쪽 상세 -->
@@ -191,7 +159,7 @@
 					</div>
 
 					<!-- 객실 배정 -->
-					<div class="room-assignment-section">
+					<div class="room-assignment-section" id="roomAssignmentSection">
 						<div class="checkin-section-title">
 							<h3>객실 배정</h3>
 							<p>현재 이용 가능한 동일 타입 객실입니다.</p>
@@ -201,7 +169,7 @@
 					</div>
 
 					<!-- 객실 키 발급 -->
-					<div class="key-section">
+					<div class="key-section" id="keySection">
 						<div class="checkin-section-title">
 							<h3>객실 키 발급</h3>
 						</div>
@@ -223,6 +191,7 @@
 
 					<div class="checkin-action-row">
 						<button type="button" class="btn btn-primary" id="checkinBtn">체크인 완료 처리</button>
+						<button type="button" class="btn btn-primary" id="checkoutBtn" style="display: none;">체크아웃 완료 처리</button>
 					</div>
 				</div>
             </section>
