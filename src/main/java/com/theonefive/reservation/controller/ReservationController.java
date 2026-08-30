@@ -1,16 +1,20 @@
 package com.theonefive.reservation.controller;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.theonefive.reservation.model.dto.ReservationDTO;
 import com.theonefive.reservation.model.dto.RoomSearchDTO;
 import com.theonefive.reservation.model.dto.RoomTypeListDTO;
 import com.theonefive.reservation.service.ReservationService;
@@ -76,4 +80,74 @@ public class ReservationController {
     public int checkAvailability(@ModelAttribute RoomSearchDTO condition) {
         return service.countAvailableRooms(condition);
     }
-   }
+    
+    
+    //---------------------------------------결제
+    // URL : [GET] /customer/reservation/payment
+    @GetMapping("/payment")
+    public String payment(@RequestParam Long roomTypeId,
+                           @RequestParam String checkinDate,
+                           @RequestParam String checkoutDate,
+                           @RequestParam Integer adultCount,
+                           @RequestParam(required = false, defaultValue = "0") Integer childCount,
+                           Model model) {
+
+        RoomTypeListDTO roomType = service.findRoomTypeDetail(roomTypeId);
+
+        long nights = ChronoUnit.DAYS.between(
+                LocalDate.parse(checkinDate),
+                LocalDate.parse(checkoutDate));
+
+        int baseCapacity = roomType.getCapacity();
+        int extraAdults = Math.max(0, adultCount - baseCapacity);
+        int remaining = Math.max(0, baseCapacity - Math.min(adultCount, baseCapacity));
+        int extraChildren = Math.max(0, childCount - remaining);
+        int extraFeePerNight = (extraAdults * 10000) + (extraChildren * 5000);
+
+        int roomAmount = roomType.getPrice() * (int) nights + (extraFeePerNight * (int) nights);
+
+        // TODO: 로그인 세션 연동되면 실제 회원등급으로 교체. 지금은 임시로 false 고정
+        boolean isVip = false;
+        int discountAmount = isVip ? (int) (roomAmount * 0.05) : 0;
+        int totalAmount = roomAmount - discountAmount;
+
+        model.addAttribute("roomType", roomType);
+        model.addAttribute("checkinDate", checkinDate);
+        model.addAttribute("checkoutDate", checkoutDate);
+        model.addAttribute("nights", nights);
+        model.addAttribute("adultCount", adultCount);
+        model.addAttribute("childCount", childCount);
+        model.addAttribute("roomAmount", roomAmount);
+        model.addAttribute("discountAmount", discountAmount);
+        model.addAttribute("totalAmount", totalAmount);
+        model.addAttribute("isVip", isVip);
+
+        return "customer/reservation/payment";
+    }
+
+    // URL : [POST] /customer/reservation/complete
+    @PostMapping("/complete")
+    public String complete(@ModelAttribute ReservationDTO dto, RedirectAttributes redirectAttr) {
+
+        // 결제 직전 최종 재고 검증
+        RoomSearchDTO condition = new RoomSearchDTO();
+        condition.setRoomTypeId(dto.getRoomTypeId());
+
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        condition.setCheckinDate(sdf.format(dto.getCheckin()));
+        condition.setCheckoutDate(sdf.format(dto.getCheckout()));
+
+        int available = service.countAvailableRooms(condition);
+        if (available <= 0) {
+            redirectAttr.addFlashAttribute("error", "죄송합니다, 방금 마지막 객실이 예약되었습니다.");
+            return "redirect:/customer/reservation/detail?roomTypeId=" + dto.getRoomTypeId();
+        }
+
+        dto.setGuestId(1L);
+
+        service.createReservation(dto);
+
+        redirectAttr.addFlashAttribute("paymentSuccess", true);
+        return "redirect:/customer/reservation/rooms";
+    }
+}

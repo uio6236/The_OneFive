@@ -39,7 +39,11 @@
             PAYMENT_METHOD, REQUEST, CREATED_BY, CREATED_AT
         ) VALUES (
             #{id},
-            'RS-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || #{id},
+            TO_CHAR(SYSDATE, 'YYYYMMDD') ||
+		    LPAD(
+		        (SELECT COUNT(*) + 1 FROM RESERVATION WHERE TRUNC(CREATED_AT) = TRUNC(SYSDATE)),
+		        2, '0'
+		    ),
             #{guestId}, #{roomTypeId}, #{roomId},
             #{checkin}, #{checkout}, #{guestCount}, #{status},
             #{roomAmount}, #{discountAmount}, #{totalAmount},

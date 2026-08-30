@@ -25,9 +25,9 @@
 
         <!-- 프로모션 배너 (지금은 화면만, 고정 문구) -->
         <div class="promo-banner">
-            <span class="promo-badge">PROMOTION OF THE MONTH</span>
+            <span class="promo-badge">WELCOME</span>
             <h2>The OneFive 호텔에 오신 걸 환영합니다.</h2>
-            <p>여기 좋아요</p>
+            <p>정성으로 준비한 객실에서, 편안하고 특별한 시간을 보내세요.</p>
         </div>
 
 
@@ -140,6 +140,10 @@
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 </div>
-
+<c:if test="${paymentSuccess}">
+    <script>
+        alert('결제가 완료되었습니다. 예약이 확정되었습니다.');
+    </script>
+</c:if>
 </body>
 </html>

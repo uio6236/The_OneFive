@@ -226,3 +226,73 @@ document.addEventListener('DOMContentLoaded', function () {
     checkAvailability();
 
 });
+
+// payment.jsp 전용 - 결제수단 토글 + 요청사항 왼쪽↔오른쪽 동기화
+document.addEventListener('DOMContentLoaded', function () {
+
+    var paymentForm = document.querySelector('#paymentForm');
+    if (!paymentForm) return;
+	// 연락처 자동 하이픈: 010-1234-5678
+	var phoneInput = document.querySelector('#phone');
+	if (phoneInput) {
+	    phoneInput.addEventListener('input', function () {
+	        var digits = this.value.replace(/[^0-9]/g, '').slice(0, 11);
+	        var formatted = digits;
+	        if (digits.length > 3 && digits.length <= 7) {
+	            formatted = digits.slice(0, 3) + '-' + digits.slice(3);
+	        } else if (digits.length > 7) {
+	            formatted = digits.slice(0, 3) + '-' + digits.slice(3, 7) + '-' + digits.slice(7);
+	        }
+	        this.value = formatted;
+	    });
+	}
+
+	// 카드번호 자동 하이픈: 0000 - 0000 - 0000 - 0000
+	var cardNumberInput = document.querySelector('#cardNumber');
+	if (cardNumberInput) {
+	    cardNumberInput.addEventListener('input', function () {
+	        var digits = this.value.replace(/[^0-9]/g, '').slice(0, 16);
+	        var groups = digits.match(/.{1,4}/g) || [];
+	        this.value = groups.join(' - ');
+	    });
+	}
+
+	// 유효기간 자동 슬래시: MM / YY
+	var expiryInput = document.querySelector('#expiry');
+	if (expiryInput) {
+	    expiryInput.addEventListener('input', function () {
+	        var digits = this.value.replace(/[^0-9]/g, '').slice(0, 4);
+	        var formatted = digits;
+	        if (digits.length > 2) {
+	            formatted = digits.slice(0, 2) + ' / ' + digits.slice(2);
+	        }
+	        this.value = formatted;
+	    });
+	}
+    // 결제수단 탭 클릭 시 active 토글 + 카드/계좌 필드 전환
+    document.querySelectorAll('.payment-method').forEach(function (label) {
+        label.addEventListener('click', function () {
+            document.querySelectorAll('.payment-method').forEach(function (l) {
+                l.classList.remove('active');
+            });
+            this.classList.add('active');
+
+            var radio = this.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
+
+            var method = this.dataset.method;
+            document.querySelector('#cardFields').style.display = (method === 'CARD') ? 'block' : 'none';
+            document.querySelector('#accountFields').style.display = (method === 'ACCOUNT') ? 'block' : 'none';
+        });
+    });
+
+    // 왼쪽 카드의 요청사항 입력값을, 폼 안 hidden input에 실시간 복사
+    var requestDisplay = document.querySelector('#requestDisplay');
+    var requestHidden = document.querySelector('#requestHidden');
+    if (requestDisplay && requestHidden) {
+        requestDisplay.addEventListener('input', function () {
+            requestHidden.value = this.value;
+        });
+    }
+
+});
