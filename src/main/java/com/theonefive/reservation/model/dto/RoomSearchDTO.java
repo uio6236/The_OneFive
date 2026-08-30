@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-// 고객 객실조회 검색조건 전용 (파라미터 3개라 DTO로 묶음)
+// 고객 객실조회 검색조건 전용 
 @Getter
 @Setter
 @NoArgsConstructor
