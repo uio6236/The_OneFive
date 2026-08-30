@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+           "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.theonefive.housekeeping.model.mapper.HousekeepingMapper">
+
+    <!-- 필터(층/상태/담당자)가 적용된 목록 조회. 조건이 없으면 <if>가 생략되어 WHERE절 자체가 안 붙음 -->
+    <select id="selectList" resultType="HousekeepingDTO" parameterType="HousekeepingSearchConditionDTO">
+        SELECT
+            H.ID, H.ROOM_ID, H.EMPLOYEE_ID, H.STATUS, H.REQUESTED_AT,
+            H.STARTED_AT, H.COMPLETED_AT, H.INSPECTED_AT, H.NOTE,
+            R.ROOM_NUM, R.FLOOR, RT.NAME AS TYPE_NAME, E.NAME AS EMPLOYEE_NAME
+        FROM HOUSEKEEPING H
+        JOIN ROOM R ON H.ROOM_ID = R.ID
+        JOIN ROOM_TYPE RT ON R.TYPE_ID = RT.ID
+        <!-- 담당자 미배정(EMPLOYEE_ID NULL) 건도 목록에 나와야 하므로 LEFT JOIN -->
+        LEFT JOIN EMPLOYEE E ON H.EMPLOYEE_ID = E.ID
+        <where>
+            <if test="floor != null">AND R.FLOOR = #{floor}</if>
+            <if test="status != null and status != ''">AND H.STATUS = #{status}</if>
+            <if test="employeeName != null and employeeName != ''">AND E.NAME = #{employeeName}</if>
+        </where>
+        ORDER BY H.REQUESTED_AT DESC
+    </select>
+
+    <!-- id 단건 조회 (상세패널용) -->
+    <select id="selectById" resultType="HousekeepingDTO">
+        SELECT
+            H.ID, H.ROOM_ID, H.EMPLOYEE_ID, H.STATUS, H.REQUESTED_AT,
+            H.STARTED_AT, H.COMPLETED_AT, H.INSPECTED_AT, H.NOTE,
+            R.ROOM_NUM, R.FLOOR, RT.NAME AS TYPE_NAME, E.NAME AS EMPLOYEE_NAME
+        FROM HOUSEKEEPING H
+        JOIN ROOM R ON H.ROOM_ID = R.ID
+        JOIN ROOM_TYPE RT ON R.TYPE_ID = RT.ID
+        LEFT JOIN EMPLOYEE E ON H.EMPLOYEE_ID = E.ID
+        WHERE H.ID = #{id}
+    </select>
+
+    <!-- 담당자(EMPLOYEE_ID) 변경 -->
+    <update id="assignEmployee" parameterType="HousekeepingDTO">
+        UPDATE HOUSEKEEPING SET EMPLOYEE_ID = #{employeeId} WHERE ID = #{id}
+    </update>
+
+    <!-- 청소 시작: 상태 전환 + 시작 시각 기록 -->
+    <update id="startCleaning">
+        UPDATE HOUSEKEEPING SET STATUS = '청소중', STARTED_AT = SYSDATE WHERE ID = #{id}
+    </update>
+
+    <!--
+      청소 완료: STATUS는 그대로 '청소중'으로 두고 COMPLETED_AT만 기록한다.
+      HOUSEKEEPING.STATUS는 (청소대기/청소중/점검완료) 세 값만 허용하는 CHECK 제약이 있어
+      '청소완료'라는 STATUS 값 자체를 저장할 수 없기 때문에, 완료 여부는
+      COMPLETED_AT의 존재 유무로 판단한다.
+    -->
+    <update id="completeCleaning">
+        UPDATE HOUSEKEEPING SET COMPLETED_AT = SYSDATE WHERE ID = #{id}
+    </update>
+
+    <!-- 점검 완료: 상태 전환 + 점검 시각 기록 -->
+    <update id="inspect">
+        UPDATE HOUSEKEEPING SET STATUS = '점검완료', INSPECTED_AT = SYSDATE WHERE ID = #{id}
+    </update>
+
+    <!-- 비고(NOTE) 저장 -->
+    <update id="updateNote">
+        UPDATE HOUSEKEEPING SET NOTE = #{note} WHERE ID = #{id}
+    </update>
+
+    <!-- 상태별(STATUS) 건수 집계. 0건인 상태는 결과에 포함되지 않음 (Service에서 보정) -->
+    <select id="selectStatusCount" resultType="StatusCountDTO">
+        SELECT STATUS AS status, COUNT(*) AS count
+        FROM HOUSEKEEPING
+        GROUP BY STATUS
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
