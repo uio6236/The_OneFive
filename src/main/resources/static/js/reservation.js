@@ -296,3 +296,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
+// 관리자 예약 목록 - 10개씩 클라이언트에서 나눠 보여주기
+document.addEventListener('DOMContentLoaded', function () {
+    var rows = document.querySelectorAll('.reservation-row');
+    var pagination = document.querySelector('#pagination');
+    if (!pagination || rows.length === 0) return;
+
+    var pageSize = 10;
+    var totalPages = Math.ceil(rows.length / pageSize);
+
+    function showPage(page) {
+        rows.forEach(function (row, index) {
+            var rowPage = Math.floor(index / pageSize) + 1;
+            row.style.display = (rowPage === page) ? '' : 'none';
+        });
+        pagination.querySelectorAll('a').forEach(function (link) {
+            link.classList.toggle('active', Number(link.dataset.page) === page);
+        });
+    }
+
+    for (var i = 1; i <= totalPages; i++) {
+        var link = document.createElement('a');
+        link.href = '#';
+        link.textContent = i;
+        link.dataset.page = i;
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            showPage(Number(this.dataset.page));
+        });
+        pagination.appendChild(link);
+    }
+
+    showPage(1);
+});

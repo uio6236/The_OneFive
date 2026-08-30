@@ -103,7 +103,7 @@
 
                     <c:forEach var="r" items="${reservationList}">
 
-                        <tr class="${r.status == '예약취소' ? 'cancelled-row' : ''}">
+                        <tr class="reservation-row ${r.status == '예약취소' ? 'cancelled-row' : ''}">
 
                             <td>
                                     ${r.code}
@@ -220,16 +220,14 @@
                         <dd id="detailTotalAmount"></dd>
                     </dl>
 
-                    <div class="detail-panel-buttons">
-                        <button type="button" class="btn btn-outline">예약 수정</button>
-
-                        <form id="cancelForm" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('이 예약을 취소하시겠습니까?');">
-                                예약 취소
-                            </button>
-                        </form>
-                    </div>
+					<div class="detail-panel-buttons">
+					    <form id="cancelForm" method="post" style="display:inline;">
+					        <button type="submit" class="btn btn-danger"
+					                onclick="return confirm('이 예약을 취소하시겠습니까?');">
+					            예약 취소
+					        </button>
+					    </form>
+					</div>
 
                 </div>
 
@@ -246,12 +244,8 @@
                     전체 ${fn:length(reservationList)}건
                 </span>
 
-
-                <div class="pagination">
-                    <!-- 페이지네이션은 지금은 화면만, 실제 페이징 기능은 나중에 연결 예정 -->
-                    <a href="#" class="active">1</a>
-                </div>
-
+				<!-- 페이징-->
+				<div class="pagination" id="pagination"></div>
             </div>
 
         </section>
