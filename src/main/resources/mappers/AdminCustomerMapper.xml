@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 반드시 AdminCustomerMapper 인터페이스의 전체 경로와 철자 하나까지 똑같아야 함 -->
+<mapper namespace="com.theonefive.admin.model.mapper.AdminCustomerMapper">
+
+    <!-- 검색조건 where절을 목록 쿼리, 카운트 쿼리 둘 다에서 재사용하려고 sql 조각으로 분리 -->
+    <sql id="searchWhere">
+        <where>
+            <if test="keyword != null and keyword != ''">
+                <!-- 이름/연락처/이메일 중 하나라도 일치하면 검색되게 OR로 묶음 -->
+                AND (
+                    NAME LIKE '%' || #{keyword} || '%'
+                    OR PHONE LIKE '%' || #{keyword} || '%'
+                    OR EMAIL LIKE '%' || #{keyword} || '%'
+                )
+            </if>
+            <if test="membershipGrade != null and membershipGrade != '' and membershipGrade != '전체'">
+                <!-- 화면에서 "전체"를 선택하면 이 조건 자체를 걸지 않음 -->
+                AND MEMBERSHIP_GRADE = #{membershipGrade}
+            </if>
+        </where>
+    </sql>
+    
+        <!-- resultType은 재사용하는 CustomerDTO의 실제 패키지 경로로 정확히 적어야 함 -->
+    <select id="selectCustomerList" parameterType="AdminCustomerSearchDTO"
+            resultType="CustomerDTO">
+        SELECT
+            ID                AS id,
+            NAME              AS name,
+            PHONE             AS phone,
+            EMAIL             AS email,
+            MEMBERSHIP_GRADE  AS membershipGrade,
+            TOTAL_VISIT_COUNT AS totalVisitCount,
+            MEMO              AS memo
+        FROM CUSTOMER
+        <include refid="searchWhere"/>
+        ORDER BY ID DESC
+        <!-- Oracle 12c 이상 페이징 문법: offset개 건너뛰고 size개만 가져오기 -->
+        OFFSET #{offset} ROWS FETCH NEXT #{size} ROWS ONLY
+    </select>
+
+    <select id="countCustomerList" parameterType="AdminCustomerSearchDTO"
+            resultType="int">
+        SELECT COUNT(*)
+        FROM CUSTOMER
+        <include refid="searchWhere"/>
+    </select>
+
+    <select id="selectCustomerById" resultType="CustomerDTO">
+        SELECT
+            ID AS id, NAME AS name, PHONE AS phone, EMAIL AS email,
+            MEMBERSHIP_GRADE AS membershipGrade, TOTAL_VISIT_COUNT AS totalVisitCount, MEMO AS memo
+        FROM CUSTOMER
+        WHERE ID = #{id}
+    </select>
+
+    <update id="updateCustomerByAdmin" parameterType="CustomerDTO">
+        UPDATE CUSTOMER
+        SET MEMBERSHIP_GRADE = #{membershipGrade},
+            MEMO = #{memo}
+        WHERE ID = #{id}
+    </update>
+
+</mapper>

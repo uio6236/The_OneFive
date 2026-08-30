@@ -1048,7 +1048,6 @@
     font-size: 16px;
 }
 
-
 /* ---------- 링크 ---------- */
 
 .mypage-link {
@@ -1128,7 +1127,7 @@
     vertical-align: middle;
 }
 
-.admin-customer-table td:nth-child(8) {
+.admin-customer-table td:nth-child(6) {
     max-width: 220px;
 
     overflow: hidden;

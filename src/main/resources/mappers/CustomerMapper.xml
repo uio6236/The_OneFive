@@ -13,8 +13,7 @@
 	<!-- 아이디 중복 확인 / 회원 조회 -->
 	<select id="selectCustomerByLoginId" parameterType="string" resultType="CustomerDTO">
 		SELECT ID, LOGIN_ID, PASSWORD, NAME, PHONE, EMAIL, 
-			   MEMBERSHIP_GRADE, POINT, TOTAL_VISIT_COUNT, 
-			   LAST_VISIT_DATE, MEMO
+			   MEMBERSHIP_GRADE, TOTAL_VISIT_COUNT, MEMO
 		FROM CUSTOMER
 		WHERE LOGIN_ID = #{loginId}
 	</select>

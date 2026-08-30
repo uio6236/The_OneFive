@@ -1,7 +1,5 @@
 package com.theonefive.customer.model.dto;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +20,8 @@ public class CustomerDTO {
 	private String phone;
 	private String email;
 	private String membershipGrade;
-	private Integer point;
 	private Integer totalVisitCount;
-	private LocalDate lastVisitDate;
 	private String memo;
 	
-	private String lastVisitDateStr;
+
 }

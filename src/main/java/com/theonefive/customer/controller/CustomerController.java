@@ -98,18 +98,18 @@ public class CustomerController {
     // ==========================================
     // 3. 로그아웃 & 메인페이지
     // ==========================================
-
+/*
     // 메인 페이지
     @GetMapping("/main")
     public String mainPage() {
         return "customer/main"; // /WEB-INF/views/customer/main.jsp 연결
     }
-
+*/
     // 로그아웃
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // 세션 정보 삭제 (로그아웃 처리)
-        return "redirect:/customer/login"; // 로그인 페이지로 이동
+        return "redirect:/login"; // 로그인 페이지로 이동
     }
     
     // ==========================================

@@ -205,7 +205,7 @@
                         </strong>
 
                         <span>
-                            VIP
+                            ${customer.membershipGrade}
                         </span>
 
                     </div>
@@ -213,7 +213,7 @@
                     <div class="membership-bottom">
 
                         <span>MEMBER ID
-							<strong>onefive_kim01</strong>
+							<strong>${customer.loginId}</strong>
                         </span>
 
                     </div>
@@ -230,7 +230,7 @@
                         </span>
 
                         <strong>
-                            14회
+                            ${customer.totalVisitCount}회
                         </strong>
 
                     </div>

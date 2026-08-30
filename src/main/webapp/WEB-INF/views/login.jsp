@@ -171,12 +171,12 @@
                 </div>
 
 
-                <div class="login-option-row">
+				<div class="login-option-row">
 
-                    <label class="login-remember">
-                        <input type="checkbox" name="remember">
-                        로그인 상태 유지
-                    </label>
+				    <label class="login-remember">
+				        <input type="checkbox" name="rememberId" id="rememberId">
+				        아이디 저장
+				    </label>
 
 					<a href="/password/reset" class="text-link"> 아이디 찾기 </a>
 					
