@@ -12,7 +12,8 @@ public interface HousekeepingService {
     List<HousekeepingDTO> getList(HousekeepingSearchConditionDTO condition);
     HousekeepingDTO getDetail(Long id);
     List<StatusCountDTO> getStatusCount();
-
+   
+    
     List<Long> assignEmployee(List<Long> ids, Long employeeId);
     List<Long> startCleaning(List<Long> ids);
     List<Long> completeCleaning(List<Long> ids);

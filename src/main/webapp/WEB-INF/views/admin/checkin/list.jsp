@@ -86,6 +86,57 @@
 								</c:if>
 							</tbody>
 						</table>
+						<div id="checkinPagination" class="table-pagination"></div>
+					</div>
+					<div class="checkin-panel-title past-list-title">
+						<h2>지난 체크인 고객</h2>
+						<span>총 ${pastCheckinList.size()}건</span>
+					</div>
+
+					<div class="checkin-table-wrap">
+						<table class="checkin-table">
+							<thead>
+								<tr>
+									<th>객실</th>
+									<th>고객명</th>
+									<th>예약번호</th>
+									<th>인원</th>
+									<th>객실상태</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="checkin" items="${pastCheckinList}">
+									<tr class="past-checkin-row" data-reservation-id="${checkin.reservationId}">
+										<td>
+											<c:choose>
+												<c:when test="${not empty checkin.roomNum}">${checkin.roomNum}호</c:when>
+												<c:otherwise>미배정</c:otherwise>
+											</c:choose>
+										</td>
+										<td>${checkin.guestName}</td>
+										<td>${checkin.reservationCode}</td>
+										<td>${checkin.guestCount}명</td>
+										<td>
+											<c:choose>
+												<c:when test="${not empty checkin.roomStatus}">
+													<span class="room-state">${checkin.roomStatus}</span>
+												</c:when>
+												<c:otherwise>-</c:otherwise>
+											</c:choose>
+										</td>
+									</tr>
+								</c:forEach>
+
+								<c:if test="${empty pastCheckinList}">
+									<tr>
+										<td colspan="5" class="empty-row">
+											지난 체크인 미처리 고객이 없습니다.
+										</td>
+									</tr>
+								</c:if>
+							</tbody>
+						</table>
+						<div id="pastCheckinPagination" class="table-pagination"></div>
 					</div>
 					</div>
 					<div id="checkoutListArea" style="display: none;">
@@ -125,6 +176,49 @@
 								</c:if>
 							</tbody>
 						</table>
+						<div id="checkoutPagination" class="table-pagination"></div>
+					</div>
+					<div class="checkin-panel-title past-list-title">
+						<h2>지난 체크아웃 고객</h2>
+						<span>총 ${pastCheckoutList.size()}건</span>
+					</div>
+
+					<div class="checkin-table-wrap">
+						<table class="checkin-table">
+							<thead>
+								<tr>
+									<th>객실</th>
+									<th>고객명</th>
+									<th>예약번호</th>
+									<th>인원</th>
+									<th>객실상태</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="checkout" items="${pastCheckoutList}">
+									<tr class="past-checkout-row"
+										data-reservation-id="${checkout.reservationId}"
+										data-checkin-id="${checkout.id}">
+										<td>${checkout.roomNum}호</td>
+										<td>${checkout.guestName}</td>
+										<td>${checkout.reservationCode}</td>
+										<td>${checkout.guestCount}명</td>
+										<td>
+											<span class="room-state">투숙중</span>
+										</td>
+									</tr>
+								</c:forEach>
+
+								<c:if test="${empty pastCheckoutList}">
+									<tr>
+										<td colspan="5" class="empty-row">
+											지난 체크아웃 미처리 고객이 없습니다.
+										</td>
+									</tr>
+								</c:if>
+							</tbody>
+						</table>
+						<div id="pastCheckoutPagination" class="table-pagination"></div>
 					</div>
 					</div>
                 </div>

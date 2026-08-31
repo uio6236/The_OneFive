@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.theonefive.checkin.model.dto.CheckinDTO;
 import com.theonefive.checkin.model.mapper.CheckinMapper;
+import com.theonefive.housekeeping.model.dto.HousekeepingDTO;
+import com.theonefive.housekeeping.model.mapper.HousekeepingMapper;
 import com.theonefive.room.model.mapper.RoomMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -16,10 +18,8 @@ import lombok.RequiredArgsConstructor;
 public class CheckinServiceImpl implements CheckinService {
 	private final CheckinMapper checkinMapper;
 	private final RoomMapper roomMapper;
-	// private final HousekeepingMapper housekeepingMapper;
+	private final HousekeepingMapper housekeepingMapper;
 	// private final ReservationMapper reservationMapper;
-	
-	// private final HousekeepingMapper housekeepingMapper;
 	
 	@Override
 	public List<CheckinDTO> getTodayCheckinList() {
@@ -50,9 +50,14 @@ public class CheckinServiceImpl implements CheckinService {
 		// 체크아웃 처리
 		int result = checkinMapper.updateCheckout(checkin);
 		int roomResult =  roomMapper.updateRoomStatus(checkin.getRoomId(), "청소중");
-		// housekeepingMapper.updateStatus(checkin.getRoomId(), "청소대기");
+		HousekeepingDTO housekeeping = new HousekeepingDTO();
+		housekeeping.setRoomId((long) checkin.getRoomId());
+		housekeeping.setNote("체크아웃 후 청소 요청");
+
+		int housekeepingResult = housekeepingMapper.insertCleaningRequest(housekeeping);
+
+		return result > 0 && roomResult > 0 && housekeepingResult > 0;
 		// int reservationResult = reservationMapper.updateReservationStatus(checkin.getReservationId(), "이용완료");
-		return result > 0 && roomResult > 0;
 	}
 	@Override
 	public List<CheckinDTO> getPastCheckinList() {

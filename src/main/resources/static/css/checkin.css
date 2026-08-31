@@ -94,6 +94,46 @@
 .checkin-left-area {
 	min-width: 0;
 }
+.past-list-title {
+	margin-top: 24px;
+	border-top: 1px solid var(--border);
+}
+.table-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+	padding: 16px 0;
+}
+
+.table-pagination button {
+	min-width: 30px;
+	height: 30px;
+	padding: 0 8px;
+	border: 1px solid var(--border);
+	border-radius: 6px;
+	background: #fff;
+	color: var(--text-secondary);
+	font-size: 10px;
+	cursor: pointer;
+}
+
+.table-pagination button:hover:not(:disabled) {
+	border-color: var(--navy);
+	color: var(--navy);
+}
+
+.table-pagination button.active {
+	border-color: var(--navy);
+	background: var(--navy);
+	color: #fff;
+	font-weight: 600;
+}
+
+.table-pagination button:disabled {
+	opacity: 0.4;
+	cursor: default;
+}
 /* 상세 */
 .checkin-detail-panel {
     padding: 26px;
