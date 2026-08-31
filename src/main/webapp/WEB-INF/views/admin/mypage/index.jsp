@@ -42,7 +42,7 @@
                     <div class="mypage-card mypage-profile-card">
 
                         <div class="mypage-avatar">
-                            ${fn:substring(employee.name, 0, 1)}
+                            ${fn:substring(adminEmployee.name, 0, 1)}
                         </div>
 
                         <h2>${employee.name}</h2>

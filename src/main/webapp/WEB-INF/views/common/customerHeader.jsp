@@ -20,15 +20,11 @@
 
     <nav class="customer-nav">
 
-        <a href="/customer/main">
+        <a href="/customer/reservation/rooms">
             객실 예약
         </a>
 
-        <a href="/customer/reservation/payment">
-            예약 결제
-        </a>
-
-        <a href="/customer/mypage">
+        <a href="/mypage/index">
             마이페이지
         </a>
 
@@ -41,11 +37,6 @@
             ${customer.name} 고객님
         </span>
 
-        <img
-            src="/images/common/customer-profile.png"
-            alt="고객 프로필"
-            class="customer-user-image"
-        >
 
         <a href="/logout">
             로그아웃

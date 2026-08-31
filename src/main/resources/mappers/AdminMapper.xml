@@ -9,7 +9,7 @@
 	</select>
 
 	<!-- 회원 조회 -->
-	<select id="selectCustomerByCode" parameterType="string"
+	<select id="selectEmployeeByCode" parameterType="string"
 		resultType="AdminEmployeeDTO">
 		SELECT ID, CODE,NAME, PASSWORD, POSITION, PHONE, EMAIL
 		FROM EMPLOYEE

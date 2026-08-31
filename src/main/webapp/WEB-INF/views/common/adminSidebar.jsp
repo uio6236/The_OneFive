@@ -48,7 +48,7 @@
         </li>
 
         <li class="admin-menu-item">
-            <a href="/admin/rooms">
+            <a href="/admin/room">
                 <span class="admin-menu-icon">⚿</span>
                 객실 현황
             </a>
