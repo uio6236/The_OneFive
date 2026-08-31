@@ -57,8 +57,8 @@
     display: grid;
 
     grid-template-columns:
-        minmax(300px, 0.75fr)
-        minmax(0, 1.35fr);
+        minmax(420px, 1.6fr)
+        minmax(0, 1fr);
 
     gap: 22px;
 
@@ -201,7 +201,7 @@
 
     color: var(--text-secondary);
 
-    font-size: 9px;
+    font-size: 13px;
 }
 
 
@@ -235,11 +235,11 @@
 
     color: var(--text-secondary);
 
-    font-size: 8px;
+    font-size: 12px;
 }
 
 .inquiry-customer-info strong {
-    font-size: 10px;
+    font-size: 15px;
 }
 
 
@@ -262,7 +262,7 @@
 
     color: var(--text-secondary);
 
-    font-size: 9px;
+    font-size: 13px;
 }
 
 .inquiry-content-box p {
@@ -270,7 +270,7 @@
 
     color: var(--text-primary);
 
-    font-size: 11px;
+    font-size: 16px;
 
     line-height: 1.8;
 }
@@ -303,4 +303,74 @@
         grid-template-columns: 1fr;
     }
 
+}
+
+/* ===== 관리자 문의 목록 - 테이블형 (기존 카드 리스트보다 정돈된 레이아웃) ===== */
+
+.inquiry-table-wrapper {
+    overflow-x: auto;
+}
+
+.inquiry-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.inquiry-table th:nth-child(1), .inquiry-table td:nth-child(1) { width: 20%; }
+.inquiry-table th:nth-child(2), .inquiry-table td:nth-child(2) { width: 32%; }
+.inquiry-table th:nth-child(3), .inquiry-table td:nth-child(3) { width: 16%; }
+.inquiry-table th:nth-child(4), .inquiry-table td:nth-child(4) { width: 16%; }
+.inquiry-table th:nth-child(5), .inquiry-table td:nth-child(5) { width: 16%; }
+
+.inquiry-table thead th {
+    text-align: left;
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.inquiry-table tbody tr {
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.inquiry-table tbody tr:hover {
+    background: var(--background);
+}
+
+.inquiry-table tbody tr.active {
+    background: var(--blue-light);
+}
+
+.inquiry-table td {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+.inquiry-table td.inquiry-table-no {
+    color: var(--text-secondary);
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.inquiry-table td.inquiry-table-title {
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.inquiry-table td.inquiry-table-date {
+    color: var(--text-secondary);
+    font-size: 13px;
+    white-space: nowrap;
 }

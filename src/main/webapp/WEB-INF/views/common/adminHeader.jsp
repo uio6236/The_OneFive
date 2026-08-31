@@ -10,5 +10,8 @@
         <div class="admin-date">
             ${today} <!-- 나중에 common의 controller에서 Date 함수로 날짜 불러와서 model로 넣어주기 -->
         </div>
+
     </div>
+
 </header>
+
