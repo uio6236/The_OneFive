@@ -5,8 +5,8 @@ import com.theonefive.housekeeping.model.dto.EmployeeDTO;
 import com.theonefive.housekeeping.model.dto.HousekeepingDTO;
 import com.theonefive.housekeeping.model.dto.HousekeepingSearchConditionDTO;
 import com.theonefive.housekeeping.model.dto.StatusCountDTO;
-import com.theonefive.housekeeping.model.mapper.EmployeeMapper;
-import com.theonefive.housekeeping.model.mapper.RoomMapper;
+import com.theonefive.housekeeping.model.mapper.HouseEmployeeMapper;
+import com.theonefive.room.model.mapper.RoomMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class HousekeepingServiceImpl implements HousekeepingService {
 
     private final HousekeepingMapper housekeepingMapper;
     private final RoomMapper roomMapper;
-    private final EmployeeMapper employeeMapper;
+    private final HouseEmployeeMapper employeeMapper;
 
     @Override
     public List<HousekeepingDTO> getList(HousekeepingSearchConditionDTO condition) {

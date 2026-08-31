@@ -6,7 +6,7 @@ import java.util.List;
 
 // 담당자 배정 드롭다운을 위한 EMPLOYEE 전체 목록 조회 Mapper
 @Mapper
-public interface EmployeeMapper {
+public interface HouseEmployeeMapper {
 
     List<EmployeeDTO> selectAll();
 }

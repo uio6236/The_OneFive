@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.theonefive.housekeeping.model.mapper.EmployeeMapper">
+<mapper namespace="com.theonefive.housekeeping.model.mapper.HouseEmployeeMapper">
 
     <!-- 담당자 드롭다운용 전체 직원 목록 (이름순) -->
-    <select id="selectAll" resultType="EmployeeDTO">
+    <select id="selectAll" resultType="HousekeepingEmployeeDTO">
         SELECT ID AS id, NAME AS name
         FROM EMPLOYEE
         ORDER BY NAME

@@ -1,10 +1,13 @@
 package com.theonefive.housekeeping.model.dto;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 // 담당자 배정 드롭다운용 직원 정보
+@Alias("HousekeepingEmployeeDTO")
 @Getter
 @Setter
 @NoArgsConstructor

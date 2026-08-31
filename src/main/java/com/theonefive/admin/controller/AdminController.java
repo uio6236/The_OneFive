@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.theonefive.admin.model.dto.EmployeeDTO;
 import com.theonefive.admin.service.AdminService;
-import com.theonefive.customer.common.ApiResponse;
+import com.theonefive.common.dto.ApiResponse;
 
 
 import jakarta.servlet.http.HttpSession;

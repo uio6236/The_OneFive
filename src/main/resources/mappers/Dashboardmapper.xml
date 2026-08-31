@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.theonefive.dashboard.model.mapper.DashboardMapper">
+ 
+    <resultMap id="dashboardResultMap" type="com.theonefive.dashboard.model.dto.DashboardDTO">
+        <result property="todayCheckinCount"  column="TODAY_CHECKIN_COUNT" />
+        <result property="todayCheckoutCount" column="TODAY_CHECKOUT_COUNT" />
+        <result property="occupancyRate"      column="OCCUPANCY_RATE" />
+        <result property="roomsNeedCleaning"  column="ROOMS_NEED_CLEANING" />
+        <result property="todayRevenue"       column="TODAY_REVENUE" />
+        <result property="roomAvailable"      column="ROOM_AVAILABLE" />
+        <result property="roomOccupied"       column="ROOM_OCCUPIED" />
+        <result property="roomCleaning"       column="ROOM_CLEANING" />
+        <result property="roomInspection"     column="ROOM_INSPECTION" />
+        <result property="hkWaiting"          column="HK_WAITING" />
+        <result property="hkInProgress"       column="HK_IN_PROGRESS" />
+        <result property="hkInspected"        column="HK_INSPECTED" />
+    </resultMap>
+ 
+    <!--
+        주의: STATUS 컬럼의 문자열 값('이용가능','투숙중','청소중','점검중' 등)은
+        JSP 라벨을 기준으로 추정한 값입니다. 실제 객실/하우스키핑 담당자가
+        DB에 넣는 STATUS 값과 다르면 이 부분을 맞춰서 수정해야 합니다.
+    -->
+    <select id="selectSummary" resultMap="dashboardResultMap">
+        SELECT
+            (SELECT COUNT(*) FROM RESERVATION WHERE TRUNC(CHECKIN) = TRUNC(SYSDATE))  AS TODAY_CHECKIN_COUNT,
+            (SELECT COUNT(*) FROM RESERVATION WHERE TRUNC(CHECKOUT) = TRUNC(SYSDATE)) AS TODAY_CHECKOUT_COUNT,
+            (SELECT CASE WHEN COUNT(*) = 0 THEN 0
+                         ELSE ROUND(SUM(CASE WHEN STATUS = '투숙중' THEN 1 ELSE 0 END) / COUNT(*) * 100, 1)
+                    END
+             FROM ROOM) AS OCCUPANCY_RATE,
+            (SELECT COUNT(*) FROM ROOM WHERE STATUS = '청소중') AS ROOMS_NEED_CLEANING,
+            (SELECT NVL(SUM(TOTAL_AMOUNT), 0) FROM RESERVATION WHERE TRUNC(CREATED_AT) = TRUNC(SYSDATE)) AS TODAY_REVENUE,
+            (SELECT COUNT(*) FROM ROOM WHERE STATUS = '이용가능') AS ROOM_AVAILABLE,
+            (SELECT COUNT(*) FROM ROOM WHERE STATUS = '투숙중')   AS ROOM_OCCUPIED,
+            (SELECT COUNT(*) FROM ROOM WHERE STATUS = '청소중')   AS ROOM_CLEANING,
+            (SELECT COUNT(*) FROM ROOM WHERE STATUS = '점검중')   AS ROOM_INSPECTION,
+            (SELECT COUNT(*) FROM HOUSEKEEPING WHERE STATUS = '청소대기') AS HK_WAITING,
+            (SELECT COUNT(*) FROM HOUSEKEEPING WHERE STATUS = '청소중')   AS HK_IN_PROGRESS,
+            (SELECT COUNT(*) FROM HOUSEKEEPING WHERE STATUS = '점검완료') AS HK_INSPECTED
+        FROM DUAL
+    </select>
+ 
+    <select id="selectTodayArrivals" resultType="com.theonefive.dashboard.model.dto.ArrivalDTO">
+        SELECT
+            C.NAME       AS guestName,
+            RT.NAME      AS roomTypeName,
+            R.ROOM_NUM   AS roomNum,
+            RES.CHECKIN  AS checkinTime,
+            RES.CODE     AS reservationCode,
+            RES.GUEST_COUNT AS guestCount,
+            R.STATUS     AS roomStatus
+        FROM RESERVATION RES
+        JOIN CUSTOMER C   ON RES.GUEST_ID = C.ID
+        JOIN ROOM_TYPE RT ON RES.ROOM_TYPE_ID = RT.ID
+        LEFT JOIN ROOM R  ON RES.ROOM_ID = R.ID
+        WHERE TRUNC(RES.CHECKIN) = TRUNC(SYSDATE)
+        ORDER BY RES.CHECKIN ASC
+    </select>
+ 
+</mapper>
+ 
