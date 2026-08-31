@@ -373,17 +373,26 @@
 	border-bottom: 0;
 }
 
-.checkin-row {
-	cursor: pointer;
-	transition: background 0.15s ease;
+.checkin-row,
+.past-checkin-row,
+.checkout-row,
+.past-checkout-row {
+    cursor: pointer;
+    transition: background 0.15s ease;
 }
 
-.checkin-row:hover {
-	background: #f8fafc;
+.checkin-row:hover,
+.past-checkin-row:hover,
+.checkout-row:hover,
+.past-checkout-row:hover {
+    background: #f8fafc;
 }
 
-.checkin-row.active {
-	background: var(--blue-light);
+.checkin-row.active,
+.past-checkin-row.active,
+.checkout-row.active,
+.past-checkout-row.active {
+    background: #dfeaf4;
 }
 
 .checkin-table .room-state {
