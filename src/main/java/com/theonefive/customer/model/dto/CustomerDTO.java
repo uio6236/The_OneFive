@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 public class CustomerDTO {
-	private Integer id;
+	private Long id;
 	private String loginId;
 	private String password;
 	private String newPassword;

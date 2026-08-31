@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.theonefive.common.dto.ApiResponse;
 import com.theonefive.customer.model.dto.CustomerDTO;
 import com.theonefive.customer.service.CustomerService;
+import com.theonefive.reservation.service.ReservationService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,9 @@ import lombok.RequiredArgsConstructor;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final ReservationService reservationService;
 
+    
     // ==========================================
     // 1. 회원가입 기능
     // ==========================================
@@ -116,15 +119,17 @@ public class CustomerController {
     // 4.마이페이지 
     // ==========================================
     
-    @GetMapping("/mypage/index")
+    @GetMapping("/mypage/index")                                 // ③ 메소드 내용만 교체
     public String myPage(HttpSession session, Model model) {
-    	String loginId = (String) session.getAttribute("loginId");
-    	if(loginId == null) {
-    		return "redirect:login";
-    	}
-    	
-    	CustomerDTO customer = customerService.getCustomerByLoginId(loginId);
-    	model.addAttribute("customer", customer);
+        String loginId = (String) session.getAttribute("loginId");
+        if(loginId == null) {
+            return "redirect:login";
+        }
+        CustomerDTO customer = customerService.getCustomerByLoginId(loginId);
+        model.addAttribute("customer", customer);
+
+        model.addAttribute("reservationList", reservationService.findByGuestId(customer.getId()));   // ⬅ 이 한 줄만 추가
+
         return "customer/mypage/index";
     }
     
@@ -145,9 +150,5 @@ public class CustomerController {
              return ApiResponse.fail(e.getMessage());
          }
     }
-    
-    @GetMapping("/test/custo")
-    public String listTest() {
-        return "admin/customer/list";
-    }
+
 }
