@@ -51,11 +51,11 @@
                 <h1>
                     The OneFive 호텔
                     <br>
-                    고객 회원가입
+                    관리자 회원가입
                 </h1>
 
                 <p>
-                    간편하게 회원가입하고 다양한 혜택을 누리세요.
+                    호텔 관리 시스템 이용을 위한 관리자 계정을 등록하세요
                 </p>
 
                 <div class="auth-blue-line"></div>
@@ -79,12 +79,11 @@
                     <div>
 
                         <strong>
-                            실시간 객실 예약 현황
+                            통합 호텔 운영 관리
                         </strong>
 
                         <p>
-                            원하는 날짜와 객실 타입을 선택하여
-                            예약 가능 여부를 확인할 수 있습니다.
+                            객실, 예약, 고객 정보를 한 곳에서 통합 관리하고 운영 효율을 극대화 할 수 있습니다.
                         </p>
 
                     </div>
@@ -101,35 +100,17 @@
                     <div>
 
                         <strong>
-                            간편 체크인 / 체크아웃
+                            실시간 현황 모니터링
                         </strong>
 
                         <p>
-                            사전 정보 등록으로 도착 시
-                            빠르고 편리하게 이용할 수 있습니다.
+                         객실 가동률, 매출, 체크인/체크아웃 현황을 실시간 대시보드로 확인할 수 있습니다.
                         </p>
 
                     </div>
 
                 </div>
 
-
-                <div class="auth-feature">
-
-                    <span class="auth-check">
-                        ✓
-                    </span>
-
-                    <div>
-                        <strong>
-                            멤버십 혜택 및 포인트 적립
-                        </strong>
-                        <p>
-                            회원 전용 할인과 포인트 등
-                            다양한 혜택을 제공합니다.
-                        </p>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -143,24 +124,23 @@
                     회원가입
                 </h2>
                 <p>
-                    The OneFive 호텔의 멤버십 서비스 이용을 위해
-                    회원 정보를 등록해 주세요.
+                    The OneFive 호텔 관리 시스템 이용을 위해 관리자 정보를 등록해 주세요.
                 </p>
             </div>
 
 
-            <form action="/customer/signup" method="post" id="signup-form">
+            <form action="/admin/adminSignup" method="post" id="signup-form">
                 <div class="form-group">
-                    <label for="loginId" class="form-label">
-                        아이디
+                    <label for="code" class="form-label">
+                        사번
                     </label>
 					
-                    <input type="text" id="loginId" name="loginId" class="form-control" 
-					placeholder="아이디를 입력하세요" required>
+                    <input type="text" id="code" name="code" class="form-control" 
+					placeholder="사번을 입력하세요" required>
 					
-					<button type="button" id="check-id-btn" class="btn btn-outline">중복확인</button>
+					<button type="button" id="check-code-btn" class="btn btn-outline">중복확인</button>
 					
-					<p id="check-id-result" class="form-tip"></p>
+					<p id="check-code-result" class="form-tip"></p>
                 </div>
 
                 <div class="form-group">
@@ -248,6 +228,22 @@
                     >
 
                 </div>
+				
+				<label class="form-label">부서</label>
+
+				<!-- 라디오 버튼들을 감싸는 박스 (이미지의 라운드 테두리 스타일 적용) -->
+				<div class="dept-radio-group">
+				    <label class="radio-item">
+				        <input type="radio" id="dept_front" name="position" value="프론트" checked required>
+				        <span>프런트</span>
+				    </label>
+				    
+				    <label class="radio-item">
+				        <input type="radio" id="dept_housekeeping" name="position" value="하우스키핑" required>
+				        <span>하우스키핑</span>
+				    </label>
+				</div><br>
+
 
 
                 <button
@@ -289,7 +285,7 @@
     </section>
 
 </div>
-<script src="/js/customer.js" defer></script>
+<script src="/js/admin.js" defer></script>
 </body>
 
 </html>

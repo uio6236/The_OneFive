@@ -38,7 +38,7 @@
     <div class="customer-user-area">
 
         <span>
-            ${sessionScope.loginCustomer.customerName} 고객님
+            ${customer.name} 고객님
         </span>
 
         <img
