@@ -1,4 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -10,6 +13,7 @@
 
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 
 <body>
@@ -28,94 +32,35 @@
             <section class="dashboard-summary-grid">
 
                 <article class="dashboard-summary-card">
-
                     <div>
-                        <span class="dashboard-summary-title">
-                            오늘 체크인
-                        </span>
-
-                        <strong class="dashboard-summary-value">
-                            12건
-                        </strong>
-
-                        <span class="dashboard-summary-sub">
-                            예정 고객
-                        </span>
+                        <span class="dashboard-summary-title">오늘 체크인</span>
+                        <strong class="dashboard-summary-value">${dashboard.todayCheckinCount}건 예정</strong>
                     </div>
-
-                    <div class="dashboard-icon">
-                        ↘
-                    </div>
-
+                    <div class="dashboard-icon">&#128100;</div>
                 </article>
 
-
                 <article class="dashboard-summary-card">
-
                     <div>
-                        <span class="dashboard-summary-title">
-                            오늘 체크아웃
-                        </span>
-
-                        <strong class="dashboard-summary-value">
-                            8건
-                        </strong>
-
-                        <span class="dashboard-summary-sub">
-                            예정 고객
-                        </span>
+                        <span class="dashboard-summary-title">오늘 체크아웃</span>
+                        <strong class="dashboard-summary-value">${dashboard.todayCheckoutCount}건 예정</strong>
                     </div>
-
-                    <div class="dashboard-icon">
-                        ↗
-                    </div>
-
+                    <div class="dashboard-icon">&#8644;</div>
                 </article>
 
-
                 <article class="dashboard-summary-card">
-
                     <div>
-                        <span class="dashboard-summary-title">
-                            객실 가동률
-                        </span>
-
-                        <strong class="dashboard-summary-value">
-                            78.4%
-                        </strong>
-
-                        <span class="dashboard-summary-sub">
-                            현재 기준
-                        </span>
+                        <span class="dashboard-summary-title">객실 가동률</span>
+                        <strong class="dashboard-summary-value">${dashboard.occupancyRate}%</strong>
                     </div>
-
-                    <div class="dashboard-icon">
-                        %
-                    </div>
-
+                    <div class="dashboard-icon">&#9638;</div>
                 </article>
 
-
                 <article class="dashboard-summary-card">
-
                     <div>
-                        <span class="dashboard-summary-title">
-                            청소 필요 객실
-                        </span>
-
-                        <strong class="dashboard-summary-value">
-                            7실
-                        </strong>
-
-                        <span class="dashboard-summary-sub">
-                            정비 대기
-                        </span>
+                        <span class="dashboard-summary-title">오늘 매출</span>
+                        <strong class="dashboard-summary-value">&#8361;<fmt:formatNumber value="${dashboard.todayRevenue}" pattern="#,##0"/></strong>
                     </div>
-
-                    <div class="dashboard-icon">
-                        ⌁
-                    </div>
-
+                    <div class="dashboard-icon">&#128200;</div>
                 </article>
 
             </section>
@@ -125,73 +70,44 @@
             <section class="dashboard-section">
 
                 <div class="dashboard-section-header">
-
-                    <div>
-                        <h2>객실 상태 현황</h2>
-
-                        <p>
-                            전체 객실의 현재 운영 상태를 확인합니다.
-                        </p>
-                    </div>
-
-                    <a href="/admin/rooms" class="dashboard-more-link">
-                        전체 객실 보기
-                    </a>
-
+                    <h2>실시간 객실 현황 요약</h2>
                 </div>
 
+                <c:set var="roomTotal"
+                       value="${dashboard.roomAvailable + dashboard.roomOccupied + dashboard.roomCleaning + dashboard.roomInspection}"/>
 
                 <div class="room-status-summary-grid">
 
                     <div class="room-summary-item room-summary-available">
-
-                        <span>
-                            이용 가능
-                        </span>
-
-                        <strong>
-                            32
-                        </strong>
-
+                        <span>이용가능 (Clean)</span>
+                        <strong>${dashboard.roomAvailable}객실</strong>
+                        <c:if test="${roomTotal > 0}">
+                            <em><fmt:formatNumber value="${dashboard.roomAvailable * 100.0 / roomTotal}" pattern="#0"/>%</em>
+                        </c:if>
                     </div>
-
 
                     <div class="room-summary-item room-summary-occupied">
-
-                        <span>
-                            투숙 중
-                        </span>
-
-                        <strong>
-                            89
-                        </strong>
-
+                        <span>투숙중 (Occupied)</span>
+                        <strong>${dashboard.roomOccupied}객실</strong>
+                        <c:if test="${roomTotal > 0}">
+                            <em><fmt:formatNumber value="${dashboard.roomOccupied * 100.0 / roomTotal}" pattern="#0"/>%</em>
+                        </c:if>
                     </div>
-
 
                     <div class="room-summary-item room-summary-cleaning">
-
-                        <span>
-                            청소 중
-                        </span>
-
-                        <strong>
-                            7
-                        </strong>
-
+                        <span>청소중 (Dirty)</span>
+                        <strong>${dashboard.roomCleaning}객실</strong>
+                        <c:if test="${roomTotal > 0}">
+                            <em><fmt:formatNumber value="${dashboard.roomCleaning * 100.0 / roomTotal}" pattern="#0"/>%</em>
+                        </c:if>
                     </div>
 
-
                     <div class="room-summary-item room-summary-inspection">
-
-                        <span>
-                            점검 중
-                        </span>
-
-                        <strong>
-                            2
-                        </strong>
-
+                        <span>점검중 (Out of Order)</span>
+                        <strong>${dashboard.roomInspection}객실</strong>
+                        <c:if test="${roomTotal > 0}">
+                            <em><fmt:formatNumber value="${dashboard.roomInspection * 100.0 / roomTotal}" pattern="#0"/>%</em>
+                        </c:if>
                     </div>
 
                 </div>
@@ -206,98 +122,45 @@
                 <div class="dashboard-panel">
 
                     <div class="dashboard-section-header">
-
-                        <div>
-                            <h2>
-                                오늘 도착 예정 투숙객
-                            </h2>
-
-                            <p>
-                                체크인 예정 고객의 예약정보입니다.
-                            </p>
-                        </div>
-
-                        <a
-                            href="/admin/checkin"
-                            class="dashboard-more-link"
-                        >
-                            전체보기
-                        </a>
-
+                        <h2>오늘 체크인 예정 투숙객</h2>
+                        <a href="/admin/checkin" class="dashboard-more-link">신속 체크인 대기</a>
                     </div>
 
+                    <table class="dashboard-arrival-table">
+                        <thead>
+                            <tr>
+                                <th>객실</th>
+                                <th>고객명</th>
+                                <th>예약번호</th>
+                                <th>인원</th>
+                                <th>객실상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${dashboard.todayArrivals}" var="guest">
+                                <tr>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${empty guest.roomNum}">배정 대기</c:when>
+                                            <c:otherwise>${guest.roomNum}호</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td>${guest.guestName}</td>
+                                    <td>${guest.reservationCode}</td>
+                                    <td>${guest.guestCount}명</td>
+                                    <td>
+                                        <span class="badge-room-status">${guest.roomStatus}</span>
+                                    </td>
+                                </tr>
+                            </c:forEach>
 
-                    <div class="dashboard-guest-list">
-
-                        <div class="dashboard-guest-item">
-
-                            <div class="guest-avatar">
-                                김
-                            </div>
-
-                            <div class="guest-info">
-                                <strong>
-                                    김우현
-                                </strong>
-
-                                <span>
-                                    디럭스 더블 · 405호
-                                </span>
-                            </div>
-
-                            <div class="guest-time">
-                                15:00
-                            </div>
-
-                        </div>
-
-
-                        <div class="dashboard-guest-item">
-
-                            <div class="guest-avatar">
-                                박
-                            </div>
-
-                            <div class="guest-info">
-                                <strong>
-                                    박서연
-                                </strong>
-
-                                <span>
-                                    프리미어 킹 · 배정 대기
-                                </span>
-                            </div>
-
-                            <div class="guest-time">
-                                15:30
-                            </div>
-
-                        </div>
-
-
-                        <div class="dashboard-guest-item">
-
-                            <div class="guest-avatar">
-                                이
-                            </div>
-
-                            <div class="guest-info">
-                                <strong>
-                                    이준혁
-                                </strong>
-
-                                <span>
-                                    디럭스 트윈 · 507호
-                                </span>
-                            </div>
-
-                            <div class="guest-time">
-                                16:00
-                            </div>
-
-                        </div>
-
-                    </div>
+                            <c:if test="${empty dashboard.todayArrivals}">
+                                <tr>
+                                    <td colspan="5" class="inquiry-empty">오늘 도착 예정인 투숙객이 없습니다.</td>
+                                </tr>
+                            </c:if>
+                        </tbody>
+                    </table>
 
                 </div>
 
@@ -306,182 +169,46 @@
                 <div class="dashboard-panel">
 
                     <div class="dashboard-section-header">
-
-                        <div>
-                            <h2>
-                                하우스키핑 진행 현황
-                            </h2>
-
-                            <p>
-                                금일 객실 정비 진행 상태입니다.
-                            </p>
-                        </div>
-
-                        <a
-                            href="/admin/housekeeping"
-                            class="dashboard-more-link"
-                        >
-                            전체보기
-                        </a>
-
+                        <h2>하우스키핑 현황</h2>
+                        <c:set var="hkTotal"
+                               value="${dashboard.hkWaiting + dashboard.hkInProgress + dashboard.hkInspected}"/>
+                        <a href="/admin/housekeeping" class="dashboard-more-link">전체 ${hkTotal}개 정비 대상</a>
                     </div>
 
-
-                    <div class="housekeeping-progress-list">
-
-                        <div class="housekeeping-progress-item">
-
-                            <div class="progress-title-row">
-                                <span>청소 대기</span>
-                                <strong>5실</strong>
-                            </div>
-
-                            <div class="progress-bar">
-                                <div
-                                    class="progress-value"
-                                    style="width: 25%;"
-                                ></div>
-                            </div>
-
+                    <div class="housekeeping-overall">
+                        <div class="progress-title-row">
+                            <span>실시간 정비 완료율</span>
+                            <strong>
+                                <c:choose>
+                                    <c:when test="${hkTotal > 0}">
+                                        <fmt:formatNumber value="${dashboard.hkInspected * 100.0 / hkTotal}" pattern="#0"/>% 완료
+                                    </c:when>
+                                    <c:otherwise>0% 완료</c:otherwise>
+                                </c:choose>
+                            </strong>
                         </div>
-
-
-                        <div class="housekeeping-progress-item">
-
-                            <div class="progress-title-row">
-                                <span>청소 중</span>
-                                <strong>7실</strong>
-                            </div>
-
-                            <div class="progress-bar">
-                                <div
-                                    class="progress-value"
-                                    style="width: 45%;"
-                                ></div>
-                            </div>
-
+                        <div class="progress-bar">
+                            <div class="progress-value"
+                                 style="width: ${hkTotal > 0 ? (dashboard.hkInspected * 100 / hkTotal) : 0}%;"></div>
                         </div>
-
-
-                        <div class="housekeeping-progress-item">
-
-                            <div class="progress-title-row">
-                                <span>청소 완료</span>
-                                <strong>18실</strong>
-                            </div>
-
-                            <div class="progress-bar">
-                                <div
-                                    class="progress-value"
-                                    style="width: 75%;"
-                                ></div>
-                            </div>
-
-                        </div>
-
-
-                        <div class="housekeeping-progress-item">
-
-                            <div class="progress-title-row">
-                                <span>점검 완료</span>
-                                <strong>12실</strong>
-                            </div>
-
-                            <div class="progress-bar">
-                                <div
-                                    class="progress-value"
-                                    style="width: 90%;"
-                                ></div>
-                            </div>
-
-                        </div>
-
                     </div>
 
-                </div>
+                    <div class="housekeeping-status-list">
 
-            </section>
+                        <div class="housekeeping-status-row">
+                            <span>점검 완료 (인수 가능)</span>
+                            <strong>${dashboard.hkInspected}개 객실</strong>
+                        </div>
 
+                        <div class="housekeeping-status-row">
+                            <span>청소 중</span>
+                            <strong>${dashboard.hkInProgress}개 객실</strong>
+                        </div>
 
-            <!-- 최근 활동 -->
-            <section class="dashboard-section">
-
-                <div class="dashboard-section-header">
-
-                    <div>
-                        <h2>
-                            최근 현장 활동 기록
-                        </h2>
-
-                        <p>
-                            체크인·체크아웃 및 객실 정비 처리 내역입니다.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="activity-list">
-
-                    <div class="activity-item">
-
-                        <span class="activity-time">
-                            14:15
-                        </span>
-
-                        <span class="activity-category">
-                            객실 정비
-                        </span>
-
-                        <strong>
-                            502호 객실 정비 완료
-                        </strong>
-
-                        <span class="activity-user">
-                            김민지
-                        </span>
-
-                    </div>
-
-
-                    <div class="activity-item">
-
-                        <span class="activity-time">
-                            14:02
-                        </span>
-
-                        <span class="activity-category">
-                            체크인
-                        </span>
-
-                        <strong>
-                            405호 고객 체크인 완료
-                        </strong>
-
-                        <span class="activity-user">
-                            박지훈
-                        </span>
-
-                    </div>
-
-
-                    <div class="activity-item">
-
-                        <span class="activity-time">
-                            13:45
-                        </span>
-
-                        <span class="activity-category">
-                            체크아웃
-                        </span>
-
-                        <strong>
-                            305호 퇴실 처리
-                        </strong>
-
-                        <span class="activity-user">
-                            이수민
-                        </span>
+                        <div class="housekeeping-status-row housekeeping-status-warning">
+                            <span>청소 대기 (미정비)</span>
+                            <strong>${dashboard.hkWaiting}개 객실</strong>
+                        </div>
 
                     </div>
 

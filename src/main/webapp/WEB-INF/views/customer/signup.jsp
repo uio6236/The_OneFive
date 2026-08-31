@@ -121,109 +121,68 @@
                     </span>
 
                     <div>
-
                         <strong>
                             멤버십 혜택 및 포인트 적립
                         </strong>
-
                         <p>
                             회원 전용 할인과 포인트 등
                             다양한 혜택을 제공합니다.
                         </p>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
 
     </section>
 
-
     <!-- 회원가입 -->
     <section class="auth-form-section">
-
         <div class="auth-form-card signup-card">
-
             <div class="auth-form-title">
-
                 <h2>
                     회원가입
                 </h2>
-
                 <p>
                     The OneFive 호텔의 멤버십 서비스 이용을 위해
                     회원 정보를 등록해 주세요.
                 </p>
-
             </div>
 
 
-            <form
-                action="/customer/signup"
-                method="post"
-            >
-
+            <form action="/customer/signup" method="post" id="signup-form">
                 <div class="form-group">
-
-                    <label
-                        for="customerId"
-                        class="form-label"
-                    >
+                    <label for="loginId" class="form-label">
                         아이디
                     </label>
-
-                    <input
-                        type="text"
-                        id="customerId"
-                        name="customerId"
-                        class="form-control"
-                        placeholder="아이디를 입력하세요"
-                        required
-                    >
-
+					
+                    <input type="text" id="loginId" name="loginId" class="form-control" 
+					placeholder="아이디를 입력하세요" required>
+					
+					<button type="button" id="check-id-btn" class="btn btn-outline">중복확인</button>
+					
+					<p id="check-id-result" class="form-tip"></p>
                 </div>
-
 
                 <div class="form-group">
 
-                    <label
-                        for="password"
-                        class="form-label"
-                    >
+                    <label for="password" class="form-label" >
                         비밀번호
                     </label>
-
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        class="form-control"
-                        placeholder="비밀번호를 입력하세요"
-                        required
-                    >
-
+					
+                    <input type="password" id="password" name="password" class="form-control"
+                        placeholder="비밀번호를 입력하세요" required>
                 </div>
-
 
                 <div class="form-group">
 
-                    <label
-                        for="passwordCheck"
-                        class="form-label"
-                    >
+                    <label for="passwordCheck" class="form-label">
                         비밀번호 확인
                     </label>
 
-                    <input
-                        type="password"
-                        id="passwordCheck"
-                        class="form-control"
-                        placeholder="비밀번호를 한번 더 입력하세요"
-                        required
-                    >
+                    <input type="password" id="passwordCheck" class="form-control" 
+					placeholder="비밀번호를 한번 더 입력하세요" required>
+					
+					<p id="check-pwd-result" class="form-tip"></p>
 
                 </div>
 
@@ -239,8 +198,8 @@
 
                     <input
                         type="text"
-                        id="customerName"
-                        name="customerName"
+                        id="name"
+                        name="name"
                         class="form-control"
                         placeholder="이름을 입력하세요"
                         required
@@ -330,6 +289,7 @@
     </section>
 
 </div>
-
+<script src="/js/customer.js" defer></script>
 </body>
+
 </html>
