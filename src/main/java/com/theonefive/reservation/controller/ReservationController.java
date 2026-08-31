@@ -14,23 +14,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.theonefive.customer.model.dto.CustomerDTO;
+import com.theonefive.customer.service.CustomerService;
 import com.theonefive.reservation.model.dto.ReservationDTO;
 import com.theonefive.reservation.model.dto.RoomSearchDTO;
 import com.theonefive.reservation.model.dto.RoomTypeListDTO;
 import com.theonefive.reservation.service.ReservationService;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
 /*
  * 고객용 예약(객실조회 ~ 결제) 화면 이동을 담당할 컨트롤러
  */
 @Controller
 @RequestMapping("/customer/reservation")
+@RequiredArgsConstructor
 public class ReservationController {
 
     private final ReservationService service;
-
-    public ReservationController(ReservationService service) {
-        this.service = service;
-    }
+    private final CustomerService service1;
 
 
     
@@ -125,14 +128,21 @@ public class ReservationController {
         return "customer/reservation/payment";
     }
 
-    // URL : [POST] /customer/reservation/complete
     @PostMapping("/complete")
-    public String complete(@ModelAttribute ReservationDTO dto, RedirectAttributes redirectAttr) {
+    public String complete(@ModelAttribute ReservationDTO dto,
+                            HttpSession session,
+                            RedirectAttributes redirectAttr) {
+
+        // 로그인 확인
+        String loginId = (String) session.getAttribute("loginId");
+        if (loginId == null) {
+            return "redirect:/login";
+        }
+        CustomerDTO customer = service1.getCustomerByLoginId(loginId);
 
         // 결제 직전 최종 재고 검증
         RoomSearchDTO condition = new RoomSearchDTO();
         condition.setRoomTypeId(dto.getRoomTypeId());
-
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
         condition.setCheckinDate(sdf.format(dto.getCheckin()));
         condition.setCheckoutDate(sdf.format(dto.getCheckout()));
@@ -143,8 +153,7 @@ public class ReservationController {
             return "redirect:/customer/reservation/detail?roomTypeId=" + dto.getRoomTypeId();
         }
 
-        dto.setGuestId(1L);
-
+        dto.setGuestId(customer.getId()); 
         service.createReservation(dto);
 
         redirectAttr.addFlashAttribute("paymentSuccess", true);
