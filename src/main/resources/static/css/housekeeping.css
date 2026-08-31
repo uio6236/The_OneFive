@@ -1,0 +1,292 @@
+/*
+ * list.jsp의 각 class 속성에 대응하는 스타일 규칙.
+ * 팀 공통 디자인 시스템(common.css)의 CSS 변수(--blue, --border 등)를
+ * 재사용해서 색상/간격의 일관성을 유지한다.
+ */
+
+/* 좌측(표) / 우측(상세패널) 2단 레이아웃. 우측은 360px 고정폭 + sticky */
+.housekeeping-layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    align-items: start;
+    max-width: 1520px; /* 초광폭 모니터에서 화면 전체로 늘어지는 것 방지 */
+}
+.housekeeping-main-col {
+    min-width: 0; /* grid item 안에서 표가 넘칠 때 찌그러지지 않도록 */
+}
+@media (max-width: 1100px) {
+    .housekeeping-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ======================================================
+   Housekeeping
+====================================================== */
+
+/* 상태별 건수 카드 3개를 가로로 나란히 배치 */
+.housekeeping-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 상태가 3단계라 3등분 */
+    gap: 16px;
+    margin-bottom: 22px;
+}
+.housekeeping-summary-card {
+    padding: 18px 20px;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: #fff;
+}
+/* statusCounts는 청소대기/청소중/점검완료 순서로 고정되어 내려오므로
+   nth-child로 순서에 맞는 좌측 강조색을 입힌다 */
+.housekeeping-summary-card:nth-child(1) { border-left-color: #d64545; }
+.housekeeping-summary-card:nth-child(2) { border-left-color: var(--navy-light); }
+.housekeeping-summary-card:nth-child(3) { border-left-color: var(--blue); }
+.housekeeping-summary-card span {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 11px;
+}
+.housekeeping-summary-card strong {
+    display: block;
+    margin-top: 6px;
+    color: var(--navy-light);
+    font-size: 21px;
+}
+
+/* 필터(층/상태) 영역 */
+.housekeeping-filter {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.housekeeping-filter-select {
+    width: 150px;
+}
+.filter-label {
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* 표 컬럼 너비 고정 + 넘치는 텍스트는 말줄임 처리 */
+.housekeeping-table {
+    table-layout: fixed;
+    width: 100%;
+}
+.housekeeping-table th:nth-child(1),
+.housekeeping-table td:nth-child(1) { width: 9%; }
+.housekeeping-table th:nth-child(2),
+.housekeeping-table td:nth-child(2) { width: 7%; }
+.housekeeping-table th:nth-child(3),
+.housekeeping-table td:nth-child(3) { width: 15%; }
+.housekeeping-table th:nth-child(4),
+.housekeeping-table td:nth-child(4) { width: 12%; }
+.housekeeping-table th:nth-child(5),
+.housekeeping-table td:nth-child(5) { width: 13%; }
+.housekeeping-table th:nth-child(6),
+.housekeeping-table td:nth-child(6) { width: 44%; }
+.housekeeping-table td {
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.housekeeping-detail-btn {
+    padding: 5px 9px;
+    border: 0;
+    border-radius: 6px;
+    color: var(--blue);
+    background: var(--blue-light);
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* 표의 행을 클릭 가능한 요소처럼 보이게 하고, 선택된 행은 배경색으로 표시 */
+.hk-row {
+    cursor: pointer;
+}
+.hk-row:hover {
+    background: #f7f9fc;
+}
+.hk-row.selected {
+    background: var(--blue-light);
+}
+
+/* 상태 배지 3종 색상 (청소대기/청소중/점검완료) */
+.badge-waiting {
+    color: #d64545;
+    background: #fdecec;
+}
+.badge-progress {
+    color: #1e293b;
+    background: #e7e9ee;
+}
+.badge-done {
+    color: #2563eb;
+    background: #e6efff;
+}
+
+/* 우측 상세패널 컨테이너. 표 오른쪽에 붙어서 스크롤해도 같은 위치에 고정(sticky) */
+.housekeeping-management-panel {
+    padding: 26px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: #fff;
+    position: sticky;
+    top: 20px;
+}
+.housekeeping-panel-header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+.housekeeping-panel-header h2 {
+    margin: 10px 0 4px;
+    font-size: 20px;
+}
+.housekeeping-panel-header p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 10px;
+}
+.housekeeping-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 22px;
+}
+.housekeeping-detail-grid > div {
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+.housekeeping-detail-grid span {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--text-secondary);
+    font-size: 9px;
+}
+.housekeeping-detail-grid strong {
+    font-size: 11px;
+}
+.housekeeping-note {
+    margin-top: 20px;
+}
+.housekeeping-note-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 6px;
+}
+.housekeeping-note-row input {
+    flex: 1;
+}
+
+/* 상세패널 상단의 "객실 번호 / 타입 / 층" 정보 목록 */
+.housekeeping-info-list {
+    margin-top: 20px;
+}
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+}
+.info-row span {
+    color: var(--text-secondary);
+}
+.info-row strong {
+    color: var(--navy-light);
+    font-weight: 600;
+}
+.housekeeping-current-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+/* 담당자 드롭다운 + 배정 버튼을 한 줄에 배치 */
+.housekeeping-assign-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+}
+.housekeeping-assign-row .form-label {
+    color: var(--text-secondary);
+    font-size: 11px;
+    white-space: nowrap;
+}
+.housekeeping-assign-row select {
+    flex: 1;
+}
+
+/* 상태 진행 스텝바(1→2→3). completed/current 클래스는 JS가 상태에 따라 붙여줌 */
+.housekeeping-status-flow {
+    display: flex;
+    align-items: center;
+    margin-top: 28px;
+    padding: 20px 10px;
+}
+.status-flow-item {
+    width: 110px;
+    text-align: center;
+    color: var(--text-muted);
+}
+.status-flow-item span {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 8px;
+    border-radius: 50%;
+    background: #edf1f5;
+    font-size: 9px;
+}
+.status-flow-item strong {
+    font-size: 10px;
+}
+.status-flow-item.completed,
+.status-flow-item.current {
+    color: var(--navy-light);
+}
+.status-flow-item.completed span,
+.status-flow-item.current span {
+    color: #fff;
+    background: var(--navy-light);
+}
+.status-flow-item.current span {
+    background: var(--blue);
+}
+.status-flow-line {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+}
+.status-flow-line.active {
+    background: var(--blue);
+}
+.housekeeping-action-row {
+    margin-top: 24px;
+}
+.housekeeping-action-row .btn-primary {
+    width: 100%;
+    padding: 12px;
+}
+
+/* 반응형: 1100px 이하 화면에서는 카드 3등분 → 2등분으로 축소 */
+@media (max-width: 1100px) {
+    .housekeeping-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .housekeeping-detail-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,1138 @@
+/* customer.css */
+
+.customer-page {
+    min-height: 100vh;
+
+    background: var(--background);
+}
+
+/* ---------- Header ---------- */
+
+.customer-header {
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 72px;
+
+    background: var(--navy);
+
+    color: #fff;
+}
+
+.customer-logo {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.customer-logo-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: var(--blue);
+}
+
+.customer-nav {
+    display: flex;
+    align-items: center;
+
+    gap: 42px;
+}
+
+.customer-nav a {
+    color: #9ca9bc;
+
+    font-size: 14px;
+
+    font-weight: 500;
+}
+
+.customer-nav a:hover,
+.customer-nav a.active {
+    color: #fff;
+}
+
+.customer-user-area {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    font-size: 13px;
+}
+
+.customer-user-image {
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+}
+
+/* ---------- Main ---------- */
+
+.customer-main {
+    max-width: 1440px;
+
+    margin: 0 auto;
+
+    padding: 36px 40px 70px;
+}
+
+/* ---------- Footer ---------- */
+
+.customer-footer {
+    padding: 38px 20px;
+
+    background: var(--navy);
+
+    color: #fff;
+
+    text-align: center;
+}
+
+.customer-footer-title {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.customer-footer-description {
+    margin-top: 14px;
+
+    color: #8795aa;
+
+    font-size: 11px;
+}
+/* ======================================================
+   로그인 / 회원가입
+====================================================== */
+
+.auth-page {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background: #f7f9fc;
+}
+
+/* 메세지가 강제로 화면에 표시되도록 설정 */
+.form-tip {
+    display: block !important;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* 오류 메세지 (빨간색) */
+.form-tip-error {
+    color: #ff4d4f !important;
+}
+
+/* 통과 메세지 (초록색) */
+.form-tip-ok {
+    color: #52c41a !important;
+}
+
+/* ---------- 왼쪽 브랜드 ---------- */
+
+.auth-brand {
+    position: relative;
+
+    width: 50%;
+    min-height: 100vh;
+
+    background:
+        url("/images/common/hotel-bg.jpg")
+        center / cover no-repeat;
+}
+
+.auth-brand-overlay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 60px;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            rgba(15, 26, 45, 0.90),
+            rgba(15, 26, 45, 0.94)
+        );
+}
+
+
+.auth-logo {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    color: #fff;
+}
+
+.auth-logo-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: var(--blue);
+}
+
+.auth-logo strong {
+    display: block;
+
+    font-size: 20px;
+}
+
+.auth-logo span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #a8b5c9;
+
+    font-size: 10px;
+}
+
+
+/* ---------- 타이틀 ---------- */
+
+.auth-brand-content {
+    margin-top: 190px;
+}
+
+.auth-chip {
+    display: inline-flex;
+
+    padding: 8px 14px;
+
+    border-radius: 20px;
+
+    background: var(--navy-light);
+
+    color: #bdd0eb;
+
+    font-size: 12px;
+}
+
+.auth-brand-content h1 {
+    margin: 28px 0 10px;
+
+    font-size: 42px;
+    line-height: 1.25;
+}
+
+.auth-brand-content p {
+    color: #adb8c9;
+
+    font-size: 17px;
+}
+
+.auth-blue-line {
+    width: 60px;
+    height: 4px;
+
+    margin-top: 24px;
+
+    background: var(--blue);
+}
+
+
+/* ---------- 특징 ---------- */
+
+.auth-feature-area {
+    margin-top: auto;
+}
+
+.auth-feature-area h3 {
+    color: #aab6c8;
+
+    font-size: 12px;
+}
+
+.auth-feature {
+    display: flex;
+
+    gap: 14px;
+
+    margin-top: 22px;
+}
+
+.auth-check {
+    flex-shrink: 0;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: var(--blue);
+
+    background: rgba(40, 100, 232, 0.15);
+}
+
+.auth-feature strong {
+    font-size: 14px;
+}
+
+.auth-feature p {
+    margin: 5px 0 0;
+
+    color: #8896aa;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* ---------- 오른쪽 ---------- */
+
+.auth-form-section {
+    width: 50%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 60px;
+}
+
+.auth-form-card {
+    width: 100%;
+    max-width: 460px;
+
+    padding: 48px;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    background: #fff;
+}
+
+.signup-card {
+    max-width: 500px;
+}
+
+.auth-form-title {
+    margin-bottom: 34px;
+}
+
+.auth-form-title h2 {
+    margin: 0;
+
+    color: var(--navy-light);
+
+    font-size: 30px;
+}
+
+.auth-form-title p {
+    margin: 8px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+.login-option-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 12px 0 30px;
+
+    font-size: 13px;
+}
+
+.login-remember {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+.text-link {
+    color: var(--blue);
+
+    font-weight: 600;
+}
+
+.auth-submit {
+    width: 100%;
+    height: 48px;
+}
+
+.auth-bottom-link {
+    margin-top: 20px;
+
+    color: var(--text-muted);
+
+    font-size: 12px;
+
+    text-align: center;
+}
+
+.auth-bottom-link a {
+    color: var(--navy-light);
+
+    font-weight: 600;
+
+    text-decoration: underline;
+}
+
+.auth-copyright {
+    margin-top: 50px;
+
+    color: #9aa8bb;
+
+    font-size: 11px;
+
+    line-height: 1.8;
+
+    text-align: center;
+}
+
+
+/* ======================================================
+   고객 예약 메인
+====================================================== */
+
+/* ---------- promotion ---------- */
+
+.promotion-banner {
+    position: relative;
+
+    min-height: 190px;
+
+    margin-bottom: 38px;
+
+    overflow: hidden;
+
+    border-radius: 16px;
+
+    background:
+        url("/images/common/hotel-bg.jpg")
+        center 45% / cover no-repeat;
+}
+
+.promotion-overlay {
+    position: absolute;
+    inset: 0;
+
+    padding: 38px 42px;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(15, 26, 45, 0.93),
+            rgba(15, 26, 45, 0.64)
+        );
+}
+
+.promotion-label {
+    display: inline-flex;
+
+    padding: 5px 10px;
+
+    border-radius: 12px;
+
+    background: var(--blue);
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.promotion-overlay h2 {
+    margin: 18px 0 8px;
+
+    font-size: 25px;
+}
+
+.promotion-overlay p {
+    max-width: 750px;
+
+    margin: 0;
+
+    color: #aeb9c8;
+
+    font-size: 12px;
+}
+
+
+/* ---------- 객실 ---------- */
+
+.section-title-area {
+    margin-bottom: 28px;
+}
+
+.section-title-area h2 {
+    margin: 0;
+
+    font-size: 24px;
+}
+
+.section-title-area p {
+    margin: 8px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+.customer-room-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 26px;
+}
+
+
+/* ---------- 객실 카드 ---------- */
+
+.customer-room-card {
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    background: #fff;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.customer-room-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(15, 26, 45, 0.08);
+}
+
+
+.room-image-wrapper {
+    position: relative;
+
+    height: 230px;
+
+    overflow: hidden;
+}
+
+.room-image-wrapper img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* ---------- 객실 상태 ---------- */
+
+.room-available,
+.room-unavailable {
+    position: absolute;
+
+    top: 14px;
+    left: 14px;
+
+    padding: 5px 8px;
+
+    border-radius: 5px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.room-available {
+    color: var(--navy-light);
+
+    background: #edf3fc;
+}
+
+.room-unavailable {
+    color: var(--navy);
+
+    background: #eef1f5;
+}
+
+
+/* ---------- 카드 내용 ---------- */
+
+.room-card-content {
+    padding: 22px;
+}
+
+.room-card-content h3 {
+    margin: 0;
+
+    font-size: 20px;
+}
+
+.room-description {
+    height: 44px;
+
+    margin: 10px 0 18px;
+
+    overflow: hidden;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+.room-meta {
+    display: flex;
+
+    gap: 16px;
+
+    padding-bottom: 18px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+.room-card-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding-top: 16px;
+}
+
+.price-label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--text-muted);
+
+    font-size: 10px;
+}
+
+.room-card-bottom strong {
+    font-size: 18px;
+}
+
+.room-card-bottom .btn {
+    min-width: 135px;
+
+    font-size: 12px;
+}
+
+
+.room-disabled-btn {
+    color: var(--text-secondary);
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+
+    cursor: not-allowed;
+}
+
+
+/* ---------- pagination ---------- */
+
+.room-pagination-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 28px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+
+/* ---------- 반응형 ---------- */
+
+@media (max-width: 1100px) {
+
+    .customer-room-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .auth-brand {
+        display: none;
+    }
+
+    .auth-form-section {
+        width: 100%;
+    }
+
+    .customer-room-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .customer-header {
+        padding: 0 20px;
+    }
+
+    .customer-main {
+        padding: 28px 20px 50px;
+    }
+
+}
+/* ======================================================
+   MyPage
+====================================================== */
+
+.mypage-title {
+    margin-bottom: 24px;
+}
+
+.mypage-title h1 {
+    margin: 0;
+
+    font-size: 28px;
+}
+
+.mypage-title p {
+    margin: 7px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+
+/* ---------- tab ---------- */
+
+.mypage-tabs {
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 26px;
+}
+
+.mypage-tabs a {
+    padding: 11px 18px;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    background: #fff;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+.mypage-tabs a.active {
+    color: #fff;
+
+    background: var(--navy);
+
+    border-color: var(--navy);
+}
+
+
+/* ---------- top ---------- */
+
+.mypage-top-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.5fr)
+        minmax(320px, 0.8fr);
+
+    gap: 24px;
+
+    align-items: start;
+}
+
+
+.mypage-profile-card {
+    padding: 30px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.mypage-profile-card h2 {
+    margin: 0;
+
+    font-size: 18px;
+}
+
+.mypage-profile-card > p {
+    margin: 7px 0 25px;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+
+.mypage-password-title {
+    margin: 28px 0 18px;
+
+    padding-top: 24px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--blue);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.mypage-form-buttons {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin-top: 26px;
+}
+
+
+/* ---------- 멤버십 ---------- */
+
+.mypage-summary-area {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+
+.membership-card {
+    padding: 24px;
+
+    border-radius: 12px;
+
+    color: #fff;
+
+    background: var(--navy);
+}
+
+.membership-top {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.membership-top span {
+    padding: 4px 8px;
+
+    border-radius: 6px;
+
+    color: #83661e;
+
+    background: #fff3cc;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.membership-card > p {
+    margin: 22px 0 4px;
+
+    color: #93a2b8;
+
+    font-size: 9px;
+}
+
+.membership-point {
+    font-size: 25px;
+
+    font-weight: 500;
+}
+
+
+.membership-bottom {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 30px;
+
+    color: #7f8ea4;
+
+    font-size: 8px;
+}
+
+.membership-bottom span {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.membership-bottom strong {
+    color: #fff;
+
+    font-size: 9px;
+}
+
+
+.mypage-stat-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+}
+
+.mypage-stat-grid > div {
+    padding: 18px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: #fff;
+}
+
+.mypage-stat-grid span {
+    display: block;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+}
+
+.mypage-stat-grid strong {
+    display: block;
+
+    margin-top: 7px;
+
+    font-size: 20px;
+}
+
+
+.recent-reservation-card {
+    padding: 20px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: #fff;
+}
+
+.card-title-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.card-title-row h3 {
+    margin: 0;
+
+    font-size: 13px;
+}
+
+.card-title-row a {
+    color: var(--blue);
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+.recent-reservation {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.recent-reservation:last-child {
+    border-bottom: 0;
+}
+
+.recent-reservation strong {
+    display: block;
+
+    font-size: 11px;
+}
+
+.recent-reservation div span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-secondary);
+
+    font-size: 9px;
+}
+
+
+/* ---------- section ---------- */
+
+.mypage-section-card {
+    margin-top: 24px;
+
+    padding: 24px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.mypage-section-card h2,
+.new-inquiry-card h2 {
+    margin: 0 0 20px;
+
+    font-size: 16px;
+}
+
+/* ---------- 링크 ---------- */
+
+.mypage-link {
+    margin-right: 10px;
+
+    color: var(--blue);
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+.mypage-link.danger {
+    color: var(--danger);
+}
+
+
+/* ---------- 문의 ---------- */
+
+.mypage-inquiry-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.5fr)
+        minmax(300px, 0.7fr);
+
+    gap: 24px;
+
+    align-items: start;
+}
+
+
+.new-inquiry-card {
+    margin-top: 24px;
+
+    padding: 24px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    background: #fff;
+}
+
+.inquiry-submit {
+    width: 100%;
+}
+
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1000px) {
+
+    .mypage-top-layout,
+    .mypage-inquiry-layout {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* ======================================================
+   Admin Customer
+====================================================== */
+
+.admin-customer-filter {
+    margin-bottom: 20px;
+}
+
+.customer-filter-select {
+    width: 145px;
+}
+
+.admin-customer-table {
+    background: #fff;
+}
+
+.admin-customer-table td {
+    vertical-align: middle;
+}
+
+.admin-customer-table td:nth-child(6) {
+    max-width: 220px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
