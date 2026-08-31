@@ -1,16 +1,31 @@
 package com.theonefive.housekeeping.controller;
 
-import com.theonefive.common.dto.ApiResponse;
-import com.theonefive.housekeeping.model.dto.*;
-import com.theonefive.housekeeping.service.HousekeepingService;
-import lombok.RequiredArgsConstructor;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
+import com.theonefive.common.dto.ApiResponse;
+import com.theonefive.housekeeping.model.dto.AssignEmployeeDTO;
+import com.theonefive.housekeeping.model.dto.EmployeeDTO;
+import com.theonefive.housekeeping.model.dto.HousekeepingDTO;
+import com.theonefive.housekeeping.model.dto.HousekeepingListResponseDTO;
+import com.theonefive.housekeeping.model.dto.HousekeepingSearchConditionDTO;
+import com.theonefive.housekeeping.model.dto.NoteDTO;
+import com.theonefive.housekeeping.model.dto.StatusChangeDTO;
+import com.theonefive.housekeeping.service.HousekeepingService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
@@ -42,6 +57,8 @@ public class HousekeepingController {
         
         model.addAttribute("pageTitle", "하우스키핑 관리");
         model.addAttribute("pageDescription", "실시간 객실 청소 지시 및 진행 현황 통제");
+        
+        model.addAttribute("today", new SimpleDateFormat("yyyy년 M월 d일 EEEE", Locale.KOREAN).format(new Date()));
         
 
         return "admin/housekeeping/list";
@@ -134,4 +151,4 @@ public class HousekeepingController {
     public ResponseEntity<ApiResponse<List<EmployeeDTO>>> employees() {
         return ResponseEntity.ok(ApiResponse.success(housekeepingService.getEmployees()));
     }
-}
+   }

@@ -72,6 +72,12 @@
     font-weight: 700;
 }
 
+.summary-icon img {
+    width:35px;
+    height: 35px;
+    object-fit: contain;
+}
+
 /* 카드 우측의 컬러 배경 아이콘 박스 */
 .housekeeping-summary-card .summary-icon {
     flex: none;
@@ -119,15 +125,15 @@
     font-weight: 400;
 }
 .housekeeping-filter-select {
-    box-sizing: border-box;
-    width: 90px;
-    height: 32px;
-    padding: 8px 12px;
-    border: 1px solid #E2E8F0;
-    border-radius: 8px;
-    font-size: 13px;
-    color: #475569;
-    background: #fff;
+	box-sizing: border-box;
+	    width: 100px;
+	    height: 34px;
+	    padding: 8px 12px;
+	    border: 1px solid #E2E8F0;
+	    border-radius: 8px;
+	    font-size: 13px;
+	    color: #475569;
+	    background: #fff
 }
 .housekeeping-filter .btn-dark {
     margin-left: auto;
@@ -490,4 +496,27 @@
 .housekeeping-action-row .btn-primary:disabled {
     background: #94A3B8;
     cursor: not-allowed;
+}
+
+
+/*admin 프로필 이미지*/
+.avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/*admin sidebar 이미지*/
+.admin-menu-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+/*admin sidebar hotel이미지*/
+.admin-logo-icon img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
