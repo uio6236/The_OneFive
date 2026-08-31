@@ -39,6 +39,10 @@ public class HousekeepingController {
         model.addAttribute("selectedFloor", floor);
         model.addAttribute("selectedStatus", status);
         model.addAttribute("selectedEmployeeName", employeeName);
+        
+        model.addAttribute("pageTitle", "하우스키핑 관리");
+        model.addAttribute("pageDescription", "실시간 객실 청소 지시 및 진행 현황 통제");
+        
 
         return "admin/housekeeping/list";
     }
