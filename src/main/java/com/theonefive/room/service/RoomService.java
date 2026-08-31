@@ -16,4 +16,7 @@ public interface RoomService {
 	
 	// 체크인 가능 객실 조회
 	List<RoomDTO> getAvailableRooms(int roomTypeId);
+	
+	// 객실 정비 요청
+	boolean requestMaintenance(int roomId, String note);
 }
