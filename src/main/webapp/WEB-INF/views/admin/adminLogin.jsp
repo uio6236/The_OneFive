@@ -139,22 +139,22 @@
                 </h2>
 
                 <p>
-                    아이디와 비밀번호를 입력해 주세요.
+                    사번과 비밀번호를 입력해 주세요.
                 </p>
 
             </div>
 
 
-            <form action="/login" method="post">
+            <form action="/admin/adminLogin" method="post">
 
                 <div class="form-group">
 
-                    <label for="loginId" class="form-label">
-                        아이디
+                    <label for="code" class="form-label">
+                        사번
                     </label>
 
-                    <input type="text" id="loginId" name="loginId" 
-					class="form-control" placeholder="아이디를 입력하세요" required />
+                    <input type="text" id="code" name="code" 
+					class="form-control" placeholder="사번을 입력하세요" required />
 
                 </div>
 
@@ -171,12 +171,12 @@
                 </div>
 
 
-				<div class="login-option-row">
+                <div class="login-option-row">
 
-				    <label class="login-remember">
-				        <input type="checkbox" name="rememberId" id="rememberId">
-				        아이디 저장
-				    </label>
+                    <label class="login-remember">
+                        <input type="checkbox" name="remember">
+                        로그인 상태 유지
+                    </label>
 
 					<a href="/password/reset" class="text-link"> 아이디 찾기 </a>
 					
@@ -198,11 +198,11 @@
                     계정이 없으신가요?
                 </span>
 
-                <a href="/customer/signup">
+                <a href="/admin/adminSignup">
                     회원 가입
                 </a><br><br>
 
-				<a href="/admin/adminLogin">관리자용 로그인 </a>
+				<a href="/login">고객용 로그인 </a>
 				
             </div>
 

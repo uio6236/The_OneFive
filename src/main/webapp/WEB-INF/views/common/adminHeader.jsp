@@ -20,7 +20,6 @@
         <div class="admin-date">
             ${today}
         </div>
-
     </div>
 
 </header>
