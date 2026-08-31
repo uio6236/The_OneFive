@@ -86,6 +86,7 @@
 								</c:if>
 							</tbody>
 						</table>
+						<div id="checkinPagination" class="table-pagination"></div>
 					</div>
 					<div class="checkin-panel-title past-list-title">
 						<h2>지난 체크인 고객</h2>
@@ -135,6 +136,7 @@
 								</c:if>
 							</tbody>
 						</table>
+						<div id="pastCheckinPagination" class="table-pagination"></div>
 					</div>
 					</div>
 					<div id="checkoutListArea" style="display: none;">
@@ -174,6 +176,7 @@
 								</c:if>
 							</tbody>
 						</table>
+						<div id="checkoutPagination" class="table-pagination"></div>
 					</div>
 					<div class="checkin-panel-title past-list-title">
 						<h2>지난 체크아웃 고객</h2>
@@ -215,6 +218,7 @@
 								</c:if>
 							</tbody>
 						</table>
+						<div id="pastCheckoutPagination" class="table-pagination"></div>
 					</div>
 					</div>
                 </div>

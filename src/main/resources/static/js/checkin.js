@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-	const rows = document.querySelectorAll(".checkin-row");
+	const rows = document.querySelectorAll(".checkin-row, .past-checkin-row");
 	const detailGuestName = document.querySelector("#detailGuestName");
 	const detailReservationCode = document.querySelector("#detailReservationCode");
 	const detailRoomType = document.querySelector("#detailRoomType");
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	const checkoutListArea = document.querySelector("#checkoutListArea");
 	const listTitle = document.querySelector("#listTitle");
 	const listCount = document.querySelector("#listCount");
-	const checkoutRows = document.querySelectorAll(".checkout-row");
+	const checkoutRows = document.querySelectorAll(".checkout-row, .past-checkout-row");
 	const roomAssignmentSection = document.querySelector("#roomAssignmentSection");
 	const keySection = document.querySelector("#keySection");
 	const checkoutBtn = document.querySelector("#checkoutBtn");
@@ -26,6 +26,122 @@ document.addEventListener("DOMContentLoaded", function () {
 	let selectedGuestId = null;
 	let selectedRoomId = null;
 	let selectedCheckinId = null;
+	
+	const PAGE_SIZE = 5;
+
+	function createPagination(rowSelector, paginationSelector) {
+		const allRows = Array.from(document.querySelectorAll(rowSelector));
+		const pagination = document.querySelector(paginationSelector);
+		let filteredRows = [...allRows];
+		let currentPage = 1;
+
+		function showPage(page) {
+			const totalPages = Math.ceil(filteredRows.length / PAGE_SIZE);
+
+			if (totalPages === 0) {
+				currentPage = 1;
+			} else if (page > totalPages) {
+				currentPage = totalPages;
+			} else {
+				currentPage = page;
+			}
+
+			allRows.forEach(function (row) {
+				row.style.display = "none";
+			});
+
+			const start = (currentPage - 1) * PAGE_SIZE;
+			const end = start + PAGE_SIZE;
+
+			filteredRows.slice(start, end).forEach(function (row) {
+				row.style.display = "";
+			});
+
+			renderPagination();
+		}
+
+		function renderPagination() {
+			pagination.innerHTML = "";
+
+			const totalPages = Math.ceil(filteredRows.length / PAGE_SIZE);
+
+			if (totalPages <= 1) {
+				return;
+			}
+
+			const prevButton = document.createElement("button");
+			prevButton.type = "button";
+			prevButton.textContent = "<";
+			prevButton.disabled = currentPage === 1;
+
+			prevButton.addEventListener("click", function () {
+				if (currentPage > 1) {
+					showPage(currentPage - 1);
+				}
+			});
+
+			pagination.appendChild(prevButton);
+
+			for (let page = 1; page <= totalPages; page++) {
+				const pageButton = document.createElement("button");
+				pageButton.type = "button";
+				pageButton.textContent = page;
+
+				if (page === currentPage) {
+					pageButton.classList.add("active");
+				}
+
+				pageButton.addEventListener("click", function () {
+					showPage(page);
+				});
+
+				pagination.appendChild(pageButton);
+			}
+
+			const nextButton = document.createElement("button");
+			nextButton.type = "button";
+			nextButton.textContent = ">";
+			nextButton.disabled = currentPage === totalPages;
+
+			nextButton.addEventListener("click", function () {
+				if (currentPage < totalPages) {
+					showPage(currentPage + 1);
+				}
+			});
+
+			pagination.appendChild(nextButton);
+		}
+
+		function search(keyword) {
+			const normalizedKeyword = keyword.trim().toLowerCase();
+
+			if (normalizedKeyword === "") {
+				filteredRows = [...allRows];
+			} else {
+				filteredRows = allRows.filter(function (row) {
+					return row.textContent.toLowerCase().includes(normalizedKeyword);
+				});
+			}
+
+			showPage(1);
+		}
+
+		function reset() {
+			filteredRows = [...allRows];
+			showPage(1);
+		}
+
+		showPage(1);
+
+		return {
+			search: search,
+			reset: reset
+		};
+	}
+	const checkinPagination = createPagination(".checkin-row", "#checkinPagination");
+	const pastCheckinPagination = createPagination(".past-checkin-row", "#pastCheckinPagination");
+	const checkoutPagination = createPagination(".checkout-row", "#checkoutPagination");
+	const pastCheckoutPagination = createPagination(".past-checkout-row", "#pastCheckoutPagination");
 	
 	checkinTab.addEventListener("click", function () {
 		checkinTab.classList.add("active");
@@ -66,13 +182,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 	
 	function resetSearchRows() {
-		rows.forEach(function (row) {
-			row.style.display = "";
-		});
-
-		checkoutRows.forEach(function (row) {
-			row.style.display = "";
-		});
+		checkinPagination.reset();
+		pastCheckinPagination.reset();
+		checkoutPagination.reset();
+		pastCheckoutPagination.reset();
 	}
 	
 	function resetDetailPanel() {
@@ -95,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			row.classList.remove("active");
 		});
 
-		document.querySelectorAll(".checkout-row").forEach(function (row) {
+		checkoutRows.forEach(function (row) {
 			row.classList.remove("active");
 		});
 	}
@@ -325,25 +438,16 @@ document.addEventListener("DOMContentLoaded", function () {
 			alert("체크아웃 처리 중 오류가 발생했습니다.");
 		}
 	});
-	function searchRows(targetRows, keyword) {
-		targetRows.forEach(function (row) {
-			const roomNum = row.children[0].textContent.trim();
-			const guestName = row.children[1].textContent.trim();
 
-			if (roomNum.includes(keyword) || guestName.includes(keyword)) {
-				row.style.display = "";
-			} else {
-				row.style.display = "none";
-			}
-		});
-	}
 	checkinSearchBtn.addEventListener("click", function () {
-		const keyword = checkinSearchInput.value.trim();
+		const keyword = checkinSearchInput.value;
 
 		if (checkinTab.classList.contains("active")) {
-			searchRows(rows, keyword);
+			checkinPagination.search(keyword);
+			pastCheckinPagination.search(keyword);
 		} else {
-			searchRows(checkoutRows, keyword);
+			checkoutPagination.search(keyword);
+			pastCheckoutPagination.search(keyword);
 		}
 	});
 	checkinSearchInput.addEventListener("keydown", function (event) {

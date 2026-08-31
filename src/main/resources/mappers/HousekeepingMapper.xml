@@ -72,7 +72,12 @@
         FROM HOUSEKEEPING
         GROUP BY STATUS
     </select>
-
+	
+	<!-- 객실 청소 요청 생성 -->
+	<insert id="insertCleaningRequest" parameterType="HousekeepingDTO">
+		INSERT INTO HOUSEKEEPING (ID, ROOM_ID, EMPLOYEE_ID, STATUS, REQUESTED_AT, STARTED_AT, COMPLETED_AT, INSPECTED_AT, NOTE)
+		VALUES (HOUSEKEEPING_SEQ.NEXTVAL, #{roomId}, NULL, '청소대기', SYSDATE, NULL, NULL, NULL, #{note})
+	</insert>
 </mapper>
 
 
