@@ -14,6 +14,12 @@ public interface CheckinMapper {
 	// 금일 체크아웃 예정
 	List<CheckinDTO> selectTodayCheckoutList();
 	
+	// 지난 체크인 미처리
+	List<CheckinDTO> selectPastCheckinList();
+
+	// 지난 체크아웃 미처리
+	List<CheckinDTO> selectPastCheckoutList();
+	
 	// 체크인 상세
 	CheckinDTO selectCheckinDetail(int reservationId);
 	

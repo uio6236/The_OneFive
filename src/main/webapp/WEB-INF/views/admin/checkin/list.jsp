@@ -133,7 +133,6 @@
 				<div class="checkin-detail-panel">
 					<div class="checkin-detail-header">
 						<div>
-							<span class="badge badge-blue">예약 완료</span>
 							<h2 id="detailGuestName">고객을 선택하세요</h2>
 							<p id="detailReservationCode">예약번호</p>
 						</div>

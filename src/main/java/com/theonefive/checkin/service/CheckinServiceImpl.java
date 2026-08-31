@@ -54,4 +54,12 @@ public class CheckinServiceImpl implements CheckinService {
 		// int reservationResult = reservationMapper.updateReservationStatus(checkin.getReservationId(), "이용완료");
 		return result > 0 && roomResult > 0;
 	}
+	@Override
+	public List<CheckinDTO> getPastCheckinList() {
+		return checkinMapper.selectPastCheckinList();
+	}
+	@Override
+	public List<CheckinDTO> getPastCheckoutList() {
+		return checkinMapper.selectPastCheckoutList();
+	}
 }

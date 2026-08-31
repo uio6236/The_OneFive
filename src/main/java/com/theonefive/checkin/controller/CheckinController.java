@@ -28,10 +28,14 @@ public class CheckinController {
 	@GetMapping
 	public String checkinlist(Model model) {
 		List<CheckinDTO> checkinList = checkinService.getTodayCheckinList();
+		List<CheckinDTO> pastCheckinList = checkinService.getPastCheckinList();
 		List<CheckinDTO> checkoutList = checkinService.getTodayCheckoutList();
+		List<CheckinDTO> pastCheckoutList = checkinService.getPastCheckoutList();
 		
 		model.addAttribute("checkinList", checkinList);
+		model.addAttribute("pastCheckinList", pastCheckinList);
 		model.addAttribute("checkoutList", checkoutList);
+		model.addAttribute("pastCheckoutList", pastCheckoutList);
 		
 		model.addAttribute("pageTitle", "체크인 / 체크아웃");
 		model.addAttribute("pageDescription", "금일 객실 입퇴실 처리 및 신속 체크인을 지원합니다");
