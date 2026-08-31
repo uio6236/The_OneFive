@@ -94,6 +94,10 @@
 .checkin-left-area {
 	min-width: 0;
 }
+.past-list-title {
+	margin-top: 24px;
+	border-top: 1px solid var(--border);
+}
 /* 상세 */
 .checkin-detail-panel {
     padding: 26px;
