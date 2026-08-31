@@ -1,48 +1,27 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
-
     <title>The OneFive - 마이페이지</title>
-
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/customer.css">
 </head>
-
 <body>
-
 <div class="customer-page">
-
     <jsp:include page="/WEB-INF/views/common/customerHeader.jsp"/>
-
-
     <main class="customer-main">
-
-
         <div class="mypage-title">
-
-            <h1>
-                마이페이지
-            </h1>
-
+            <h1>마이페이지</h1>
             <p>
                 고객님의 개인정보 관리와 과거 이용 내역 및
                 1:1 문의사항을 통합 제어합니다.
             </p>
-
         </div>
-
 
         <!-- 메뉴 -->
         <nav class="mypage-tabs">
-
-            <a
-                href="#profile"
-                class="active"
-            >
+            <a href="#profile" class="active">
                 개인정보 관리
             </a>
 
