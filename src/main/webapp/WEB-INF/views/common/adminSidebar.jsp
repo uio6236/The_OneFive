@@ -1,5 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
+<%--
+  모든 관리자 페이지 상단에서 <jsp:include>로 재사용되는 공통 사이드바.
+  각 메뉴는 href만으로 해당 Controller의 @GetMapping과 연결된다.
+  새 관리자 페이지를 추가할 때는 ① Controller에 매핑 추가 ② 여기에 <li> 한 줄 추가, 이 두 가지만 하면 된다.
+--%>
+
 <aside class="admin-sidebar">
 
     <div class="admin-logo">
@@ -18,7 +24,13 @@
         </div>
     </div>
 
-
+	<%--
+	      TODO: 현재 페이지가 어떤 메뉴인지에 따라 admin-menu-item에 "active" 클래스를
+	      붙여주는 로직이 없음. admin.css의 .admin-menu-item.active 스타일은 이미
+	      정의되어 있으므로, 이후 각 li에 EL로 현재 요청 URI와 비교해서
+	      class="admin-menu-item ${pageContext.request.requestURI.contains('housekeeping') ? 'active' : ''}"
+	      같은 방식을 붙이거나, Controller에서 model에 현재 메뉴명을 내려주는 방식으로 구현 예정.
+	    --%>
     <ul class="admin-menu">
 
         <li class="admin-menu-item">
@@ -79,7 +91,7 @@
 
     </ul>
 
-
+	<%-- 로그인한 관리자 정보 표시 --%>
     <div class="admin-profile">
 
         <img

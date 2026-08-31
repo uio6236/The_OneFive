@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.theonefive.reservation.model.mapper.ReservationMapper">
+
+    <select id="findAll" resultType="ReservationDTO">
+        SELECT
+            ID, CODE, GUEST_ID, ROOM_TYPE_ID, ROOM_ID,
+            CHECKIN, CHECKOUT, GUEST_COUNT, STATUS,
+            ROOM_AMOUNT, DISCOUNT_AMOUNT, TOTAL_AMOUNT,
+            PAYMENT_METHOD, REQUEST, CREATED_BY, CREATED_AT
+        FROM RESERVATION
+        ORDER BY CREATED_AT DESC
+    </select>
+
+    <select id="findById" parameterType="long" resultType="ReservationDTO">
+        SELECT
+            ID, CODE, GUEST_ID, ROOM_TYPE_ID, ROOM_ID,
+            CHECKIN, CHECKOUT, GUEST_COUNT, STATUS,
+            ROOM_AMOUNT, DISCOUNT_AMOUNT, TOTAL_AMOUNT,
+            PAYMENT_METHOD, REQUEST, CREATED_BY, CREATED_AT
+        FROM RESERVATION
+        WHERE ID = #{id}
+    </select>
+
+
+    <!-- 예약 등록
+         selectKey로 시퀀스에서 ID를 먼저 뽑아 dto.id에 채우고(order="BEFORE"),
+         그 값을 CODE 생성(RS-날짜-ID)에도 그대로 재사용함 -->
+    <insert id="insertReservation" parameterType="ReservationDTO">
+        <selectKey keyProperty="id" resultType="long" order="BEFORE">
+            SELECT RESERVATION_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO RESERVATION (
+            ID, CODE, GUEST_ID, ROOM_TYPE_ID, ROOM_ID,
+            CHECKIN, CHECKOUT, GUEST_COUNT, STATUS,
+            ROOM_AMOUNT, DISCOUNT_AMOUNT, TOTAL_AMOUNT,
+            PAYMENT_METHOD, REQUEST, CREATED_BY, CREATED_AT
+        ) VALUES (
+            #{id},
+            TO_CHAR(SYSDATE, 'YYYYMMDD') ||
+		    LPAD(
+		        (SELECT COUNT(*) + 1 FROM RESERVATION WHERE TRUNC(CREATED_AT) = TRUNC(SYSDATE)),
+		        2, '0'
+		    ),
+            #{guestId}, #{roomTypeId}, #{roomId},
+            #{checkin}, #{checkout}, #{guestCount}, #{status},
+            #{roomAmount}, #{discountAmount}, #{totalAmount},
+            #{paymentMethod}, #{request}, #{createdBy}, SYSDATE
+        )
+    </insert>
+
+    <!-- 예약 취소 : 삭제(DELETE) 아니고 상태만 변경 -->
+    <update id="cancelReservation" parameterType="long">
+        UPDATE RESERVATION
+        SET STATUS = '예약취소'
+        WHERE ID = #{id}
+    </update>
+
+
+	<!-- 관리자 예약 목록 조회 : 검색어(고객명/예약번호), 상태 필터 지원 -->
+	<select id="findReservationList" resultType="ReservationViewDTO">
+	    SELECT
+	        RES.ID              AS reservationId,
+	        RES.CODE            AS code,
+	        RES.STATUS          AS status,
+	        C.NAME              AS guestName,
+	        C.PHONE             AS guestPhone,
+	        RT.NAME             AS typeName,
+	        R.ROOM_NUM          AS roomNum,
+	        RES.CHECKIN         AS checkin,
+	        RES.CHECKOUT        AS checkout,
+	        RES.GUEST_COUNT     AS guestCount,
+	        RES.TOTAL_AMOUNT    AS totalAmount
+	    FROM RESERVATION RES
+	    JOIN CUSTOMER C ON C.ID = RES.GUEST_ID
+	    JOIN ROOM_TYPE RT ON RT.ID = RES.ROOM_TYPE_ID
+	    LEFT JOIN ROOM R ON R.ID = RES.ROOM_ID
+	    <where>
+	        <if test="keyword != null and keyword != ''">
+	            AND (C.NAME LIKE '%' || #{keyword} || '%'
+	                 OR RES.CODE LIKE '%' || #{keyword} || '%')
+	        </if>
+	        <if test="status != null and status != ''">
+	            AND RES.STATUS = #{status}
+	        </if>
+	        <if test="checkinDate != null and checkinDate != ''">
+	            AND TRUNC(RES.CHECKIN) = TO_DATE(#{checkinDate}, 'YYYY-MM-DD')
+	        </if>
+	    </where>
+	    ORDER BY RES.CREATED_AT DESC
+	</select>
+
+    <!-- 특정 고객 한 명의 예약 목록 (마이페이지용) -->
+    <select id="findByGuestId" parameterType="long" resultType="ReservationViewDTO">
+        SELECT
+            RES.ID              AS reservationId,
+            RES.CODE            AS code,
+            RES.STATUS          AS status,
+            C.NAME              AS guestName,
+            C.PHONE             AS guestPhone,
+            RT.NAME             AS typeName,
+            R.ROOM_NUM          AS roomNum,
+            RES.CHECKIN         AS checkin,
+            RES.CHECKOUT        AS checkout,
+            RES.GUEST_COUNT     AS guestCount,
+            RES.TOTAL_AMOUNT    AS totalAmount
+        FROM RESERVATION RES
+        JOIN CUSTOMER C ON C.ID = RES.GUEST_ID
+        JOIN ROOM_TYPE RT ON RT.ID = RES.ROOM_TYPE_ID
+        LEFT JOIN ROOM R ON R.ID = RES.ROOM_ID
+        WHERE RES.GUEST_ID = #{guestId}
+        ORDER BY RES.CREATED_AT DESC
+    </select>
+    
+    <!-- 예약 상세 1건 (join 포함, 우측 패널용) -->
+	<select id="findDetailById" parameterType="long" resultType="ReservationViewDTO">
+	    SELECT
+	        RES.ID              AS reservationId,
+	        RES.CODE            AS code,
+	        RES.STATUS          AS status,
+	        C.NAME              AS guestName,
+	        C.PHONE             AS guestPhone,
+	        RT.NAME             AS typeName,
+	        R.ROOM_NUM          AS roomNum,
+	        RES.CHECKIN         AS checkin,
+	        RES.CHECKOUT        AS checkout,
+	        RES.GUEST_COUNT     AS guestCount,
+	        RES.TOTAL_AMOUNT    AS totalAmount
+	    FROM RESERVATION RES
+	    JOIN CUSTOMER C ON C.ID = RES.GUEST_ID
+	    JOIN ROOM_TYPE RT ON RT.ID = RES.ROOM_TYPE_ID
+	    LEFT JOIN ROOM R ON R.ID = RES.ROOM_ID
+	    WHERE RES.ID = #{id}
+	</select>
+	<!-- 고객 객실조회(rooms.jsp) : 선택한 기간에 실제로 남은 방 개수 계산 + 인원수 초과 타입은 0으로 처리 -->
+	<select id="findRoomTypeList" resultType="RoomTypeListDTO">
+	    SELECT
+	        RT.ID           AS typeId,
+	        RT.NAME         AS typeName,
+	        RT.DESCRIPTION  AS description,
+	        RT.CAPACITY     AS capacity,
+	        RT.MAX_CAPACITY AS maxCapacity,
+	        RT.PRICE        AS price,
+	        RT.MAX_PRICE    AS maxPrice,
+	        RT.IMAGE_URL    AS imageUrl,
+	        CASE
+	            WHEN RT.MAX_CAPACITY &lt; #{guestCount} THEN 0
+	            ELSE (
+	                (SELECT COUNT(*) FROM ROOM R WHERE R.TYPE_ID = RT.ID)
+	                -
+	                (SELECT COUNT(*) FROM RESERVATION RES
+	                 WHERE RES.ROOM_TYPE_ID = RT.ID
+	                   AND RES.STATUS != '예약취소'
+	                   AND RES.CHECKIN &lt; TO_DATE(#{checkoutDate}, 'YYYY-MM-DD')
+	                   AND RES.CHECKOUT &gt; TO_DATE(#{checkinDate}, 'YYYY-MM-DD'))
+	            )
+	        END AS availableRoomCount
+	    FROM ROOM_TYPE RT
+	    ORDER BY RT.PRICE
+	</select>
+	
+	<!-- 고객 객실상세(detail.jsp) : 타입 1건 -->
+	<select id="findRoomTypeDetail" parameterType="long" resultType="RoomTypeListDTO">
+	    SELECT
+	        RT.ID           AS typeId,
+	        RT.NAME         AS typeName,
+	        RT.DESCRIPTION  AS description,
+	        RT.CAPACITY     AS capacity,
+	        RT.MAX_CAPACITY AS maxCapacity,
+	        RT.PRICE        AS price,
+	        RT.MAX_PRICE    AS maxPrice,
+	        RT.IMAGE_URL    AS imageUrl
+	    FROM ROOM_TYPE RT
+	    WHERE RT.ID = #{roomTypeId}
+	</select>
+	
+	<!-- 특정 타입 + 특정 기간에 실제로 예약 가능한 방이 있는지 (0이면 마감) -->
+	<select id="countAvailableRooms" resultType="int">
+	    SELECT
+	        (SELECT COUNT(*) FROM ROOM WHERE TYPE_ID = #{roomTypeId})
+	        -
+	        (SELECT COUNT(*) FROM RESERVATION
+	         WHERE ROOM_TYPE_ID = #{roomTypeId}
+	           AND STATUS != '예약취소'
+	           AND CHECKIN &lt; TO_DATE(#{checkoutDate}, 'YYYY-MM-DD')
+	           AND CHECKOUT &gt; TO_DATE(#{checkinDate}, 'YYYY-MM-DD'))
+	    FROM DUAL
+	</select>
+</mapper>
+
