@@ -1,11 +1,13 @@
 package com.theonefive.reservation.model.dto;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.Date;
 
 // RESERVATION 테이블 컬럼과 1:1 CRUD용
 
@@ -20,13 +22,16 @@ public class ReservationDTO {
     private Long guestId;
     private Long roomTypeId;
     private Long roomId;           
-    private Date checkin;          
+    @DateTimeFormat(pattern = "yyyy-MM-dd")   // ← checkin, checkout 필드 위에 각각 추가
+    private Date checkin;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date checkout;         
-    private int guestCount;
+    private Integer guestCount;
     private String status;        
-    private int roomAmount;      
-    private int discountAmount;  
-    private int totalAmount;    
+    private Integer roomAmount;      
+    private Integer discountAmount;  
+    private Integer totalAmount;    
     private String paymentMethod;
     private String request;       
     private Long createdBy;       
