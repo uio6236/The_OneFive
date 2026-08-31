@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -40,73 +41,31 @@
 
                 </div>
 
-
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                >
-                    + 고객 등록
-                </button>
-
             </div>
+			
+			<form method="get" action="/admin/customers" class="filter-bar admin-customer-filter">
 
+			    <div class="search-box">
+			        <input
+			            type="text"
+			            name="keyword"
+			            class="form-control"
+			            value="${search.keyword}"
+			            placeholder="고객명, 연락처, 이메일 검색"
+			        >
+			    </div>
 
-            <!-- 검색 -->
-            <div class="filter-bar admin-customer-filter">
+			    <div>멤버십</div>
 
-                <div class="search-box">
+			    <select name="membershipGrade" class="form-control customer-filter-select">
+			        <option value="전체" ${search.membershipGrade == '전체' ? 'selected' : ''}>전체</option>
+			        <option value="NORMAL" ${search.membershipGrade == 'NORMAL' ? 'selected' : ''}>NORMAL</option>
+			        <option value="VIP" ${search.membershipGrade == 'VIP' ? 'selected' : ''}>VIP</option>
+			    </select>
 
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="고객명, 연락처, 이메일 검색"
-                    >
+			    <button type="submit" class="btn btn-dark">검색</button>
 
-                </div>
-
-
-                <select class="form-control customer-filter-select">
-
-                    <option>
-                        전체 등급
-                    </option>
-
-                    <option>
-                        일반
-                    </option>
-
-                    <option>
-                        VIP
-                    </option>
-
-                </select>
-
-
-                <select class="form-control customer-filter-select">
-
-                    <option>
-                        전체 방문
-                    </option>
-
-                    <option>
-                        첫 방문
-                    </option>
-
-                    <option>
-                        재방문
-                    </option>
-
-                </select>
-
-
-                <button
-                    type="button"
-                    class="btn btn-dark"
-                >
-                    검색
-                </button>
-
-            </div>
+			</form>
 
 
             <!-- 고객 테이블 -->
@@ -122,10 +81,9 @@
                         <th>이메일</th>
                         <th>등급</th>
                         <th>총 방문</th>
-                        <th>최근 방문일</th>
-                        <th>재방문</th>
-                        <th>특이사항</th>
+                        <th>메모</th>
                         <th></th>
+                      
                     </tr>
 
                     </thead>
@@ -133,199 +91,54 @@
 
                     <tbody>
 
-                    <tr>
-
-                        <td>
-                            김우현
-                        </td>
-
-                        <td>
-                            010-1234-5678
-                        </td>
-
-                        <td>
-                            woohyun@email.com
-                        </td>
-
-                        <td>
-                            <span class="badge badge-blue">
-                                VIP
-                            </span>
-                        </td>
-
-                        <td>
-                            14회
-                        </td>
-
-                        <td>
-                            2026.08.11
-                        </td>
-
-                        <td>
-                            <span class="badge badge-dark">
-                                REVISIT
-                            </span>
-                        </td>
-
-                        <td>
-                            고층 객실 선호
-                        </td>
-
-                        <td>
-
-                            <a
-                                href="/admin/customers/1"
-                                class="table-detail-link"
-                            >
-                                상세
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            박서연
-                        </td>
-
-                        <td>
-                            010-2222-3333
-                        </td>
-
-                        <td>
-                            seoyeon@email.com
-                        </td>
-
-                        <td>
-                            <span class="badge badge-dark">
-                                일반
-                            </span>
-                        </td>
-
-                        <td>
-                            3회
-                        </td>
-
-                        <td>
-                            2026.06.18
-                        </td>
-
-                        <td>
-                            <span class="badge badge-blue">
-                                REVISIT
-                            </span>
-                        </td>
-
-                        <td>
-                            조용한 객실 선호
-                        </td>
-
-                        <td>
-
-                            <a
-                                href="/admin/customers/2"
-                                class="table-detail-link"
-                            >
-                                상세
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            이준혁
-                        </td>
-
-                        <td>
-                            010-4444-5555
-                        </td>
-
-                        <td>
-                            junhyuk@email.com
-                        </td>
-
-                        <td>
-                            <span class="badge badge-dark">
-                                일반
-                            </span>
-                        </td>
-
-                        <td>
-                            1회
-                        </td>
-
-                        <td>
-                            2026.08.11
-                        </td>
-
-                        <td>
-                            <span class="badge badge-blue">
-                                FIRST
-                            </span>
-                        </td>
-
-                        <td>
-                            -
-                        </td>
-
-                        <td>
-
-                            <a
-                                href="/admin/customers/3"
-                                class="table-detail-link"
-                            >
-                                상세
-                            </a>
-
-                        </td>
-
-                    </tr>
+						<c:forEach items="${customerList}" var="c">
+						    <tr>
+						        <td>${c.name}</td>
+						        <td>${c.phone}</td>
+						        <td>${c.email}</td>
+						        <td>
+						            <span class="badge ${c.membershipGrade == 'VIP' ? 'badge-blue' : 'badge-dark'}">
+						                ${c.membershipGrade}
+						            </span>
+						        </td>
+						        <td>${c.totalVisitCount}회</td>
+						        <td>${c.memo}</td>
+						        <td>
+						            <a href="/admin/customers/${c.id}" class="table-detail-link">수정</a>
+						        </td>
+						    </tr>
+						</c:forEach>
 
                     </tbody>
 
                 </table>
 
-            </div>
+            </div><br>
 
 
             <div class="admin-table-bottom">
 
-                <span>
-                    전체 482명 중 1-10 표시
-                </span>
-
 
                 <div class="pagination">
 
-                    <a href="#">
-                        ‹
-                    </a>
+					 <c:if test="${search.page > 1}">
+					        <a href="/admin/customers?keyword=${search.keyword}&membershipGrade=${search.membershipGrade}&page=${search.page - 1}">‹</a>
+					    </c:if>
 
-                    <a href="#" class="active">
-                        1
-                    </a>
+					    <c:forEach begin="1" end="${totalPages}" var="p">
+					        <a href="/admin/customers?keyword=${search.keyword}&membershipGrade=${search.membershipGrade}&page=${p}"
+					           class="${p == search.page ? 'active' : ''}">
+					            ${p}
+					        </a>
+					    </c:forEach>
 
-                    <a href="#">
-                        2
-                    </a>
+					    <c:if test="${search.page < totalPages}">
+					        <a href="/admin/customers?keyword=${search.keyword}&membershipGrade=${search.membershipGrade}&page=${search.page + 1}">›</a>
+					    </c:if>
 
-                    <a href="#">
-                        3
-                    </a>
+					</div>
 
-                    <a href="#">
-                        ›
-                    </a>
-
-                </div>
-
+					
             </div>
 
         </section>
