@@ -410,15 +410,25 @@
     font-size: 9px;
 }
 
-.room-detail-memo p {
-    min-height: 70px;
-    margin: 7px 0 0;
-    padding: 13px;
-    background: #f7f9fc;
-    border-radius: 8px;
-    color: var(--text-primary);
-    font-size: 10px;
-    line-height: 1.6;
+.room-detail-memo textarea {
+	width: 100%;
+	min-height: 80px;
+	margin: 7px 0 0;
+	padding: 13px;
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	background: #f7f9fc;
+	color: var(--text-primary);
+	font-size: 10px;
+	line-height: 1.6;
+	resize: vertical;
+	box-sizing: border-box;
+}
+
+.room-detail-memo textarea:focus {
+	outline: none;
+	border-color: var(--blue);
+	background: #fff;
 }
 
 /* Action */

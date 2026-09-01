@@ -354,15 +354,17 @@
 				            </div>
 				        </div>
 
-				        <div class="room-detail-memo">
-				            <span>객실 메모</span>
-				            <p id="detailMemo">등록된 메모가 없습니다.</p>
-				        </div>
-				        <div class="room-detail-actions">
-				            <button type="button" class="btn btn-primary">
-				                객실 정비
-				            </button>
-				        </div>
+						<div class="room-detail-memo">
+							<span>정비 요청 내용</span>
+							<textarea id="detailMemo"
+								placeholder="객실 정비 내용을 입력하세요."></textarea>
+						</div>
+
+						<div class="room-detail-actions">
+							<button type="button" class="btn btn-primary" id="maintenanceRequestBtn">
+								객실 정비 요청
+							</button>
+						</div>
 				    </div>
 				</aside>
 			</div>
