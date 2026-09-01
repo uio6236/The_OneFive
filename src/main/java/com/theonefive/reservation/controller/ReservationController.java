@@ -93,6 +93,7 @@ public class ReservationController {
                            @RequestParam String checkoutDate,
                            @RequestParam Integer adultCount,
                            @RequestParam(required = false, defaultValue = "0") Integer childCount,
+                           HttpSession session,
                            Model model) {
 
         RoomTypeListDTO roomType = service.findRoomTypeDetail(roomTypeId);
@@ -109,8 +110,13 @@ public class ReservationController {
 
         int roomAmount = roomType.getPrice() * (int) nights + (extraFeePerNight * (int) nights);
 
-        // TODO: 로그인 세션 연동되면 실제 회원등급으로 교체. 지금은 임시로 false 고정
+        String loginId = (String) session.getAttribute("loginId");
         boolean isVip = false;
+        if (loginId != null) {
+            CustomerDTO customer = service1.getCustomerByLoginId(loginId);
+            isVip = "VIP".equals(customer.getMembershipGrade());
+        }
+
         int discountAmount = isVip ? (int) (roomAmount * 0.05) : 0;
         int totalAmount = roomAmount - discountAmount;
 
@@ -127,7 +133,6 @@ public class ReservationController {
 
         return "customer/reservation/payment";
     }
-
     @PostMapping("/complete")
     public String complete(@ModelAttribute ReservationDTO dto,
                             HttpSession session,
