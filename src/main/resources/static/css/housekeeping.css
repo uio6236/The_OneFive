@@ -128,7 +128,7 @@
 	box-sizing: border-box;
 	    width: 100px;
 	    height: 34px;
-	    padding: 8px 12px;
+	    padding: 3px 12px;
 	    border: 1px solid #E2E8F0;
 	    border-radius: 8px;
 	    font-size: 13px;
@@ -426,14 +426,14 @@
 .housekeeping-assign-row select {
     box-sizing: border-box;
     flex: 1;
-    height: 32px;
-    padding: 8px 12px;
+    padding: 8px 28px 8px 12px;
     border: 1px solid #E2E8F0;
     border-radius: 8px;
     font-size: 13px;
     font-weight: 600;
     color: #101828;
     background: #fff;
+	min-width: 0
 }
 .housekeeping-assign-row #p-assignBtn {
     flex: none;
