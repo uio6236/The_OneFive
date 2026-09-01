@@ -1,5 +1,9 @@
 package com.theonefive.admin.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +35,7 @@ public class AdminCustomerController {
         
 		model.addAttribute("pageTitle", "고객 관리");
 		model.addAttribute("pageDescription", "호텔 멤버십 회원 및 역대 투숙객 통합 조회 및 기록 관리");
-		
+		model.addAttribute("today", new SimpleDateFormat("yyyy년 M월 d일 EEEE", Locale.KOREAN).format(new Date()));
         return "admin/customer/list"; // /WEB-INF/views/admin/customer/list.jsp
     }
 }

@@ -1,6 +1,9 @@
 package com.theonefive.reservation.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +45,7 @@ public class AdminReservationController {
 		
 		model.addAttribute("pageTitle", "예약 관리");
 		model.addAttribute("pageDescription", "전체 예약 현황 분석");
+		model.addAttribute("today", new SimpleDateFormat("yyyy년 M월 d일 EEEE", Locale.KOREAN).format(new Date()));
         return "admin/reservation/list";
     }
 

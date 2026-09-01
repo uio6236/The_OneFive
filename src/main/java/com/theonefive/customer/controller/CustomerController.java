@@ -46,6 +46,7 @@ public class CustomerController {
     @PostMapping("customer/signup")
     public String signup(CustomerDTO customer, Model model) throws IOException {
         // JSP Form의 name값들이 CustomerDTO 필드명과 일치하므로 자동으로 customer 객체에 담김
+    	
         try {
             customerService.signup(customer); // 회원가입 로직 실행 (중복검사 + 암호화 + DB저장)
             return "redirect:/login"; // 가입 성공 시 로그인 페이지로 자동 이동

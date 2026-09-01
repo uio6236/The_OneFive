@@ -1,6 +1,9 @@
 package com.theonefive.room.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,6 +75,7 @@ public class RoomController {
 		
 		model.addAttribute("pageTitle", "객실 현황");
 		model.addAttribute("pageDescription", "호텔 전체 객실 상태 확인");
+		model.addAttribute("today", new SimpleDateFormat("yyyy년 M월 d일 EEEE", Locale.KOREAN).format(new Date()));
 		
 		return "admin/room/list";
 	}
