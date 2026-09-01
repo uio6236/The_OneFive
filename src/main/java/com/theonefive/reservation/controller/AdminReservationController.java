@@ -38,6 +38,10 @@ public class AdminReservationController {
         List<ReservationViewDTO> reservationList = service.findReservationList(condition);
         model.addAttribute("reservationList", reservationList);
         model.addAttribute("condition", condition);   // 검색값 유지용
+        
+		
+		model.addAttribute("pageTitle", "예약 관리");
+		model.addAttribute("pageDescription", "전체 예약 현황 분석");
         return "admin/reservation/list";
     }
 
