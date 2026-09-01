@@ -78,6 +78,14 @@
 		INSERT INTO HOUSEKEEPING (ID, ROOM_ID, EMPLOYEE_ID, STATUS, REQUESTED_AT, STARTED_AT, COMPLETED_AT, INSPECTED_AT, NOTE)
 		VALUES (HOUSEKEEPING_SEQ.NEXTVAL, #{roomId}, NULL, '청소대기', SYSDATE, NULL, NULL, NULL, #{note})
 	</insert>
+	
+	<!-- 객실의 진행 중인 정비 요청 개수 조회 -->
+	<select id="countActiveCleaningRequest" parameterType="long" resultType="int">
+		SELECT COUNT(*)
+		FROM HOUSEKEEPING
+		WHERE ROOM_ID = #{roomId}
+		AND STATUS IN ('청소대기', '청소중')
+	</select>
 </mapper>
 
 

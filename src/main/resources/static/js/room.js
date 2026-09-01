@@ -28,15 +28,30 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
                     const room = await response.json();
+					console.log(room);
                     // 상세 정보 입력
                     document.querySelector("#detailFloor").textContent = room.floor + "F";
                     document.querySelector("#detailRoomNum").textContent = room.roomNum + "호";
                     document.querySelector("#detailRoomType").textContent = room.typeName;
                     document.querySelector("#detailRoomNumber").textContent = room.roomNum + "호";
                     document.querySelector("#detailTypeName").textContent = room.typeName;
-                    document.querySelector("#detailFloorInfo").textContent = room.floor + "층";
                     document.querySelector("#detailStatusText").textContent = room.status;
-                    document.querySelector("#detailMemo").value = "";
+					const stayInfo = document.querySelector("#stayInfo");
+					const emptyStayInfo = document.querySelector("#emptyStayInfo");
+
+					if (room.guestName) {
+						stayInfo.style.display = "block";
+						emptyStayInfo.style.display = "none";
+
+						document.querySelector("#detailGuestName").textContent = room.guestName;
+						document.querySelector("#detailGuestCount").textContent = room.guestCount + "명";
+						document.querySelector("#detailCheckinTime").textContent = formatDate(room.checkinTime);
+						document.querySelector("#detailCheckoutTime").textContent = formatDate(room.checkoutTime);
+					} else {
+						stayInfo.style.display = "none";
+						emptyStayInfo.style.display = "block";
+					}
+					document.querySelector("#detailMemo").value = "";
 
                     // 상태 Badge
                     const status = document.querySelector("#detailStatus");
@@ -126,3 +141,16 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	});
 });
+function formatDate(dateTime) {
+	if (!dateTime) {
+		return "-";
+	}
+
+	const date = new Date(dateTime);
+
+	const year = date.getFullYear();
+	const month = String(date.getMonth() + 1).padStart(2, "0");
+	const day = String(date.getDate()).padStart(2, "0");
+
+	return year + "." + month + "." + day;
+}

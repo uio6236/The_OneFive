@@ -45,14 +45,20 @@ public class RoomServiceImpl implements RoomService{
 	@Transactional
 	@Override
 	public boolean requestMaintenance(int roomId, String note) {
-		int roomResult = roomMapper.updateRoomStatus(roomId, "청소중");
+		int activeCount = housekeepingMapper.countActiveCleaningRequest((long) roomId);
 
+		if (activeCount > 0) {
+			throw new IllegalStateException(
+					"이미 진행 중인 객실 정비 요청이 있습니다.");
+		}
+		
+		int roomResult = roomMapper.updateRoomStatus(roomId, "청소중");
+		
 		HousekeepingDTO housekeeping = new HousekeepingDTO();
 		housekeeping.setRoomId((long) roomId);
 		housekeeping.setNote(note);
 
-		int housekeepingResult =
-			housekeepingMapper.insertCleaningRequest(housekeeping);
+		int housekeepingResult = housekeepingMapper.insertCleaningRequest(housekeeping);
 
 		return roomResult > 0 && housekeepingResult > 0;
 	}

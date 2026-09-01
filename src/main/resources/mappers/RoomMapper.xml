@@ -11,10 +11,12 @@
 		ORDER BY R.FLOOR DESC, R.ROOM_NUM ASC
 	</select>
 	<select id="selectRoomById" parameterType="int" resultType="RoomDTO">
-		SELECT R.ID AS id, R.ROOM_NUM AS roomNum, R.TYPE_ID AS typeId, R.FLOOR AS floor, R.STATUS AS status, R.MEMO AS memo, RT.NAME AS typeName, C.NAME AS guestName
-		FROM ROOM R JOIN ROOM_TYPE RT ON R.TYPE_ID = RT.ID
+		SELECT R.ID AS id, R.ROOM_NUM AS roomNum, R.TYPE_ID AS typeId, R.FLOOR AS floor, R.STATUS AS status, R.MEMO AS memo, RT.NAME AS typeName, C.NAME AS guestName, RS.GUEST_COUNT AS guestCount, CS.CHECKIN AS checkinTime, RS.CHECKOUT AS checkoutTime
+		FROM ROOM R
+		JOIN ROOM_TYPE RT ON R.TYPE_ID = RT.ID
 		LEFT JOIN CHECKIN_STATUS CS ON R.ID = CS.ROOM_ID AND CS.CHECKIN IS NOT NULL AND CS.CHECKOUT IS NULL
 		LEFT JOIN CUSTOMER C ON CS.GUEST_ID = C.ID
+		LEFT JOIN RESERVATION RS ON CS.RESERVATION_ID = RS.ID
 		WHERE R.ID = #{roomId}
 	</select>
 	<select id="selectRoomByFloor" parameterType="int" resultType="RoomDTO">

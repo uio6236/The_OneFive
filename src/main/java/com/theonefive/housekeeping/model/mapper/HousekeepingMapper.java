@@ -36,4 +36,7 @@ public interface HousekeepingMapper {
     
     // 객실 정비 요청 생성
     int insertCleaningRequest(HousekeepingDTO dto);
+    
+    // 객실의 진행 중인 정비 요청 개수 조회
+    int countActiveCleaningRequest(Long roomId);
 }
