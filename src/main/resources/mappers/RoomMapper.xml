@@ -28,11 +28,10 @@
     	ORDER BY R.ROOM_NUM ASC
 	</select>
 	<select id="selectAvailableRooms" parameterType="int" resultType="RoomDTO">
-		SELECT R.ID AS id, R.ROOM_NUM AS roomNum, R.TYPE_ID AS typeId, R.FLOOR AS floor, R.STATUS AS status, R.MEMO AS memo, RT.NAME AS typeName
-		FROM ROOM R JOIN ROOM_TYPE RT ON R.TYPE_ID = RT.ID
-		WHERE R.TYPE_ID = #{roomTypeId} 
-		AND R.STATUS = '이용가능'
-		ORDER BY R.FLOOR DESC, R.ROOM_NUM ASC
+	    SELECT ID AS id, ROOM_NUM AS roomNum
+	    FROM ROOM
+	    WHERE TYPE_ID = #{roomTypeId} AND STATUS = '이용가능'
+	    ORDER BY FLOOR DESC, ROOM_NUM ASC
 	</select>
 	<update id="updateRoomStatus">
 		UPDATE ROOM

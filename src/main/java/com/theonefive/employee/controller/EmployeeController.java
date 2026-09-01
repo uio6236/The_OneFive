@@ -50,7 +50,6 @@ public class EmployeeController {
         String todayStr = today.getYear() + "년 " + today.getMonthValue() + "월 " + today.getDayOfMonth() + "일 "
                 + weekdays[today.getDayOfWeek().getValue() - 1] + "요일";
         model.addAttribute("today", todayStr);
-        model.addAttribute("today", new SimpleDateFormat("yyyy년 M월 d일 EEEE", Locale.KOREAN).format(new Date()));
         return "admin/mypage/index";   // -> /WEB-INF/views/admin/mypage/index.jsp
     }
  

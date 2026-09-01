@@ -104,10 +104,6 @@
     font-size: 19px;
 }
 
-.room-floor-title span {
-    color: var(--text-secondary);
-    font-size: 10px;
-}
 
 /* 객실 */
 .admin-room-grid {
@@ -209,10 +205,6 @@
     font-weight: 600;
 }
 
-.room-action-link.danger {
-    color: var(--danger);
-}
-
 /* 상태별 미세 차이 */
 .room-available-card {
     border-top-color: #7193be;
@@ -254,9 +246,6 @@
     align-items: start;
 }
 
-.room-list-area {
-    min-width: 0;
-}
 .room-left-area {
 	min-width: 0;
 }
