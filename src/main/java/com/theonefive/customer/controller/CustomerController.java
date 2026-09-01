@@ -31,7 +31,10 @@ public class CustomerController {
     // ==========================================
     // 1. 회원가입 기능
     // ==========================================
-
+    @GetMapping("")
+    public String home() {
+        return "redirect:/login";
+    }
     // 회원가입 페이지 보여주기 (GET 요청: http://localhost:8080/customer/signup)
     @GetMapping("customer/signup")
     public String signupForm() {
@@ -97,7 +100,7 @@ public class CustomerController {
             return "redirect:/login"; // 다시 로그인 페이지로 돌아감
         }
     }
-
+    
     // ==========================================
     // 3. 로그아웃 & 메인페이지
     // ==========================================
