@@ -22,6 +22,8 @@ local.properties
 .buildpath
 .target
 .classpath
+application.properties
+.project
 
 
 ### Intellij ###
