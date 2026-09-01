@@ -19,7 +19,15 @@ public class CustomerServiceImpl implements CustomerService {
 	private final PasswordEncoder passwordEncoder;
 	
 	public void signup(CustomerDTO customer) throws IOException {
-		
+		 // 아이디 형식 체크
+	    if (!customer.getLoginId().matches("^[a-zA-Z0-9]{4,20}$")) {
+	        throw new IllegalStateException("아이디는 영문과 숫자만 사용해서 4~20자로 입력해주세요.");
+	    }
+
+	    // 전화번호 형식 체크 — 010-1234-5678 형식만 허용
+	    if (!customer.getPhone().matches("^01[0-9]-\\d{3,4}-\\d{4}$")) {
+	        throw new IllegalStateException("휴대폰 번호 형식이 올바르지 않습니다. (예: 010-1234-5678)");
+	    }
 		if(isLoginIdCheck(customer.getLoginId())) {
 			throw new IllegalStateException("이미 사용 중인 아이디입니다.");
 		}

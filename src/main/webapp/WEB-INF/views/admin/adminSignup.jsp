@@ -134,12 +134,12 @@
                     <label for="code" class="form-label">
                         사번
                     </label>
-					
+					<div class="input-with-btn">
                     <input type="text" id="code" name="code" class="form-control" 
 					placeholder="사번을 입력하세요" required>
 					
 					<button type="button" id="check-code-btn" class="btn btn-outline">중복확인</button>
-					
+					</div>
 					<p id="check-code-result" class="form-tip"></p>
                 </div>
 
