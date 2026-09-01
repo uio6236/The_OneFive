@@ -94,15 +94,16 @@
 	<%-- 로그인한 관리자 정보 표시 --%>
 	<div class="admin-profile">
 
-	        <div>
-	            <div class="admin-profile-name">
-	               <h3> ${employee.name}</h3>
-	            </div>
+	    <div class="admin-profile-info">
+	        <span class="admin-profile-name">
+	            ${sessionScope.loginAdmin.name}
+	        </span>
 
-	            <div class="admin-profile-role">
-	              <p class="mypage-position">${employee.position}</p>
-	            </div>
-	        </div>
+	        <span class="admin-profile-position">
+	            ${sessionScope.loginAdmin.position}
+	        </span>
+	    </div>
+
 	</div>
 
 </aside>
