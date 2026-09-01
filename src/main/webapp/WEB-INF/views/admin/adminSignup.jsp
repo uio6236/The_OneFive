@@ -121,7 +121,7 @@
         <div class="auth-form-card signup-card">
             <div class="auth-form-title">
                 <h2>
-                    회원가입
+                    관리자 회원가입
                 </h2>
                 <p>
                     The OneFive 호텔 관리 시스템 이용을 위해 관리자 정보를 등록해 주세요.

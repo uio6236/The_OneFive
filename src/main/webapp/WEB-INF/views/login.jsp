@@ -178,10 +178,6 @@
 				        아이디 저장
 				    </label>
 
-					<a href="/password/reset" class="text-link"> 아이디 찾기 </a>
-					
-                    <a href="/password/reset" class="text-link"> 비밀번호 찾기 </a>
-
                 </div>
 
 

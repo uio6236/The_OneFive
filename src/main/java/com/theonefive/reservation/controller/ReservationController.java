@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -158,5 +159,29 @@ public class ReservationController {
 
         redirectAttr.addFlashAttribute("paymentSuccess", true);
         return "redirect:/customer/reservation/rooms";
+    }
+    @PostMapping("/{id}/cancel")
+    public String cancel(@PathVariable Long id, HttpSession session, RedirectAttributes redirectAttr) {
+        Long guestId = (Long) session.getAttribute("loginGuestId");
+        if (guestId == null) {
+            return "redirect:/login";
+        }
+
+        ReservationDTO reservation = service.findById(id);
+        if (reservation == null || !guestId.equals(reservation.getGuestId())) {
+            redirectAttr.addFlashAttribute("error", "본인의 예약만 취소할 수 있습니다.");
+            return "redirect:/mypage/index";
+        }
+
+        try {
+            service.cancelReservation(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttr.addFlashAttribute("error", "예약 취소에 실패했습니다.");
+            return "redirect:/mypage/index";
+        }
+
+        redirectAttr.addFlashAttribute("success", "예약이 취소되었습니다.");
+        return "redirect:/mypage/index";
     }
 }

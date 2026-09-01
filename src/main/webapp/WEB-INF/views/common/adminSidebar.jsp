@@ -94,19 +94,13 @@
 	<%-- 로그인한 관리자 정보 표시 --%>
     <div class="admin-profile">
 
-        <img
-            src="/images/common/admin-profile.png"
-            alt="관리자 프로필"
-            class="admin-profile-image"
-        >
-
         <div>
             <div class="admin-profile-name">
-                ${sessionScope.loginEmployee.employeeName}
+               <h3> ${employee.name}</h3>
             </div>
 
             <div class="admin-profile-role">
-                프론트 데스크 팀
+              <p class="mypage-position">${employee.position}</p>
             </div>
         </div>
 

@@ -135,11 +135,9 @@
                     <c:if test="${totalPages > 1}">
                     <div class="admin-table-bottom">
 
-                        <span>
-                            전체 ${filteredCount}건 중 ${(currentPage - 1) * 10 + 1}-${(currentPage - 1) * 10 + fn:length(inquiryList)} 표시
-                        </span>
+                   
 
-                        <div class="pagination">
+                      <br><div class="pagination">
 
                             <c:if test="${currentPage > 1}">
                                 <a href="${pageContext.request.contextPath}/admin/inquiries?page=${currentPage - 1}&keyword=${keyword}&status=${status}&sortOrder=${sortOrder}">
@@ -160,7 +158,7 @@
                                 </a>
                             </c:if>
 
-                        </div>
+                        </div><br>
 
                     </div>
                     </c:if>
