@@ -92,7 +92,7 @@ public class CustomerController {
             // 로그인 성공 시 세션(Session)에 회원 정보 저장 (로그인 상태 유지)
             session.setAttribute("loginId", loginCustomer.getLoginId());
             
-            return "redirect:/mypage/index"; // 로그인 성공 후 메인 페이지로 이동
+            return "redirect:/customer/reservation/rooms"; // 로그인 성공 후 메인 페이지로 이동
             
         } catch (IllegalStateException e) {
             // 로그인 실패 시 (아이디 불일치 or 비밀번호 틀림)
