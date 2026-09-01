@@ -135,7 +135,7 @@
             <div class="auth-form-title">
 
                 <h2>
-                    로그인
+                    관리자 로그인
                 </h2>
 
                 <p>
@@ -177,10 +177,6 @@
                         <input type="checkbox" name="remember">
                         로그인 상태 유지
                     </label>
-
-					<a href="/password/reset" class="text-link"> 아이디 찾기 </a>
-					
-                    <a href="/password/reset" class="text-link"> 비밀번호 찾기 </a>
 
                 </div>
 

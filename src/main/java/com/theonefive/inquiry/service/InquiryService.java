@@ -15,4 +15,6 @@ public interface InquiryService {
     List<InquiryDTO> getMyInquiryList(Long guestId);
     InquiryDTO getMyInquiryDetail(Long id, Long guestId);
     void submitInquiry(InquiryDTO dto);
+    
+    int countUnansweredInquiry(Long guestId);
 }

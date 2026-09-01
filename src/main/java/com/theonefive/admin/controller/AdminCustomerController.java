@@ -3,10 +3,14 @@ package com.theonefive.admin.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.theonefive.admin.model.dto.AdminCustomerSearchDTO;
 import com.theonefive.admin.service.AdminCustomerService;
+import com.theonefive.customer.model.dto.CustomerDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,4 +38,27 @@ public class AdminCustomerController {
 		
         return "admin/customer/list"; // /WEB-INF/views/admin/customer/list.jsp
     }
+
+
+    // 고객 수정 처리
+    @PostMapping("/{id}")
+//    @ResponseBody
+    public String update(
+            @PathVariable Long id,
+            CustomerDTO dto) {
+
+        dto.setId(id);
+
+        adminCustomerService.updateCustomer(dto);
+
+        return "redirect:/admin/customers";
+    }
+    
+    @GetMapping("/{id}")
+    @ResponseBody
+    public CustomerDTO getCustomer(@PathVariable Long id) {
+
+        return adminCustomerService.getCustomerById(id);
+    }
+    
 }

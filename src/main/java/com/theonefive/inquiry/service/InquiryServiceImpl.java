@@ -1,19 +1,22 @@
 package com.theonefive.inquiry.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.theonefive.inquiry.model.dto.InquiryDTO;
 import com.theonefive.inquiry.model.mapper.InquiryMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
  
-import java.util.List;
- 
+@RequiredArgsConstructor
 @Service
 public class InquiryServiceImpl implements InquiryService {
  
    
  
-    @Autowired
-    private InquiryMapper inquiryMapper;
+    
+    private final InquiryMapper inquiryMapper;
  
     // ===== 관리자 =====
  
@@ -53,5 +56,10 @@ public class InquiryServiceImpl implements InquiryService {
     @Override
     public void submitInquiry(InquiryDTO dto) {
         inquiryMapper.insertInquiry(dto);
+    }
+    
+    @Override
+    public int countUnansweredInquiry(Long guestId) {
+    	return inquiryMapper.countUnansweredInquiry(guestId);
     }
 }

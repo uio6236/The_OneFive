@@ -5,15 +5,18 @@ import java.io.IOException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import com.theonefive.common.dto.ApiResponse;
 import com.theonefive.customer.model.dto.CustomerDTO;
 import com.theonefive.customer.service.CustomerService;
+import com.theonefive.inquiry.service.InquiryService;
 import com.theonefive.reservation.service.ReservationService;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +29,7 @@ public class CustomerController {
 
     private final CustomerService customerService;
     private final ReservationService reservationService;
+    private final InquiryService inquiryService; 
 
     
     // ==========================================
@@ -91,6 +95,7 @@ public class CustomerController {
             
             // 로그인 성공 시 세션(Session)에 회원 정보 저장 (로그인 상태 유지)
             session.setAttribute("loginId", loginCustomer.getLoginId());
+            session.setAttribute("loginGuestId", loginCustomer.getId());
             
             return "redirect:/customer/reservation/rooms"; // 로그인 성공 후 메인 페이지로 이동
             
@@ -133,6 +138,9 @@ public class CustomerController {
 
         model.addAttribute("reservationList", reservationService.findByGuestId(customer.getId()));   // ⬅ 이 한 줄만 추가
 
+        int unansweredCount = inquiryService.countUnansweredInquiry(customer.getId()); // 추가
+        model.addAttribute("unansweredCount", unansweredCount);
+        
         return "customer/mypage/index";
     }
     
@@ -153,5 +161,6 @@ public class CustomerController {
              return ApiResponse.fail(e.getMessage());
          }
     }
+    
 
 }
