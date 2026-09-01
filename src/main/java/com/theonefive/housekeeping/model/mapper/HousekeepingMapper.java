@@ -33,4 +33,11 @@ public interface HousekeepingMapper {
 
     // 상태별(STATUS) 건수 집계
     List<StatusCountDTO> selectStatusCount();
+    
+    // 청소대기 작업 생성
+    // 객실 정비 요청 생성
+    //int insertCleaningRequest(HousekeepingDTO dto);
+    
+    // 해당 방의 최신 하우스키핑 이력 기준 체크인 가능 여부 조회
+    //boolean isRoomReady(int roomId); 
 }

@@ -73,6 +73,15 @@
         GROUP BY STATUS
     </select>
 
+	<!-- 해당 ROOM_ID의 가장 최근 row가 STATUS='점검완료'인지 확인. 이력 없으면 false 반환(안전 기본값) 
+	<select id="isRoomReady" resultType="boolean">
+    SELECT CASE WHEN STATUS = '점검완료' THEN 1 ELSE 0 END
+    FROM HOUSEKEEPING
+    WHERE ROOM_ID = #{roomId}
+    AND ID = (SELECT MAX(ID) FROM HOUSEKEEPING WHERE ROOM_ID = #{roomId})
+	</select>
+	-->
+	
 </mapper>
 
 
