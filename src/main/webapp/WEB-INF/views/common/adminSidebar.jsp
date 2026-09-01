@@ -92,23 +92,17 @@
 		</ul>
 
 	<%-- 로그인한 관리자 정보 표시 --%>
-    <div class="admin-profile">
-		<img
-		        src="${pageContext.request.contextPath}/images/common/admin-profile.png"
-		        alt="관리자 프로필"
-		        class="admin-profile-image"
-		    >
+	<div class="admin-profile">
 
-		    <div>
-		        <div class="admin-profile-name">
-		            ${sessionScope.loginEmployee.employeeName} 김민준지배인
-		        </div>
+	        <div>
+	            <div class="admin-profile-name">
+	               <h3> ${employee.name}</h3>
+	            </div>
 
-		        <div class="admin-profile-role">
-		            프론트 데스크 팀
-		        </div>
-		    </div>
-			
-    </div>
+	            <div class="admin-profile-role">
+	              <p class="mypage-position">${employee.position}</p>
+	            </div>
+	        </div>
+	</div>
 
 </aside>
