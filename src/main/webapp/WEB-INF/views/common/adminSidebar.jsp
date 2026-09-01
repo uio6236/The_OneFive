@@ -8,18 +8,17 @@
 
 <aside class="admin-sidebar">
 
-    <div class="admin-logo">
-        <div class="admin-logo-icon">
-            ▣
-        </div>
-
+	<div class="admin-logo">
+	      <div class="admin-logo-icon">
+	          <img src="${pageContext.request.contextPath}/images/common/hotel-icon.png" alt="The OneFive 로고">
+	      </div>
         <div>
             <div class="admin-logo-title">
                 The OneFive
             </div>
 
             <div class="admin-logo-subtitle">
-                HOTEL PMS
+                HOTEL & RESORT
             </div>
         </div>
     </div>
@@ -31,85 +30,85 @@
 	      class="admin-menu-item ${pageContext.request.requestURI.contains('housekeeping') ? 'active' : ''}"
 	      같은 방식을 붙이거나, Controller에서 model에 현재 메뉴명을 내려주는 방식으로 구현 예정.
 	    --%>
-    <ul class="admin-menu">
+		<ul class="admin-menu">
 
-        <li class="admin-menu-item">
-            <a href="/admin/dashboard">
-                <span class="admin-menu-icon">▦</span>
-                대시보드
-            </a>
-        </li>
+		    <li class="admin-menu-item">
+		        <a href="/admin/dashboard">
+		            <img src="${pageContext.request.contextPath}/images/common/dashboard.png" class="admin-menu-icon" alt="">
+		            대시보드
+		        </a>
+		    </li>
 
-        <li class="admin-menu-item">
-            <a href="/admin/reservations">
-                <span class="admin-menu-icon">□</span>
-                예약 관리
-            </a>
-        </li>
+		    <li class="admin-menu-item">
+		        <a href="/admin/reservations">
+		            <img src="${pageContext.request.contextPath}/images/common/reservation-icon.png" class="admin-menu-icon" alt="">
+		            예약 관리
+		        </a>
+		    </li>
 
-        <li class="admin-menu-item">
-            <a href="/admin/room">
-                <span class="admin-menu-icon">⚿</span>
-                객실 현황
-            </a>
-        </li>
+		    <li class="admin-menu-item">
+		        <a href="/admin/room">
+		            <img src="${pageContext.request.contextPath}/images/common/room-icon.png" class="admin-menu-icon" alt="">
+		            객실 현황
+		        </a>
+		    </li>
 
-        <li class="admin-menu-item">
-            <a href="/admin/checkin">
-                <span class="admin-menu-icon">↔</span>
-                체크인/아웃
-            </a>
-        </li>
 
-        <li class="admin-menu-item">
-            <a href="/admin/customers">
-                <span class="admin-menu-icon">♙</span>
-                투숙객 목록
-            </a>
-        </li>
+		    <li class="admin-menu-item">
+		        <a href="/admin/checkin">
+		            <img src="${pageContext.request.contextPath}/images/common/checkin-icon.png" class="admin-menu-icon" alt="">
+		            체크인/아웃
+		        </a>
+		    </li>
 
-        <li class="admin-menu-item">
-            <a href="/admin/housekeeping">
-                <span class="admin-menu-icon">⌁</span>
-                하우스키핑
-            </a>
-        </li>
+		    <li class="admin-menu-item">
+		        <a href="/admin/customers">
+		            <img src="${pageContext.request.contextPath}/images/common/customer-icon.png" class="admin-menu-icon" alt="">
+		            투숙객 목록
+		        </a>
+		    </li>
 
-        <li class="admin-menu-item">
-            <a href="/admin/inquiries">
-                <span class="admin-menu-icon">□</span>
-                문의 관리
-            </a>
-        </li>
+		    <li class="admin-menu-item">
+		        <a href="/admin/housekeeping">
+		            <img src="${pageContext.request.contextPath}/images/common/housekeeping-icon.png" class="admin-menu-icon" alt="">
+		            하우스키핑
+		        </a>
+		    </li>
 
-        <li class="admin-menu-item">
-            <a href="/admin/mypage">
-                <span class="admin-menu-icon">♙</span>
-                마이페이지
-            </a>
-        </li>
+		    <li class="admin-menu-item">
+		        <a href="/admin/inquiries">
+		            <img src="${pageContext.request.contextPath}/images/common/inquiry-icon.png" class="admin-menu-icon" alt="">
+		            문의 관리
+		        </a>
+		    </li>
 
-    </ul>
+		    <li class="admin-menu-item">
+		        <a href="/admin/mypage">
+		            <img src="${pageContext.request.contextPath}/images/common/mypage-icon.png" class="admin-menu-icon" alt="">
+		            마이페이지
+		        </a>
+		    </li>
+
+		</ul>
 
 	<%-- 로그인한 관리자 정보 표시 --%>
     <div class="admin-profile">
+		<img
+		        src="${pageContext.request.contextPath}/images/common/admin-profile.png"
+		        alt="관리자 프로필"
+		        class="admin-profile-image"
+		    >
 
-        <img
-            src="/images/common/admin-profile.png"
-            alt="관리자 프로필"
-            class="admin-profile-image"
-        >
+		    <div>
+		        <div class="admin-profile-name">
+		            ${sessionScope.loginEmployee.employeeName} 김민준지배인
+		        </div>
 
-        <div>
-            <div class="admin-profile-name">
-                ${sessionScope.loginEmployee.employeeName}
-            </div>
-
-            <div class="admin-profile-role">
-                프론트 데스크 팀
-            </div>
-        </div>
-
+		        <div class="admin-profile-role">
+		            프론트 데스크 팀
+		        </div>
+		    </div>
+			
     </div>
 
 </aside>
