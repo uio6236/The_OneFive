@@ -162,7 +162,7 @@
 										<td>${checkout.reservationCode}</td>
 										<td>${checkout.guestCount}명</td>
 										<td>
-											<span class="room-state">투숙중</span>
+											<span class="room-state">${checkout.roomStatus}</span>
 										</td>
 									</tr>
 								</c:forEach>
@@ -204,7 +204,7 @@
 										<td>${checkout.reservationCode}</td>
 										<td>${checkout.guestCount}명</td>
 										<td>
-											<span class="room-state">투숙중</span>
+											<span class="room-state">${checkout.roomStatus}</span>
 										</td>
 									</tr>
 								</c:forEach>
