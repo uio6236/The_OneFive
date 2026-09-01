@@ -1,15 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
-
     <title>The OneFive - 관리자 마이페이지</title>
 
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/mypage.css">
 </head>
 
 <body>
@@ -24,288 +26,124 @@
 
         <section class="admin-main">
 
-            <section class="admin-mypage-layout">
+            <c:if test="${not empty message}">
+                <p class="mypage-message success">${message}</p>
+            </c:if>
 
+            <c:if test="${not empty error}">
+                <p class="mypage-message error">${error}</p>
+            </c:if>
 
-                <!-- 관리자 프로필 -->
-                <aside class="admin-mypage-profile-card">
+            <section class="mypage-layout">
 
-                    <div class="admin-mypage-profile-image">
-                        김
-                    </div>
+                <!-- 왼쪽 컬럼: 프로필 + 개인 기본 정보 -->
+                <div class="mypage-left-column">
 
+                    <div class="mypage-card mypage-profile-card">
 
-                    <h2>
-                        김민수
-                    </h2>
-
-
-                    <span class="admin-role-badge">
-                        FRONT DESK
-                    </span>
-
-
-                    <div class="admin-profile-info-list">
-
-                        <div>
-
-                            <span>
-                                사원번호
-                            </span>
-
-                            <strong>
-                                EP1002
-                            </strong>
-
+                        <div class="mypage-avatar">
+                            ${fn:substring(adminEmployee.name, 0, 1)}
                         </div>
 
-
-                        <div>
-
-                            <span>
-                                소속 부서
-                            </span>
-
-                            <strong>
-                                프런트 데스크
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                권한
-                            </span>
-
-                            <strong>
-                                MANAGER
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                이메일
-                            </span>
-
-                            <strong>
-                                minsu@theonefive.com
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-                </aside>
-
-
-                <!-- 정보 수정 -->
-                <div class="admin-mypage-content-card">
-
-                    <div class="admin-mypage-section-title">
-
-                        <h2>
-                            관리자 기본정보
-                        </h2>
-
-                        <p>
-                            관리자 계정의 연락처 및 계정 정보를 관리합니다.
-                        </p>
+                        <h2>${employee.name}</h2>
+                        <p class="mypage-position">${employee.position}</p>
 
                     </div>
 
 
-                    <form
-                        action="/admin/mypage/update"
-                        method="post"
-                    >
+                    <div class="mypage-card">
 
-                        <div class="admin-form-grid">
+                        <form action="${pageContext.request.contextPath}/admin/mypage/update-info" method="post">
 
-                            <div class="form-group">
-
-                                <label class="form-label">
-                                    관리자명
-                                </label>
-
-                                <input
-                                    type="text"
-                                    name="employeeName"
-                                    class="form-control"
-                                    value="김민수"
-                                >
-
+                            <div class="mypage-section-header">
+                                <h3>개인 기본 정보</h3>
+                                <button type="submit" class="btn btn-outline btn-sm">정보 수정</button>
                             </div>
 
+                            <div class="mypage-form-grid">
 
-                            <div class="form-group">
-
-                                <label class="form-label">
-                                    사원번호
-                                </label>
-
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    value="EP1002"
-                                    readonly
-                                >
-
-                            </div>
-
-
-                            <div class="form-group">
-
-                                <label class="form-label">
-                                    연락처
-                                </label>
-
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    class="form-control"
-                                    value="010-1234-5678"
-                                >
-
-                            </div>
-
-
-                            <div class="form-group">
-
-                                <label class="form-label">
-                                    이메일
-                                </label>
-
-                                <input
-                                    type="email"
-                                    name="email"
-                                    class="form-control"
-                                    value="minsu@theonefive.com"
-                                >
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="admin-password-section">
-
-                            <div class="admin-mypage-section-title">
-
-                                <h2>
-                                    비밀번호 변경
-                                </h2>
-
-                                <p>
-                                    계정 보안을 위해 주기적인 변경을 권장합니다.
-                                </p>
-
-                            </div>
-
-
-                            <div class="form-group">
-
-                                <label class="form-label">
-                                    현재 비밀번호
-                                </label>
-
-                                <input
-                                    type="password"
-                                    name="currentPassword"
-                                    class="form-control"
-                                    placeholder="현재 비밀번호 입력"
-                                >
-
-                            </div>
-
-
-                            <div class="admin-form-grid">
-
-                                <div class="form-group">
-
-                                    <label class="form-label">
-                                        새 비밀번호
-                                    </label>
-
-                                    <input
-                                        type="password"
-                                        name="newPassword"
-                                        class="form-control"
-                                        placeholder="새 비밀번호"
-                                    >
-
+                                <div class="mypage-form-group">
+                                    <label for="name">이름</label>
+                                    <input type="text" id="name" name="name" value="${employee.name}">
                                 </div>
 
+                                <div class="mypage-form-group">
+                                    <label for="code">사원번호</label>
+                                    <input type="text" id="code" value="${employee.code}" readonly>
+                                </div>
 
-                                <div class="form-group">
+                                <div class="mypage-form-group">
+                                    <label for="email">이메일 주소</label>
+                                    <input type="email" id="email" name="email" value="${employee.email}">
+                                </div>
 
-                                    <label class="form-label">
-                                        새 비밀번호 확인
-                                    </label>
-
-                                    <input
-                                        type="password"
-                                        name="newPasswordCheck"
-                                        class="form-control"
-                                        placeholder="새 비밀번호 재입력"
-                                    >
-
+                                <div class="mypage-form-group">
+                                    <label for="phone">연락처</label>
+                                    <input type="tel" id="phone" name="phone" value="${employee.phone}">
                                 </div>
 
                             </div>
 
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+                <!-- 오른쪽 컬럼: 비밀번호 변경 + 계정 작업 -->
+                <div class="mypage-right-column">
+
+                    <div class="mypage-card">
+
+                        <form action="${pageContext.request.contextPath}/admin/mypage/update-password" method="post">
+
+                            <div class="mypage-section-header">
+                                <h3>비밀번호 변경</h3>
+                            </div>
+
+                            <div class="mypage-password-form">
+
+                                <div class="mypage-form-group">
+                                    <label for="currentPassword">현재 비밀번호</label>
+                                    <input type="password" id="currentPassword" name="currentPassword"
+                                           placeholder="현재 비밀번호 입력">
+                                </div>
+
+                                <div class="mypage-form-group">
+                                    <label for="newPassword">새 비밀번호</label>
+                                    <input type="password" id="newPassword" name="newPassword"
+                                           placeholder="새로운 비밀번호 입력">
+                                </div>
+
+                                <div class="mypage-form-group">
+                                    <label for="newPasswordCheck">새 비밀번호 확인</label>
+                                    <input type="password" id="newPasswordCheck" name="newPasswordCheck"
+                                           placeholder="새로운 비밀번호 재입력">
+                                </div>
+
+                            </div>
+
+                            <div class="mypage-submit-row">
+                                <button type="submit" class="btn btn-primary">비밀번호 변경 적용</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="mypage-card mypage-account-actions">
+
+                        <div class="mypage-section-header">
+                            <h3>계정 작업</h3>
                         </div>
 
+                        <p>안전한 로그아웃으로 관리 시스템 세션을 완전 종료할 수 있습니다.</p>
 
-                        <div class="admin-mypage-action-row">
+                        <a href="/logout" class="btn btn-danger-outline">로그아웃</a>
 
-                            <button
-                                type="reset"
-                                class="btn btn-outline"
-                            >
-                                초기화
-                            </button>
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary"
-                            >
-                                변경사항 저장
-                            </button>
-
-                        </div>
-
-                    </form>
-
-
-                    <!-- 로그아웃 -->
-                    <section class="admin-danger-zone">
-
-                        <div>
-
-                            <h3>
-                                시스템 로그아웃
-                            </h3>
-
-                            <p>
-                                현재 관리자 세션을 종료합니다.
-                            </p>
-
-                        </div>
-
-
-                        <a
-                            href="/logout"
-                            class="btn btn-danger-outline"
-                        >
-                            로그아웃
-                        </a>
-
-                    </section>
+                    </div>
 
                 </div>
 

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.theonefive.inquiry.model.mapper.InquiryMapper">
+ 
+    <resultMap id="inquiryResultMap" type="com.theonefive.inquiry.model.dto.InquiryDTO">
+        <id     property="id"          column="ID" />
+        <result property="inquiryNo"   column="INQUIRY_NO" />
+        <result property="guestId"     column="GUEST_ID" />
+        <result property="title"       column="TITLE" />
+        <result property="content"     column="CONTENT" />
+        <result property="status"      column="STATUS" />
+        <result property="answer"      column="ANSWER" />
+        <result property="answeredBy"  column="ANSWERED_BY" />
+        <result property="answeredAt"  column="ANSWERED_AT" />
+        <result property="createdAt"   column="CREATED_AT" />
+        <result property="guestName"   column="GUEST_NAME" />
+        <result property="guestEmail"  column="GUEST_EMAIL" />
+    </resultMap>
+ 
+    <!-- ===== 관리자 ===== -->
+ 
+    <!-- 검색/필터 조건 (목록·카운트 쿼리 공용) -->
+    <sql id="inquirySearchCondition">
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (
+                    I.TITLE LIKE '%' || #{keyword} || '%'
+                    OR I.INQUIRY_NO LIKE '%' || #{keyword} || '%'
+                    OR C.NAME LIKE '%' || #{keyword} || '%'
+                )
+            </if>
+            <if test="status != null and status != '' and status != '전체'">
+                AND I.STATUS = #{status}
+            </if>
+        </where>
+    </sql>
+ 
+    <!-- 검색/필터/페이지네이션이 적용된 문의 목록 (고객명/이메일 조인) -->
+    <select id="selectInquiryList" resultMap="inquiryResultMap">
+        SELECT
+            I.ID, I.INQUIRY_NO, I.GUEST_ID, I.TITLE, I.CONTENT,
+            I.STATUS, I.ANSWER, I.ANSWERED_BY, I.ANSWERED_AT, I.CREATED_AT,
+            C.NAME  AS GUEST_NAME,
+            C.EMAIL AS GUEST_EMAIL
+        FROM INQUIRY I
+        JOIN CUSTOMER C ON I.GUEST_ID = C.ID
+        <include refid="inquirySearchCondition" />
+        <choose>
+            <when test="sortOrder == 'oldest'">
+                ORDER BY I.CREATED_AT ASC
+            </when>
+            <otherwise>
+                ORDER BY I.CREATED_AT DESC
+            </otherwise>
+        </choose>
+        OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+    </select>
+ 
+    <!-- 같은 검색/필터 조건에서 전체 건수 -->
+    <select id="selectInquiryCount" resultType="int">
+        SELECT COUNT(*)
+        FROM INQUIRY I
+        JOIN CUSTOMER C ON I.GUEST_ID = C.ID
+        <include refid="inquirySearchCondition" />
+    </select>
+ 
+    <!-- 문의 상세 조회 -->
+    <select id="selectInquiryById" resultMap="inquiryResultMap" parameterType="long">
+        SELECT
+            I.ID, I.INQUIRY_NO, I.GUEST_ID, I.TITLE, I.CONTENT,
+            I.STATUS, I.ANSWER, I.ANSWERED_BY, I.ANSWERED_AT, I.CREATED_AT,
+            C.NAME  AS GUEST_NAME,
+            C.EMAIL AS GUEST_EMAIL
+        FROM INQUIRY I
+        JOIN CUSTOMER C ON I.GUEST_ID = C.ID
+        WHERE I.ID = #{id}
+    </select>
+ 
+    <!-- 관리자 답변 등록/수정 (상태를 답변완료로 변경) -->
+    <update id="updateAnswer" parameterType="com.theonefive.inquiry.model.dto.InquiryDTO">
+        UPDATE INQUIRY
+        SET
+            ANSWER       = #{answer},
+            ANSWERED_BY  = #{answeredBy, jdbcType=NUMERIC},
+            ANSWERED_AT  = SYSDATE,
+            STATUS       = '답변완료'
+        WHERE ID = #{id}
+    </update>
+ 
+ 
+    <!-- ===== 고객 ===== -->
+ 
+    <!-- 로그인한 고객 본인의 문의 목록만 조회 -->
+    <select id="selectInquiryListByGuest" resultMap="inquiryResultMap" parameterType="long">
+        SELECT
+            I.ID, I.INQUIRY_NO, I.GUEST_ID, I.TITLE, I.CONTENT,
+            I.STATUS, I.ANSWER, I.ANSWERED_BY, I.ANSWERED_AT, I.CREATED_AT
+        FROM INQUIRY I
+        WHERE I.GUEST_ID = #{guestId}
+        ORDER BY I.CREATED_AT DESC
+    </select>
+ 
+    <!-- 본인 문의인지 GUEST_ID까지 같이 확인하며 상세 조회 -->
+    <select id="selectInquiryByIdForGuest" resultMap="inquiryResultMap">
+        SELECT
+            I.ID, I.INQUIRY_NO, I.GUEST_ID, I.TITLE, I.CONTENT,
+            I.STATUS, I.ANSWER, I.ANSWERED_BY, I.ANSWERED_AT, I.CREATED_AT
+        FROM INQUIRY I
+        WHERE I.ID = #{id}
+          AND I.GUEST_ID = #{guestId}
+    </select>
+ 
+    <!--
+        고객 문의 등록.
+        INQUIRY_SEQ 시퀀스가 DB에 있어야 동작합니다. 없다면 먼저 생성하세요:
+          CREATE SEQUENCE INQUIRY_SEQ START WITH 1 INCREMENT BY 1;
+        STATUS(기본값 '대기중'), CREATED_AT(기본값 SYSDATE)은 컬럼 DEFAULT가 있어 생략.
+    -->
+    <insert id="insertInquiry" parameterType="com.theonefive.inquiry.model.dto.InquiryDTO">
+        INSERT INTO INQUIRY (ID, INQUIRY_NO, GUEST_ID, TITLE, CONTENT)
+        VALUES (
+            INQUIRY_SEQ.NEXTVAL,
+            'INQ-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(INQUIRY_SEQ.CURRVAL, 3, '0'),
+            #{guestId}, #{title}, #{content}
+        )
+    </insert>
+ 
+</mapper>
+	 
+ 

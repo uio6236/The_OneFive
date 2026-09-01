@@ -18,6 +18,9 @@ public interface CustomerMapper {
 	// 회원 정보 수정
 	int updateCustomer(CustomerDTO customer);
 	int updatePassword(CustomerDTO customer);
+	
+	// 방문 횟수 10회 기준 등급 승급용
+	int increaseVisitCountAndPromote(int checkinId);
 }
 /*
  	* SQL문의 행의 개수를 반환하기 때문에 int 사용 

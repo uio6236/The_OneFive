@@ -1,52 +1,33 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
-
     <title>The OneFive - 마이페이지</title>
-
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/customer.css">
 </head>
-
 <body>
-
 <div class="customer-page">
-
     <jsp:include page="/WEB-INF/views/common/customerHeader.jsp"/>
-
-
     <main class="customer-main">
-
-
         <div class="mypage-title">
-
-            <h1>
-                마이페이지
-            </h1>
-
+            <h1>마이페이지</h1>
             <p>
                 고객님의 개인정보 관리와 과거 이용 내역 및
                 1:1 문의사항을 통합 제어합니다.
             </p>
-
         </div>
-
 
         <!-- 메뉴 -->
         <nav class="mypage-tabs">
-
-            <a
-                href="#profile"
-                class="active"
-            >
+            <a href="#profile" class="active">
                 개인정보 관리
             </a>
 
-            <a href="#inquiry">
+            <a href="/customer/inquiries">
                 1:1 문의 내역
             </a>
 
@@ -283,96 +264,48 @@
                     </thead>
 
 
-                    <tbody>
-
-                    <tr>
-
-                        <td>
-                            디럭스 더블
-                        </td>
-
-                        <td>
-                            2026.08.15 ~ 2026.08.17
-                        </td>
-
-                        <td>
-                            ₩342,000
-                        </td>
-
-                        <td>
-                            <span class="badge badge-blue">
-                                예약 완료
-                            </span>
-                        </td>
-
-                        <td>
-                            <a href="#" class="mypage-link danger">
-                                예약 취소
-                            </a>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-                        <td>
-                            디럭스 트윈
-                        </td>
-
-                        <td>
-                            2026.05.02 ~ 2026.05.03
-                        </td>
-
-                        <td>
-                            ₩195,000
-                        </td>
-
-                        <td>
-                            <span class="badge badge-dark">
-                                이용 완료
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <a
-                                href="#"
-                                class="mypage-link"
-                            >
-                                상세 보기
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            패밀리 스위트
-                        </td>
-
-                        <td>
-                            2026.01.24 ~ 2026.01.26
-                        </td>
-
-                        <td>
-                            ₩440,000
-                        </td>
-
-                        <td>
-                            <span class="badge badge-dark">
-                                예약 취소
-                            </span>
-                        </td>
-
-                        <td>
-                            환불 완료
-                        </td>
-
-                    </tr>
-
-                    </tbody>
+					<tbody>
+					<c:choose>
+					    <c:when test="${empty reservationList}">
+					        <tr>
+					            <td colspan="5">예약 내역이 없습니다.</td>
+					        </tr>
+					    </c:when>
+					    <c:otherwise>
+					        <c:forEach var="r" items="${reservationList}">
+					            <tr class="reservation-row ${r.status == '예약취소' ? 'cancelled-row' : ''}">
+					                <td>${r.typeName} / ${r.roomNum}호</td>
+					                <td>
+					                    <fmt:formatDate value="${r.checkin}" pattern="yyyy.MM.dd"/> ~
+					                    <fmt:formatDate value="${r.checkout}" pattern="MM.dd"/>
+					                </td>
+					                <td>
+					                    <fmt:formatNumber value="${r.totalAmount}" type="currency" currencySymbol="₩"/>
+					                </td>
+					                <td>
+					                    <c:choose>
+					                        <c:when test="${r.status == '예약완료'}">
+					                            <span class="badge badge-confirmed">예약완료</span>
+					                        </c:when>
+					                        <c:when test="${r.status == '예약취소'}">
+					                            <span class="badge badge-canceled">예약취소</span>
+					                        </c:when>
+					                        <c:when test="${r.status == '이용완료'}">
+					                            <span class="badge badge-completed">이용완료</span>
+					                        </c:when>
+					                        <c:otherwise>
+					                            <span class="badge">${r.status}</span>
+					                        </c:otherwise>
+					                    </c:choose>
+					                </td>
+					                <td>
+					                    <a href="<c:url value='/customer/reservation/detail/${r.reservationId}'/>">상세 보기</a>
+					                </td>
+					            </tr>
+					        </c:forEach>
+					    </c:otherwise>
+					</c:choose>
+					</tbody>
 
                 </table>
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.theonefive.admin.model.dto.EmployeeDTO;
 import com.theonefive.admin.service.AdminService;
-import com.theonefive.customer.common.ApiResponse;
+import com.theonefive.common.dto.ApiResponse;
 
 
 import jakarta.servlet.http.HttpSession;
@@ -42,7 +42,7 @@ public class AdminController {
         // JSP Form의 name값들이 EmployeeDTO 필드명과 일치하므로 자동으로 employee 객체에 담김
         try {
             adminService.signup(employee); // 회원가입 로직 실행 (중복검사 + 암호화 + DB저장)
-            return "redirect:/login"; // 가입 성공 시 로그인 페이지로 자동 이동
+            return "redirect:/admin/adminLogin"; // 가입 성공 시 로그인 페이지로 자동 이동
         } catch (IllegalStateException e) {
             // 아이디 중복 등으로 Service에서 예외(throw)가 발생한 경우
             model.addAttribute("errorMessage", e.getMessage()); // 에러 메시지를 JSP로 전송
@@ -86,7 +86,7 @@ public class AdminController {
             // 로그인 성공 시 세션(Session)에 회원 정보 저장 (로그인 상태 유지)
             session.setAttribute("loginAdmin", loginAdmin);
             
-            return "redirect:/mypage/index"; // 로그인 성공 후 메인 페이지로 이동
+            return "redirect:/admin/mypage"; // 로그인 성공 후 메인 페이지로 이동
         } catch (IllegalStateException e) {
             // 로그인 실패 시 (아이디 불일치 or 비밀번호 틀림)
             model.addAttribute("errorMessage", e.getMessage());
@@ -108,15 +108,7 @@ public class AdminController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // 세션 정보 삭제 (로그아웃 처리)
-        return "redirect:/admin/adminLogin"; // 로그인 페이지로 이동
+        return "redirect:/adminLogin"; // 로그인 페이지로 이동
     }
     
-    // ==========================================
-    // 3.마이페이지 테스트 
-    // ==========================================
-    
-    @GetMapping("/test/login")
-    public String loginTest() {
-        return "customer/mypage/index";
-    }
 }

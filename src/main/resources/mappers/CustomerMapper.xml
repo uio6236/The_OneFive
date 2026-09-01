@@ -38,4 +38,17 @@
 		SET PASSWORD = #{newPassword}
 		WHERE LOGIN_ID = #{loginId}
 	</update>
+	
+	<!-- 방문 횟수 10회 기준 등급 승급용 -->
+	<update id="increaseVisitCountAndPromote" parameterType="int">
+	    UPDATE CUSTOMER
+	    SET TOTAL_VISIT_COUNT = TOTAL_VISIT_COUNT + 1,
+	        MEMBERSHIP_GRADE =
+	            CASE
+	                WHEN TOTAL_VISIT_COUNT + 1 >= 10
+	                    THEN 'VIP'
+	                ELSE MEMBERSHIP_GRADE
+	            END
+	    WHERE ID = (SELECT GUEST_ID FROM CHECKIN_STATUS WHERE ID = #{checkinId})
+	</update>
 </mapper>

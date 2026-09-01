@@ -9,14 +9,14 @@
 	</select>
 
 	<!-- 회원 조회 -->
-	<select id="selectCustomerByCode" parameterType="string"
-		resultType="EmployeeDTO">
+	<select id="selectEmployeeByCode" parameterType="string"
+		resultType="AdminEmployeeDTO">
 		SELECT ID, CODE,NAME, PASSWORD, POSITION, PHONE, EMAIL
 		FROM EMPLOYEE
 		WHERE CODE = #{code}
 	</select>
 
-	<insert id="insertEmployee" parameterType="EmployeeDTO">
+	<insert id="insertEmployee" parameterType="AdminEmployeeDTO">
 		INSERT INTO EMPLOYEE (ID, CODE, NAME, PASSWORD, POSITION, PHONE, EMAIL)
 		VALUES (EMPLOYEE_SEQ.NEXTVAL, #{code}, #{name}, #{password},
 		#{position}, #{phone},

@@ -25,23 +25,6 @@
         <jsp:include page="/WEB-INF/views/common/adminHeader.jsp"/>
 
         <section class="admin-main">
-
-
-            <div class="admin-page-action-row">
-
-                <div>
-
-                    <h2>
-                        고객 및 투숙객 관리
-                    </h2>
-
-                    <p>
-                        고객 기본정보와 방문 이력 및 특이사항을 관리합니다.
-                    </p>
-
-                </div>
-
-            </div>
 			
 			<form method="get" action="/admin/customers" class="filter-bar admin-customer-filter">
 

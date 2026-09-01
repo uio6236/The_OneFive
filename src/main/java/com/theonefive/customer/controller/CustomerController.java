@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.theonefive.customer.common.ApiResponse;
+import com.theonefive.common.dto.ApiResponse;
 import com.theonefive.customer.model.dto.CustomerDTO;
 import com.theonefive.customer.service.CustomerService;
+import com.theonefive.reservation.service.ReservationService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +25,16 @@ import lombok.RequiredArgsConstructor;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final ReservationService reservationService;
 
+    
     // ==========================================
     // 1. 회원가입 기능
     // ==========================================
-
+    @GetMapping("")
+    public String home() {
+        return "redirect:/login";
+    }
     // 회원가입 페이지 보여주기 (GET 요청: http://localhost:8080/customer/signup)
     @GetMapping("customer/signup")
     public String signupForm() {
@@ -86,7 +92,7 @@ public class CustomerController {
             // 로그인 성공 시 세션(Session)에 회원 정보 저장 (로그인 상태 유지)
             session.setAttribute("loginId", loginCustomer.getLoginId());
             
-            return "redirect:/mypage/index"; // 로그인 성공 후 메인 페이지로 이동
+            return "redirect:/customer/reservation/rooms"; // 로그인 성공 후 메인 페이지로 이동
             
         } catch (IllegalStateException e) {
             // 로그인 실패 시 (아이디 불일치 or 비밀번호 틀림)
@@ -94,7 +100,7 @@ public class CustomerController {
             return "redirect:/login"; // 다시 로그인 페이지로 돌아감
         }
     }
-
+    
     // ==========================================
     // 3. 로그아웃 & 메인페이지
     // ==========================================
@@ -116,15 +122,17 @@ public class CustomerController {
     // 4.마이페이지 
     // ==========================================
     
-    @GetMapping("/mypage/index")
+    @GetMapping("/mypage/index")                                 // ③ 메소드 내용만 교체
     public String myPage(HttpSession session, Model model) {
-    	String loginId = (String) session.getAttribute("loginId");
-    	if(loginId == null) {
-    		return "redirect:login";
-    	}
-    	
-    	CustomerDTO customer = customerService.getCustomerByLoginId(loginId);
-    	model.addAttribute("customer", customer);
+        String loginId = (String) session.getAttribute("loginId");
+        if(loginId == null) {
+            return "redirect:login";
+        }
+        CustomerDTO customer = customerService.getCustomerByLoginId(loginId);
+        model.addAttribute("customer", customer);
+
+        model.addAttribute("reservationList", reservationService.findByGuestId(customer.getId()));   // ⬅ 이 한 줄만 추가
+
         return "customer/mypage/index";
     }
     
@@ -145,9 +153,5 @@ public class CustomerController {
              return ApiResponse.fail(e.getMessage());
          }
     }
-    
-    @GetMapping("/test/custo")
-    public String listTest() {
-        return "admin/customer/list";
-    }
+
 }

@@ -1,244 +1,522 @@
-/* ======================================================
-   Housekeeping
-====================================================== */
+/*
+ * list.jsp의 각 class 속성에 대응하는 스타일 규칙.
+ * 피그마(node-id=2623-234) 기준으로 색상/폭/폰트를 고정값으로 맞춤.
+ * 요청사항: 화면 크기에 따라 레이아웃이 변하면 안 되므로 반응형(@media) 제거,
+ * 모든 폭은 px 고정값 사용.
+ */
 
-.housekeeping-summary-grid {
+/* 좌측(표) / 우측(상세패널) 2단 레이아웃.
+   상세패널만 320px로 고정하고 좌측은 1fr로 화면 끝까지 채움.
+   (화면 크기에 따라 1단으로 쌓이지 않도록 @media 분기 없이 항상 2단 유지) */
+.housekeeping-layout {
     display: grid;
-
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 16px;
-
-    margin-bottom: 22px;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    align-items: start;
+    width: 100%;
+}
+.housekeeping-main-col {
+    min-width: 0; /* grid item 안에서 표가 넘칠 때 찌그러지지 않도록 */
 }
 
+/* ======================================================
+   Housekeeping - 요약 카드 (kpi-row)
+====================================================== */
+.housekeeping-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 24px;
+}
 .housekeeping-summary-card {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    height: 82px;
     padding: 20px;
-
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
     background: #fff;
 }
 
+/* 카드 좌측의 4px 컬러 바 (상태별 강조색) */
+.housekeeping-summary-card .summary-bar {
+    flex: none;
+    width: 4px;
+    height: 36px;
+    border-radius: 2px;
+    background: #E2E8F0;
+}
+.housekeeping-summary-card:nth-child(1) .summary-bar { background: #EF4444; }
+.housekeeping-summary-card:nth-child(2) .summary-bar { background: #1E3A5F; }
+.housekeeping-summary-card:nth-child(3) .summary-bar { background: #2563EB; }
+
+.housekeeping-summary-card .summary-text {
+    flex: 1;
+    min-width: 0;
+}
 .housekeeping-summary-card span {
     display: block;
-
-    color: var(--text-secondary);
-
-    font-size: 11px;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 500;
 }
-
 .housekeeping-summary-card strong {
     display: block;
-
-    margin-top: 8px;
-
-    color: var(--navy-light);
-
-    font-size: 24px;
+    margin-top: 2px;
+    color: #101828;
+    font-size: 20px;
+    font-weight: 700;
 }
 
+.summary-icon img {
+    width:35px;
+    height: 35px;
+    object-fit: contain;
+}
 
-/* filter */
+/* 카드 우측의 컬러 배경 아이콘 박스 */
+.housekeeping-summary-card .summary-icon {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+}
+.housekeeping-summary-card:nth-child(1) .summary-icon { background: #FEF2F2; }
+.housekeeping-summary-card:nth-child(1) .summary-icon svg { stroke: #EF4444; }
+.housekeeping-summary-card:nth-child(2) .summary-icon,
+.housekeeping-summary-card:nth-child(3) .summary-icon { background: #EAF1FB; }
+.housekeeping-summary-card:nth-child(2) .summary-icon svg { stroke: #1E3A5F; }
+.housekeeping-summary-card:nth-child(3) .summary-icon svg { stroke: #2563EB; }
+.housekeeping-summary-card .summary-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
 
+/* ======================================================
+   필터(층/상태) 영역 - 카드형 바
+====================================================== */
 .housekeeping-filter {
-    margin-bottom: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 64px;
+    margin-bottom: 24px;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    background: #fff;
 }
-
+.filter-label {
+    color: #475569;
+    font-size: 13px;
+    font-weight: 400;
+}
 .housekeeping-filter-select {
-    width: 150px;
+	box-sizing: border-box;
+	    width: 100px;
+	    height: 34px;
+	    padding: 3px 12px;
+	    border: 1px solid #E2E8F0;
+	    border-radius: 8px;
+	    font-size: 13px;
+	    color: #475569;
+	    background: #fff
+}
+.housekeeping-filter .btn-dark {
+    margin-left: auto;
 }
 
-
-/* table */
-
+/* ======================================================
+   표
+====================================================== */
+.table-wrapper {
+    width: 100%;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+}
+.housekeeping-table {
+    table-layout: fixed;
+    width: 100%;
+}
+.housekeeping-table th,
 .housekeeping-table td {
-    vertical-align: middle;
+    box-sizing: border-box;
+    padding: 16px;
 }
-
+.housekeeping-table thead th {
+    background: #F8FAFC;
+    border-bottom: 1px solid #E2E8F0;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+}
+.housekeeping-table th:nth-child(1),
+.housekeeping-table td:nth-child(1) { width: 90px; }
+.housekeeping-table th:nth-child(2),
+.housekeeping-table td:nth-child(2) { width: 80px; }
+.housekeeping-table th:nth-child(4),
+.housekeeping-table td:nth-child(4) { width: 120px; }
+.housekeeping-table th:nth-child(5),
+.housekeeping-table td:nth-child(5) { width: 120px; }
+/* 객실 타입(3번째)/비고(6번째)는 폭을 고정하지 않아 화면이 넓어질 때 남는 공간을 나눠 가짐 */
+.housekeeping-table td {
+    height: 53px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+    color: #475569;
+    border-bottom: 1px solid #E2E8F0;
+}
+.housekeeping-table td:nth-child(1) {
+    font-size: 14px;
+    font-weight: 700;
+    color: #101828;
+}
+.housekeeping-table td:nth-child(5) {
+    font-weight: 500;
+    color: #101828;
+}
+.housekeeping-table tbody tr:last-child td {
+    border-bottom: 0;
+}
 .housekeeping-detail-btn {
     padding: 5px 9px;
-
     border: 0;
-
     border-radius: 6px;
-
-    color: var(--blue);
-
-    background: var(--blue-light);
-
+    color: #2563EB;
+    background: #EAF1FB;
     font-size: 10px;
-
     font-weight: 600;
-
     cursor: pointer;
 }
 
+/* 표의 행을 클릭 가능한 요소처럼 보이게 하고, 선택된 행은 배경색으로 표시 */
+.hk-row {
+    cursor: pointer;
+}
+.hk-row:hover {
+    background: #f7f9fc;
+}
+.hk-row.selected {
+    background: #EAF1FB;
+}
 
-/* management panel */
+/* 상태 배지 3종 색상 (청소대기/청소중/점검완료) - 피그마 hex 그대로 반영 */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 13px;
+}
+.badge-waiting {
+    color: #EF4444;
+    background: #FEF2F2;
+}
+.badge-progress {
+    color: #1E3A5F;
+    background: #EAF1FB;
+}
+.badge-done {
+    color: #2563EB;
+    background: #EAF1FB;
+}
 
+/* ======================================================
+   우측 상세패널 - 320px 고정폭
+====================================================== */
 .housekeeping-management-panel {
-    margin-top: 26px;
-
-    padding: 26px;
-
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-
+    box-sizing: border-box;
+    width: 320px;
+    padding: 20px;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
     background: #fff;
+    position: sticky;
+    top: 20px;
 }
-
 .housekeeping-panel-header {
-    padding-bottom: 20px;
-
-    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+    border-bottom: 1px solid #E2E8F0;
 }
-
 .housekeeping-panel-header h2 {
-    margin: 10px 0 4px;
-
-    font-size: 20px;
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #101828;
 }
-
 .housekeeping-panel-header p {
     margin: 0;
-
-    color: var(--text-secondary);
-
-    font-size: 10px;
+    color: #475569;
+    font-size: 12px;
 }
 
-
-.housekeeping-detail-grid {
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 14px;
-
-    margin-top: 22px;
+/* 상세패널 상단의 "객실 번호 / 타입 / 층" 정보 목록 */
+.housekeeping-info-list {
+    margin-top: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #E2E8F0;
+}
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    font-size: 12px;
+    border-bottom: 0;
+}
+.info-row span {
+    color: #475569;
+}
+.info-row strong {
+    color: #101828;
+    font-size: 13px;
+    font-weight: 600;
 }
 
-.housekeeping-detail-grid > div {
-    padding: 15px;
-
-    border: 1px solid var(--border);
+/* 현재 상태: 라벨 위 + 꽉 찬 컬러 배지(흰 글씨) 아래, 세로 배치 */
+.housekeeping-current-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #E2E8F0;
+}
+.housekeeping-current-status .form-label {
+    color: #475569;
+    font-size: 12px;
+}
+.housekeeping-current-status .badge {
+    padding: 6px 10px;
     border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
 }
+.housekeeping-current-status .badge-waiting { background: #EF4444; color: #fff; }
+.housekeeping-current-status .badge-progress { background: #1E3A5F; color: #fff; }
+.housekeeping-current-status .badge-done { background: #2563EB; color: #fff; }
 
-.housekeeping-detail-grid span {
-    display: block;
-
-    margin-bottom: 7px;
-
-    color: var(--text-secondary);
-
-    font-size: 9px;
-}
-
-.housekeeping-detail-grid strong {
-    font-size: 11px;
-}
-
-
-.housekeeping-note {
-    margin-top: 20px;
-}
-
-
-/* 상태 흐름 */
-
+/* 상태 진행 스텝바(1→2→3) - 작은 원 + 촘촘한 가로 배치 */
 .housekeeping-status-flow {
     display: flex;
-
     align-items: center;
-
-    margin-top: 28px;
-
-    padding: 20px 10px;
+    gap: 6px;
+    margin-top: 16px;
+    padding: 0;
 }
-
 .status-flow-item {
-    width: 110px;
-
-    text-align: center;
-
-    color: var(--text-muted);
-}
-
-.status-flow-item span {
-    width: 34px;
-    height: 34px;
-
+    flex: none;
     display: flex;
-
+    align-items: center;
+    gap: 6px;
+    width: auto;
+    text-align: left;
+    color: #475569;
+}
+.status-flow-item span {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    display: flex;
     align-items: center;
     justify-content: center;
-
-    margin: 0 auto 8px;
-
+    margin: 0;
+    border: 1px solid #E2E8F0;
     border-radius: 50%;
-
-    background: #edf1f5;
-
-    font-size: 9px;
+    background: #fff;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 700;
 }
-
 .status-flow-item strong {
-    font-size: 10px;
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+    color: #475569;
 }
-
-
-.status-flow-item.completed,
-.status-flow-item.current {
-    color: var(--navy-light);
-}
-
-.status-flow-item.completed span,
-.status-flow-item.current span {
+/* 표의 상태 배지(.badge-waiting/progress/done), 상세패널의 "현재 상태" 필과
+   동일한 색상 규칙을 스텝바에도 그대로 적용해서 색을 일치시킨다 */
+.status-flow-item[data-step="청소대기"].completed span,
+.status-flow-item[data-step="청소대기"].current span {
     color: #fff;
-
-    background: var(--navy-light);
+    background: #EF4444;
+    border-color: #EF4444;
 }
-
-.status-flow-item.current span {
-    background: var(--blue);
+.status-flow-item[data-step="청소대기"].completed strong,
+.status-flow-item[data-step="청소대기"].current strong {
+    color: #EF4444;
+    font-weight: 600;
 }
-
-
+.status-flow-item[data-step="청소중"].completed span,
+.status-flow-item[data-step="청소중"].current span {
+    color: #fff;
+    background: #1E3A5F;
+    border-color: #1E3A5F;
+}
+.status-flow-item[data-step="청소중"].completed strong,
+.status-flow-item[data-step="청소중"].current strong {
+    color: #1E3A5F;
+    font-weight: 600;
+}
+.status-flow-item[data-step="점검완료"].completed span,
+.status-flow-item[data-step="점검완료"].current span {
+    color: #fff;
+    background: #2563EB;
+    border-color: #2563EB;
+}
+.status-flow-item[data-step="점검완료"].completed strong,
+.status-flow-item[data-step="점검완료"].current strong {
+    color: #2563EB;
+    font-weight: 600;
+}
 .status-flow-line {
     flex: 1;
-
     height: 2px;
-
-    background: var(--border);
+    background: #E2E8F0;
+    min-width: 10px;
+}
+/* 진행된 구간의 연결선도 바로 앞 단계의 상태색으로 이어서 표시 */
+.status-flow-item[data-step="청소대기"].completed + .status-flow-line,
+.status-flow-item[data-step="청소대기"].current + .status-flow-line {
+    background: #EF4444;
+}
+.status-flow-item[data-step="청소중"].completed + .status-flow-line,
+.status-flow-item[data-step="청소중"].current + .status-flow-line {
+    background: #1E3A5F;
 }
 
-.status-flow-line.active {
-    background: var(--blue);
+/* 담당자 드롭다운 + 배정 링크 (라벨은 위에, 버튼은 텍스트링크 스타일) */
+.housekeeping-assign-label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    color: #475569;
+    font-size: 12px;
+}
+.housekeeping-assign-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #E2E8F0;
+}
+.housekeeping-assign-row select {
+    box-sizing: border-box;
+    flex: 1;
+    padding: 8px 28px 8px 12px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #101828;
+    background: #fff;
+	min-width: 0
+}
+.housekeeping-assign-row #p-assignBtn {
+    flex: none;
+    border: 0;
+    background: none;
+    padding: 0;
+    color: #2563EB;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.housekeeping-assign-row #p-assignBtn:disabled {
+    color: #94A3B8;
+    cursor: not-allowed;
 }
 
+/* 비고/전달사항 */
+.housekeeping-note {
+    margin-top: 16px;
+}
+.housekeeping-note > .form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #475569;
+    font-size: 12px;
+}
+.housekeeping-note-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.housekeeping-note-row input {
+    box-sizing: border-box;
+    flex: 1;
+    height: 40px;
+    padding: 12px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    background: #F8FAFC;
+    font-size: 13px;
+    color: #475569;
+}
 
 .housekeeping-action-row {
-    display: flex;
-
-    justify-content: flex-end;
-
-    gap: 10px;
-
-    margin-top: 20px;
+    margin-top: 16px;
+}
+.housekeeping-action-row .btn-primary {
+    width: 100%;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: #2563EB;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.housekeeping-action-row .btn-primary:disabled {
+    background: #94A3B8;
+    cursor: not-allowed;
 }
 
 
-@media (max-width: 1100px) {
+/*admin 프로필 이미지*/
+.avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
-    .housekeeping-summary-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/*admin sidebar 이미지*/
+.admin-menu-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
 
-    .housekeeping-detail-grid {
-        grid-template-columns: 1fr;
-    }
-
+/*admin sidebar hotel이미지*/
+.admin-logo-icon img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
