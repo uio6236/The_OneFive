@@ -37,28 +37,33 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
  
     @Override
-    public boolean changePassword(Long id, String currentPassword, String newPassword, String newPasswordCheck) {
+    public String changePassword(Long id, String currentPassword, String newPassword, String newPasswordCheck) {
  
-        // 비밀번호 변경 폼을 아예 안 건드렸으면 그냥 통과
+        // 비밀번호 변경 폼을 아예 안 건드렸으면 그냥 통과 (성공 취급)
         if (!StringUtils.hasText(newPassword) && !StringUtils.hasText(newPasswordCheck)) {
-            return true;
+            return null;
         }
  
         // 새 비밀번호 확인이 안 맞으면 실패
         if (!StringUtils.hasText(newPassword) || !newPassword.equals(newPasswordCheck)) {
-            return false;
+            return "새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.";
         }
  
         // 현재 저장된(암호화된) 비밀번호를 가져와서 BCrypt로 비교
         EmployeeDTO employee = employeeMapper.selectEmployeeById(id);
         if (employee == null || !passwordEncoder.matches(currentPassword, employee.getPassword())) {
-            return false;
+            return "현재 비밀번호가 일치하지 않습니다.";
+        }
+ 
+        // 새 비밀번호가 기존 비밀번호와 같은지 확인
+        if (passwordEncoder.matches(newPassword, employee.getPassword())) {
+            return "새 비밀번호가 기존 비밀번호와 동일합니다. 다른 비밀번호를 입력해주세요.";
         }
  
         // 새 비밀번호도 암호화해서 저장
         String encodedNewPassword = passwordEncoder.encode(newPassword);
         employeeMapper.updatePassword(id, encodedNewPassword);
-        return true;
+        return null;
     }
 }
  
