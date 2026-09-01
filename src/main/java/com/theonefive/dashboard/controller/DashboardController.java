@@ -18,6 +18,8 @@ public class DashboardController {
     @GetMapping
     public String dashboard(Model model) {
         model.addAttribute("dashboard", dashboardService.getDashboard());
+		model.addAttribute("pageTitle", "대시보드");
+		model.addAttribute("pageDescription", "금일 호텔 운영 주요 지표 및 투숙 현황 종합 제어 센터");
         return "admin/dashboard";   // -> /WEB-INF/views/admin/dashboard.jsp
     }
 	

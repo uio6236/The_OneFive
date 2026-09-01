@@ -35,7 +35,10 @@ public class CustomerController {
     // ==========================================
     // 1. 회원가입 기능
     // ==========================================
-
+    @GetMapping("")
+    public String home() {
+        return "redirect:/login";
+    }
     // 회원가입 페이지 보여주기 (GET 요청: http://localhost:8080/customer/signup)
     @GetMapping("customer/signup")
     public String signupForm() {
@@ -94,7 +97,7 @@ public class CustomerController {
             session.setAttribute("loginId", loginCustomer.getLoginId());
             session.setAttribute("loginGuestId", loginCustomer.getId());
             
-            return "redirect:/mypage/index"; // 로그인 성공 후 메인 페이지로 이동
+            return "redirect:/customer/reservation/rooms"; // 로그인 성공 후 메인 페이지로 이동
             
         } catch (IllegalStateException e) {
             // 로그인 실패 시 (아이디 불일치 or 비밀번호 틀림)
@@ -102,7 +105,7 @@ public class CustomerController {
             return "redirect:/login"; // 다시 로그인 페이지로 돌아감
         }
     }
-
+    
     // ==========================================
     // 3. 로그아웃 & 메인페이지
     // ==========================================

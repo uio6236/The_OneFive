@@ -26,6 +26,7 @@
 
         <section class="admin-main">
 
+
             <!-- 1. 가로 배치(display: flex)를 적용할 전체 감싸는 태그 시작 -->
             <div class="admin-customer-content">
 
@@ -75,6 +76,10 @@
                                 <th></th>
                             </tr>
                             </thead>
+
+			
+			<form method="get" action="/admin/customers" class="filter-bar admin-customer-filter">
+
 
                             <tbody>
                             <c:forEach items="${customerList}" var="c">

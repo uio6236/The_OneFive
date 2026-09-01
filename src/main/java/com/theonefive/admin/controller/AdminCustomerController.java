@@ -32,7 +32,10 @@ public class AdminCustomerController {
         model.addAttribute("totalCount", totalCount);
         model.addAttribute("search", search); // 검색어/필터 값을 화면에 다시 채워주기 위해 전달
         model.addAttribute("totalPages", (int) Math.ceil((double) totalCount / search.getSize())); // 총 페이지 수
-
+        
+		model.addAttribute("pageTitle", "고객 관리");
+		model.addAttribute("pageDescription", "호텔 멤버십 회원 및 역대 투숙객 통합 조회 및 기록 관리");
+		
         return "admin/customer/list"; // /WEB-INF/views/admin/customer/list.jsp
     }
 
