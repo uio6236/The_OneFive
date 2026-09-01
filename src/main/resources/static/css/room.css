@@ -26,15 +26,15 @@
 }
 
 .room-overview-line.available {
-    background: #7193be;
-}
-
-.room-overview-line.occupied {
     background: var(--navy-light);
 }
 
+.room-overview-line.occupied {
+    background: #7193be;
+}
+
 .room-overview-line.cleaning {
-    background: var(--blue);
+    background: var(--danger);
 }
 
 .room-overview-line.inspection {
@@ -166,23 +166,23 @@
 	font-weight: 600;
 }
 .room-available-card .room-state {
-	color: #5f7fa8;
-	background: #eef4fa;
+	color: #eef4fa;
+	background: var(--navy-light);
 }
 
 .room-occupied-card .room-state {
-	color: var(--navy-light);
-	background: #edf0f5;
+	color: #edf0f5;
+	background: #7193be;
 }
 
 .room-cleaning-card .room-state {
-	color: var(--blue);
-	background: var(--blue-light);
+	color: #fff0f0;
+	background: var(--danger);
 }
 
 .room-inspection-card .room-state {
-	color: var(--danger);
-	background: #fff0f0;
+	color: #fff0f0;
+	background: var(--danger);
 }
 .room-type-name {
     display: block;
@@ -223,7 +223,7 @@
 }
 
 .room-cleaning-card {
-    border-top-color: var(--blue);
+    border-top-color: var(--danger);
 }
 
 /* 중요한 상태만 red */
@@ -347,25 +347,25 @@
 .room-detail-status {
     padding: 6px 9px;
     border-radius: 6px;
-    color: var(--navy-light);
-    background: var(--blue-light);
+	color: #eef4fa;
+	background: var(--navy-light);
     font-size: 9px;
     font-weight: 700;
 }
 
 .room-detail-status.occupied {
-    color: #fff;
-    background: var(--navy-light);
+	color: #fff0f0;
+	background: #7193be;
 }
 
 .room-detail-status.cleaning {
-    color: var(--blue);
-    background: var(--blue-light);
+	color: #fff0f0;
+	background: var(--danger);
 }
 
 .room-detail-status.inspection {
-    color: var(--danger);
-    background: #fff0f0;
+    color: #fff0f0;
+    background: var(--danger);
 }
 
 /* 상세 정보 */
@@ -410,15 +410,25 @@
     font-size: 9px;
 }
 
-.room-detail-memo p {
-    min-height: 70px;
-    margin: 7px 0 0;
-    padding: 13px;
-    background: #f7f9fc;
-    border-radius: 8px;
-    color: var(--text-primary);
-    font-size: 10px;
-    line-height: 1.6;
+.room-detail-memo textarea {
+	width: 100%;
+	min-height: 80px;
+	margin: 7px 0 0;
+	padding: 13px;
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	background: #f7f9fc;
+	color: var(--text-primary);
+	font-size: 10px;
+	line-height: 1.6;
+	resize: vertical;
+	box-sizing: border-box;
+}
+
+.room-detail-memo textarea:focus {
+	outline: none;
+	border-color: var(--blue);
+	background: #fff;
 }
 
 /* Action */
@@ -432,7 +442,7 @@
 
 /* 선택된 객실 */
 .admin-room-card.selected-room {
-    border-color: var(--blue);
+    border-color: navy;
     box-shadow:
         0 0 0 2px
         rgba(40, 100, 232, 0.08);

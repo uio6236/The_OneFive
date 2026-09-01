@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+	let selectedRoomId = null;
 	const roomGrids = document.querySelectorAll(".admin-room-grid");
 
 	roomGrids.forEach(function (grid) {
@@ -19,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // a 태그의 기본 페이지 이동 방지
                 event.preventDefault();
                 const roomId = link.dataset.roomId;
+				selectedRoomId = roomId;
                 try {
                     const response = await fetch("/admin/room/" + roomId);
                     if (!response.ok) {
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     document.querySelector("#detailTypeName").textContent = room.typeName;
                     document.querySelector("#detailFloorInfo").textContent = room.floor + "층";
                     document.querySelector("#detailStatusText").textContent = room.status;
-                    document.querySelector("#detailMemo").textContent = room.memo ? room.memo : "등록된 메모가 없습니다.";
+                    document.querySelector("#detailMemo").value = "";
 
                     // 상태 Badge
                     const status = document.querySelector("#detailStatus");
@@ -67,4 +69,60 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
     });
+	const maintenanceRequestBtn =
+		document.querySelector("#maintenanceRequestBtn");
+
+	maintenanceRequestBtn.addEventListener("click", async function () {
+		if (!selectedRoomId) {
+			alert("객실을 먼저 선택해주세요.");
+			return;
+		}
+
+		const note = document.querySelector("#detailMemo").value.trim();
+
+		if (note === "") {
+			alert("정비 요청 내용을 입력해주세요.");
+			return;
+		}
+
+		if (!confirm("객실 정비를 요청하시겠습니까?")) {
+			return;
+		}
+
+		try {
+			const params = new URLSearchParams();
+			params.append("note", note);
+
+			const response = await fetch(
+				"/admin/room/" + selectedRoomId + "/maintenance",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type":
+							"application/x-www-form-urlencoded"
+					},
+					body: params.toString()
+				}
+			);
+
+			if (!response.ok) {
+				alert("객실 정비 요청에 실패했습니다.");
+				return;
+			}
+
+			const result = await response.json();
+
+			if (!result) {
+				alert("객실 정비 요청에 실패했습니다.");
+				return;
+			}
+
+			alert("객실 정비 요청이 등록되었습니다.");
+			location.reload();
+
+		} catch (error) {
+			console.error(error);
+			alert("객실 정비 요청 중 오류가 발생했습니다.");
+		}
+	});
 });

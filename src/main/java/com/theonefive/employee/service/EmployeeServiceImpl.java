@@ -1,17 +1,23 @@
 package com.theonefive.employee.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.theonefive.employee.model.dto.EmployeeDTO;
 import com.theonefive.employee.model.mapper.EmployeeMapper;
 
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
  
     @Autowired
     private EmployeeMapper employeeMapper;
+ 
+    // SecurityConfig에 이미 Bean으로 등록되어 있어서 그대로 주입받아 쓰면 됨
+    @Autowired
+    private PasswordEncoder passwordEncoder;
  
     @Override
     public EmployeeDTO getEmployee(Long id) {
@@ -23,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
  
         int duplicated = employeeMapper.countEmployeeByEmailExcludingSelf(dto.getEmail(), dto.getId());
         if (duplicated > 0) {
-            return false;   // 이미 다른 직원이 쓰는 이메일 -> 저장 안 하고 실패로 리턴
+            return false;
         }
  
         employeeMapper.updateEmployeeInfo(dto);
@@ -33,24 +39,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean changePassword(Long id, String currentPassword, String newPassword, String newPasswordCheck) {
  
-        // 비밀번호 변경 폼을 아예 안 건드렸으면 그냥 통과 (변경 안 함)
+        // 비밀번호 변경 폼을 아예 안 건드렸으면 그냥 통과
         if (!StringUtils.hasText(newPassword) && !StringUtils.hasText(newPasswordCheck)) {
             return true;
         }
  
         // 새 비밀번호 확인이 안 맞으면 실패
-        if (!newPassword.equals(newPasswordCheck)) {
+        if (!StringUtils.hasText(newPassword) || !newPassword.equals(newPasswordCheck)) {
             return false;
         }
  
-        // 현재 비밀번호가 틀리면 실패
-        int matched = employeeMapper.countEmployeeWithPassword(id, currentPassword);
-        if (matched == 0) {
+        // 현재 저장된(암호화된) 비밀번호를 가져와서 BCrypt로 비교
+        EmployeeDTO employee = employeeMapper.selectEmployeeById(id);
+        if (employee == null || !passwordEncoder.matches(currentPassword, employee.getPassword())) {
             return false;
         }
  
-        employeeMapper.updatePassword(id, newPassword);
+        // 새 비밀번호도 암호화해서 저장
+        String encodedNewPassword = passwordEncoder.encode(newPassword);
+        employeeMapper.updatePassword(id, encodedNewPassword);
         return true;
     }
 }
+ 
  
