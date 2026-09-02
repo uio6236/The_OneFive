@@ -27,6 +27,4 @@ public class DashboardController {
 		model.addAttribute("today", new SimpleDateFormat("yyyy년 M월 d일 EEEE", Locale.KOREAN).format(new Date()));
         return "admin/dashboard";   // -> /WEB-INF/views/admin/dashboard.jsp
     }
-	
-	
 }
