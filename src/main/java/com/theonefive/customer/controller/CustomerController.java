@@ -155,7 +155,7 @@ public class CustomerController {
     // 4.마이페이지 
     // ==========================================
     
-    @GetMapping("/mypage/index")                                 // ③ 메소드 내용만 교체
+    @GetMapping("/mypage/index")                                
     public String myPage(HttpSession session, Model model) {
         String loginId = (String) session.getAttribute("loginId");
         if(loginId == null) {
