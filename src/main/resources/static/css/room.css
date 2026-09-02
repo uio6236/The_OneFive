@@ -207,11 +207,11 @@
 
 /* 상태별 미세 차이 */
 .room-available-card {
-    border-top-color: #7193be;
+    border-top-color:var(--navy-light);
 }
 
 .room-occupied-card {
-    border-top-color: var(--navy-light);
+    border-top-color: #7193be;
 }
 
 .room-cleaning-card {
