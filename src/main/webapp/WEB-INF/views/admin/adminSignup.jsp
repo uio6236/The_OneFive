@@ -27,19 +27,18 @@
     <section class="auth-brand">
 
         <div class="auth-brand-overlay">
+			<a href="/" class="auth-logo">
 
-            <a href="/" class="auth-logo">
+				<span class="auth-logo-icon">
+					<img src="${pageContext.request.contextPath}/images/common/hotel-icon.png"
+						alt="The OneFive 로고">
+				</span>
+			    <div>
+			        <strong>The OneFive</strong>
+			        <span>HOTEL & RESORT</span>
+			    </div>
 
-                <span class="auth-logo-icon">
-                    ▣
-                </span>
-
-                <div>
-                    <strong>The OneFive</strong>
-                    <span>HOTEL & RESORT</span>
-                </div>
-
-            </a>
+			</a>
 
 
             <div class="auth-brand-content">
