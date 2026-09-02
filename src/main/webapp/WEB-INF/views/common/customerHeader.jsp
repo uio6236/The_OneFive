@@ -3,11 +3,11 @@
 <header class="customer-header">
 
     <a
-        href="/customer/main"
+        href="/customer/reservation/rooms"
         class="customer-logo"
     >
 
-        <span class="customer-logo-icon">
+        <span class="customer-logo-icon" >
             ▣
         </span>
 

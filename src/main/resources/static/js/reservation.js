@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var baseCapacityInput = document.querySelector('#baseCapacity');
     var maxCapacityInput = document.querySelector('#maxCapacity');
 
-    if (!checkinInput) return;
+    if (!checkinInput || !basePriceInput || !adultSelect) return;
 
     var ADULT_EXTRA_FEE = 10000;
     var CHILD_FEE = 5000;
@@ -329,4 +329,30 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     showPage(1);
+});
+// rooms.jsp 전용 - 체크인 바뀌면 체크아웃 무조건 +1일로 갱신
+document.addEventListener('DOMContentLoaded', function () {
+    var searchForm = document.querySelector('.room-search-bar');
+    if (!searchForm) return;   // rooms.jsp가 아니면 여기서 끝
+
+    var checkinInput = document.getElementById('checkinDate');
+    var checkoutInput = document.getElementById('checkoutDate');
+    if (!checkinInput || !checkoutInput) return;
+
+    function updateCheckout() {
+        if (!checkinInput.value) return;
+
+        var checkin = new Date(checkinInput.value);
+        checkin.setDate(checkin.getDate() + 1);
+
+        var yyyy = checkin.getFullYear();
+        var mm = String(checkin.getMonth() + 1).padStart(2, '0');
+        var dd = String(checkin.getDate()).padStart(2, '0');
+        var nextDayStr = yyyy + '-' + mm + '-' + dd;
+
+        checkoutInput.min = nextDayStr;
+        checkoutInput.value = nextDayStr;
+    }
+
+    checkinInput.addEventListener('change', updateCheckout);
 });
