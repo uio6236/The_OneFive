@@ -121,7 +121,7 @@
         <div class="auth-form-card signup-card">
             <div class="auth-form-title">
                 <h2>
-                    회원가입
+                    관리자 회원가입
                 </h2>
                 <p>
                     The OneFive 호텔 관리 시스템 이용을 위해 관리자 정보를 등록해 주세요.
@@ -134,12 +134,12 @@
                     <label for="code" class="form-label">
                         사번
                     </label>
-					
+					<div class="input-with-btn">
                     <input type="text" id="code" name="code" class="form-control" 
 					placeholder="사번을 입력하세요" required>
 					
 					<button type="button" id="check-code-btn" class="btn btn-outline">중복확인</button>
-					
+					</div>
 					<p id="check-code-result" class="form-tip"></p>
                 </div>
 

@@ -29,21 +29,7 @@
 
         <section class="admin-main">
 
-            <!-- 상단 -->
-            <div class="admin-page-action-row">
 
-                <div>
-                    <h2>
-                        전체 예약 현황
-                    </h2>
-
-                    <p>
-                        고객 예약정보를 조회하고 관리합니다.
-                    </p>
-                </div>
-				
-
-            </div>
 
 
 			<form method="get" action="${pageContext.request.contextPath}/admin/reservations">

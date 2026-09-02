@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+	let selectedRoomId = null;
 	const roomGrids = document.querySelectorAll(".admin-room-grid");
 
 	roomGrids.forEach(function (grid) {
@@ -19,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // a 태그의 기본 페이지 이동 방지
                 event.preventDefault();
                 const roomId = link.dataset.roomId;
+				selectedRoomId = roomId;
                 try {
                     const response = await fetch("/admin/room/" + roomId);
                     if (!response.ok) {
@@ -26,15 +28,30 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
                     const room = await response.json();
+					console.log(room);
                     // 상세 정보 입력
                     document.querySelector("#detailFloor").textContent = room.floor + "F";
                     document.querySelector("#detailRoomNum").textContent = room.roomNum + "호";
                     document.querySelector("#detailRoomType").textContent = room.typeName;
                     document.querySelector("#detailRoomNumber").textContent = room.roomNum + "호";
                     document.querySelector("#detailTypeName").textContent = room.typeName;
-                    document.querySelector("#detailFloorInfo").textContent = room.floor + "층";
                     document.querySelector("#detailStatusText").textContent = room.status;
-                    document.querySelector("#detailMemo").textContent = room.memo ? room.memo : "등록된 메모가 없습니다.";
+					const stayInfo = document.querySelector("#stayInfo");
+					const emptyStayInfo = document.querySelector("#emptyStayInfo");
+
+					if (room.guestName) {
+						stayInfo.style.display = "block";
+						emptyStayInfo.style.display = "none";
+
+						document.querySelector("#detailGuestName").textContent = room.guestName;
+						document.querySelector("#detailGuestCount").textContent = room.guestCount + "명";
+						document.querySelector("#detailCheckinTime").textContent = formatDate(room.checkinTime);
+						document.querySelector("#detailCheckoutTime").textContent = formatDate(room.checkoutTime);
+					} else {
+						stayInfo.style.display = "none";
+						emptyStayInfo.style.display = "block";
+					}
+					document.querySelector("#detailMemo").value = "";
 
                     // 상태 Badge
                     const status = document.querySelector("#detailStatus");
@@ -67,4 +84,73 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
     });
+	const maintenanceRequestBtn =
+		document.querySelector("#maintenanceRequestBtn");
+
+	maintenanceRequestBtn.addEventListener("click", async function () {
+		if (!selectedRoomId) {
+			alert("객실을 먼저 선택해주세요.");
+			return;
+		}
+
+		const note = document.querySelector("#detailMemo").value.trim();
+
+		if (note === "") {
+			alert("정비 요청 내용을 입력해주세요.");
+			return;
+		}
+
+		if (!confirm("객실 정비를 요청하시겠습니까?")) {
+			return;
+		}
+
+		try {
+			const params = new URLSearchParams();
+			params.append("note", note);
+
+			const response = await fetch(
+				"/admin/room/" + selectedRoomId + "/maintenance",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type":
+							"application/x-www-form-urlencoded"
+					},
+					body: params.toString()
+				}
+			);
+
+			if (!response.ok) {
+				alert("객실 정비 요청에 실패했습니다.");
+				return;
+			}
+
+			const result = await response.json();
+
+			if (!result) {
+				alert("객실 정비 요청에 실패했습니다.");
+				return;
+			}
+
+			alert("객실 정비 요청이 등록되었습니다.");
+			location.reload();
+
+		} catch (error) {
+			console.error(error);
+			alert("객실 정비 요청 중 오류가 발생했습니다.");
+		}
+	});
 });
+function formatDate(dateTime) {
+	if (!dateTime) {
+		return "-";
+	}
+
+	const date = new Date(dateTime);
+
+	const year = date.getFullYear();
+	const month = String(date.getMonth() + 1).padStart(2, "0");
+	const day = String(date.getDate()).padStart(2, "0");
+
+	return year + "." + month + "." + day;
+}

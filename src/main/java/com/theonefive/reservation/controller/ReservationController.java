@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -93,6 +94,7 @@ public class ReservationController {
                            @RequestParam String checkoutDate,
                            @RequestParam Integer adultCount,
                            @RequestParam(required = false, defaultValue = "0") Integer childCount,
+                           HttpSession session,
                            Model model) {
 
         RoomTypeListDTO roomType = service.findRoomTypeDetail(roomTypeId);
@@ -109,8 +111,13 @@ public class ReservationController {
 
         int roomAmount = roomType.getPrice() * (int) nights + (extraFeePerNight * (int) nights);
 
-        // TODO: 로그인 세션 연동되면 실제 회원등급으로 교체. 지금은 임시로 false 고정
+        String loginId = (String) session.getAttribute("loginId");
         boolean isVip = false;
+        if (loginId != null) {
+            CustomerDTO customer = service1.getCustomerByLoginId(loginId);
+            isVip = "VIP".equals(customer.getMembershipGrade());
+        }
+
         int discountAmount = isVip ? (int) (roomAmount * 0.05) : 0;
         int totalAmount = roomAmount - discountAmount;
 
@@ -127,7 +134,6 @@ public class ReservationController {
 
         return "customer/reservation/payment";
     }
-
     @PostMapping("/complete")
     public String complete(@ModelAttribute ReservationDTO dto,
                             HttpSession session,
@@ -158,5 +164,29 @@ public class ReservationController {
 
         redirectAttr.addFlashAttribute("paymentSuccess", true);
         return "redirect:/customer/reservation/rooms";
+    }
+    @PostMapping("/{id}/cancel")
+    public String cancel(@PathVariable Long id, HttpSession session, RedirectAttributes redirectAttr) {
+        Long guestId = (Long) session.getAttribute("loginGuestId");
+        if (guestId == null) {
+            return "redirect:/login";
+        }
+
+        ReservationDTO reservation = service.findById(id);
+        if (reservation == null || !guestId.equals(reservation.getGuestId())) {
+            redirectAttr.addFlashAttribute("error", "본인의 예약만 취소할 수 있습니다.");
+            return "redirect:/mypage/index";
+        }
+
+        try {
+            service.cancelReservation(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttr.addFlashAttribute("error", "예약 취소에 실패했습니다.");
+            return "redirect:/mypage/index";
+        }
+
+        redirectAttr.addFlashAttribute("success", "예약이 취소되었습니다.");
+        return "redirect:/mypage/index";
     }
 }

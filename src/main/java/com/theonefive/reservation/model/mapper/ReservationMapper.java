@@ -40,4 +40,7 @@ public interface ReservationMapper {
     RoomTypeListDTO findRoomTypeDetail(Long roomTypeId);
     
     int countAvailableRooms(RoomSearchDTO condition);
+    
+    // 체크아웃한 예약을 이용완료로 변경
+    int completeReservationByCheckinId(int checkinId);
 }

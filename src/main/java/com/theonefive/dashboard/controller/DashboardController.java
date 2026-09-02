@@ -1,6 +1,9 @@
 package com.theonefive.dashboard.controller;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,16 +38,11 @@ public class DashboardController {
         }
  
         model.addAttribute("dashboard", dashboardService.getDashboard());
- 
-        model.addAttribute("pageTitle", "대시보드");
-        model.addAttribute("pageDescription", "금일 호텔 운영 주요 지표 및 투숙 현황 종합 제어 센터");
- 
-        LocalDate today = LocalDate.now();
-        String[] weekdays = {"월", "화", "수", "목", "금", "토", "일"};
-        String todayStr = today.getYear() + "년 " + today.getMonthValue() + "월 " + today.getDayOfMonth() + "일 "
-                + weekdays[today.getDayOfWeek().getValue() - 1] + "요일";
-        model.addAttribute("today", todayStr);
- 
+
+		model.addAttribute("pageTitle", "대시보드");
+		model.addAttribute("pageDescription", "금일 호텔 운영 주요 지표 및 투숙 현황 종합 제어 센터");
+		model.addAttribute("today", new SimpleDateFormat("yyyy년 M월 d일 EEEE", Locale.KOREAN).format(new Date()));
+
         return "admin/dashboard";   // -> /WEB-INF/views/admin/dashboard.jsp
     }
 }

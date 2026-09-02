@@ -188,5 +188,13 @@
 	           AND CHECKOUT &gt; TO_DATE(#{checkinDate}, 'YYYY-MM-DD'))
 	    FROM DUAL
 	</select>
+	
+	<!-- 체크아웃한 예약을 이용완료로 변경 -->
+	<update id="completeReservationByCheckinId" parameterType="int">
+	    UPDATE RESERVATION
+	    SET STATUS = '이용완료'
+	    WHERE ID = (SELECT RESERVATION_ID FROM CHECKIN_STATUS WHERE ID = #{checkinId})
+	    AND STATUS = '예약확정'
+	</update>
 </mapper>
 

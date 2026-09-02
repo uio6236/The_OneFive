@@ -125,6 +125,13 @@
         )
     </insert>
  
+ <select id="countUnansweredInquiry" resultType="int">
+    SELECT COUNT(*)
+    FROM INQUIRY
+    WHERE GUEST_ID = #{guestId}
+      AND STATUS = '대기중'
+</select>
+ 
 </mapper>
 	 
  
