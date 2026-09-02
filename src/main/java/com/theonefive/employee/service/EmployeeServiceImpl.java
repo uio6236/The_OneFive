@@ -24,16 +24,32 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.selectEmployeeById(id);
     }
  
+    // 이름: 한글/영문/공백만 허용 (숫자, 특수문자 금지)
+    private static final java.util.regex.Pattern NAME_PATTERN =
+            java.util.regex.Pattern.compile("^[가-힣a-zA-Z\\s]+$");
+ 
+    // 연락처: 숫자와 하이픈(-)만 허용
+    private static final java.util.regex.Pattern PHONE_PATTERN =
+            java.util.regex.Pattern.compile("^[0-9-]+$");
+ 
     @Override
-    public boolean updateEmployeeInfo(EmployeeDTO dto) {
+    public String updateEmployeeInfo(EmployeeDTO dto) {
+ 
+        if (!StringUtils.hasText(dto.getName()) || !NAME_PATTERN.matcher(dto.getName()).matches()) {
+            return "이름에는 숫자나 특수문자를 입력할 수 없습니다.";
+        }
+ 
+        if (!StringUtils.hasText(dto.getPhone()) || !PHONE_PATTERN.matcher(dto.getPhone()).matches()) {
+            return "연락처에는 숫자와 '-'만 입력할 수 있습니다.";
+        }
  
         int duplicated = employeeMapper.countEmployeeByEmailExcludingSelf(dto.getEmail(), dto.getId());
         if (duplicated > 0) {
-            return false;
+            return "이미 사용 중인 이메일입니다. 다른 이메일을 입력해주세요.";
         }
  
         employeeMapper.updateEmployeeInfo(dto);
-        return true;
+        return null;
     }
  
     @Override
@@ -66,5 +82,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         return null;
     }
 }
- 
  

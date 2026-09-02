@@ -104,8 +104,8 @@
                                         onclick="location.href='${pageContext.request.contextPath}/admin/inquiries?id=${inq.id}'">
 
                                         <td class="inquiry-table-no">${inq.inquiryNo}</td>
-                                        <td class="inquiry-table-title">${inq.title}</td>
-                                        <td>${inq.guestName}</td>
+                                        <td class="inquiry-table-title">${fn:escapeXml(inq.title)}</td>
+                                        <td>${fn:escapeXml(inq.guestName)}</td>
                                         <td class="inquiry-table-date"><fmt:formatDate value="${inq.createdAt}" pattern="yyyy-MM-dd"/></td>
                                         <td>
                                             <c:choose>
@@ -183,7 +183,7 @@
                                 </c:otherwise>
                             </c:choose>
 
-                            <h2>${selectedInquiry.title}</h2>
+                            <h2>${fn:escapeXml(selectedInquiry.title)}</h2>
                             <p>문의번호 ${selectedInquiry.inquiryNo}</p>
                         </div>
                     </div>
@@ -191,12 +191,12 @@
                     <div class="inquiry-customer-info">
                         <div>
                             <span>고객명</span>
-                            <strong>${selectedInquiry.guestName}</strong>
+                            <strong>${fn:escapeXml(selectedInquiry.guestName)}</strong>
                         </div>
 
                         <div>
                             <span>이메일</span>
-                            <strong>${selectedInquiry.guestEmail}</strong>
+                            <strong>${fn:escapeXml(selectedInquiry.guestEmail)}</strong>
                         </div>
 
                         <div>
@@ -207,8 +207,12 @@
 
                     <div class="inquiry-content-box">
                         <span>문의 내용</span>
-                        <p>${selectedInquiry.content}</p>
+                        <p>${fn:escapeXml(selectedInquiry.content)}</p>
                     </div>
+
+                    <c:if test="${not empty error}">
+                        <p class="inquiry-message error">${error}</p>
+                    </c:if>
 
                     <form action="${pageContext.request.contextPath}/admin/inquiries/answer" method="post">
                         <input type="hidden" name="id" value="${selectedInquiry.id}">
@@ -216,7 +220,7 @@
                         <div class="inquiry-answer-area">
                             <label for="answer" class="form-label">관리자 답변</label>
                             <textarea id="answer" name="answer" class="form-control"
-                                      placeholder="고객 문의에 대한 답변을 입력하세요.">${selectedInquiry.answer}</textarea>
+                                      placeholder="고객 문의에 대한 답변을 입력하세요.">${fn:escapeXml(selectedInquiry.answer)}</textarea>
                         </div>
 
                         <div class="inquiry-action-row">

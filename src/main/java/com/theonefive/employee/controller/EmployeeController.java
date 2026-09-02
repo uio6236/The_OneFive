@@ -61,13 +61,12 @@ public class EmployeeController {
         }
  
         dto.setId(employeeId);
-        boolean infoOk = employeeService.updateEmployeeInfo(dto);
+        String errorMessage = employeeService.updateEmployeeInfo(dto);
  
-        if (infoOk) {
+        if (errorMessage == null) {
             redirectAttributes.addFlashAttribute("message", "기본정보가 저장되었습니다.");
         } else {
-            redirectAttributes.addFlashAttribute("error",
-                    "이미 사용 중인 이메일입니다. 다른 이메일을 입력해주세요.");
+            redirectAttributes.addFlashAttribute("error", errorMessage);
         }
  
         return "redirect:/admin/mypage";
