@@ -8,7 +8,7 @@
     >
 
         <span class="customer-logo-icon" >
-            ▣
+            <img src="${pageContext.request.contextPath}/images/common/hotel-icon.png" alt="The OneFive 로고">
         </span>
 
         <span>
