@@ -63,13 +63,12 @@ public class EmployeeController {
         }
  
         dto.setId(employeeId);
-        boolean infoOk = employeeService.updateEmployeeInfo(dto);
+        String errorMessage = employeeService.updateEmployeeInfo(dto);
  
-        if (infoOk) {
+        if (errorMessage == null) {
             redirectAttributes.addFlashAttribute("message", "기본정보가 저장되었습니다.");
         } else {
-            redirectAttributes.addFlashAttribute("error",
-                    "이미 사용 중인 이메일입니다. 다른 이메일을 입력해주세요.");
+            redirectAttributes.addFlashAttribute("error", errorMessage);
         }
  
         return "redirect:/admin/mypage";
@@ -84,14 +83,13 @@ public class EmployeeController {
             return "redirect:/admin/adminLogin";
         }
  
-        boolean passwordOk = employeeService.changePassword(
+        String errorMessage = employeeService.changePassword(
                 employeeId, dto.getCurrentPassword(), dto.getNewPassword(), dto.getNewPasswordCheck());
  
-        if (passwordOk) {
+        if (errorMessage == null) {
             redirectAttributes.addFlashAttribute("message", "비밀번호가 변경되었습니다.");
         } else {
-            redirectAttributes.addFlashAttribute("error",
-                    "비밀번호 변경에 실패했습니다. 현재 비밀번호를 확인해주세요.");
+            redirectAttributes.addFlashAttribute("error", errorMessage);
         }
  
         return "redirect:/admin/mypage";
