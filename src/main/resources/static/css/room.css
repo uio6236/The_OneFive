@@ -104,10 +104,6 @@
     font-size: 19px;
 }
 
-.room-floor-title span {
-    color: var(--text-secondary);
-    font-size: 10px;
-}
 
 /* 객실 */
 .admin-room-grid {
@@ -209,17 +205,13 @@
     font-weight: 600;
 }
 
-.room-action-link.danger {
-    color: var(--danger);
-}
-
 /* 상태별 미세 차이 */
 .room-available-card {
-    border-top-color: #7193be;
+    border-top-color:var(--navy-light);
 }
 
 .room-occupied-card {
-    border-top-color: var(--navy-light);
+    border-top-color: #7193be;
 }
 
 .room-cleaning-card {
@@ -254,9 +246,6 @@
     align-items: start;
 }
 
-.room-list-area {
-    min-width: 0;
-}
 .room-left-area {
 	min-width: 0;
 }
@@ -371,7 +360,6 @@
 /* 상세 정보 */
 .room-detail-info-grid {
 	display: block;
-	margin-top: 18px;
 }
 
 .room-detail-info-item {
@@ -379,7 +367,7 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 16px;
-	min-height: 52px;
+	min-height: 42px;
 	padding: 0;
 	border: 0;
 	border-bottom: 1px solid var(--border);
@@ -397,6 +385,51 @@
 .room-detail-info-item strong {
 	color: var(--navy);
 	font-size: 11px;
+	text-align: right;
+}
+.room-detail-stay {
+	margin-top: 18px;
+	padding-top: 16px;
+}
+
+.room-detail-section-title {
+	display: block;
+	margin-bottom: 8px;
+	color: var(--text-primary);
+	font-size: 12px;
+	font-weight: 700;
+}
+
+#stayInfo {
+	display: flex;
+	flex-direction: column;
+}
+
+#emptyStayInfo {
+	margin: 0;
+	padding: 14px 0;
+	color: var(--text-secondary);
+	font-size: 10px;
+	text-align: center;
+}
+
+.room-detail-stay .room-detail-info-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 38px;
+	border-bottom: 1px solid var(--border);
+}
+
+.room-detail-stay .room-detail-info-item span {
+	color: var(--text-secondary);
+	font-size: 10px;
+}
+
+.room-detail-stay .room-detail-info-item strong {
+	color: var(--text-primary);
+	font-size: 10px;
+	font-weight: 600;
 	text-align: right;
 }
 

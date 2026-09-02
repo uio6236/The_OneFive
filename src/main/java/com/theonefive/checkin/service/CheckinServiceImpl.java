@@ -43,9 +43,15 @@ public class CheckinServiceImpl implements CheckinService {
 	@Override
 	public boolean checkin(CheckinDTO checkin) {
 		// 체크인 처리
-		int result = checkinMapper.insertCheckin(checkin);
+		int checkinResult = checkinMapper.insertCheckin(checkin);
 		int roomResult = roomMapper.updateRoomStatus(checkin.getRoomId(), "투숙중");
-		return result > 0 && roomResult > 0;
+	    if (checkinResult == 0 || roomResult == 0) {
+	        throw new IllegalStateException(
+	                "체크인 연동 처리에 실패했습니다."
+	        );
+	    }
+
+	    return true;
 	}
 	@Transactional
 	@Override

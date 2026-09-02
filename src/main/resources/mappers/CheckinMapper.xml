@@ -63,8 +63,7 @@
 	<update id="updateCheckout" parameterType="CheckinDTO">
 		UPDATE CHECKIN_STATUS
 		SET CHECKOUT = SYSDATE,
-			CHECKOUT_EMPLOYEE = #{checkoutEmployee},
-			MEMO = #{memo}
+			CHECKOUT_EMPLOYEE = #{checkoutEmployee}
 		WHERE ID = #{id}
 		AND CHECKOUT IS NULL
 	</update>

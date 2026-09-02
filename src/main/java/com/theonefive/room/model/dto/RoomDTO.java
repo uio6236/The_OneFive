@@ -1,5 +1,7 @@
 package com.theonefive.room.model.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +23,7 @@ public class RoomDTO {
 	
 	private String typeName; // 객실 타입명
 	private String guestName; // 현재 투숙객 이름
+	private int guestCount; // 투숙 인원
+	private LocalDateTime checkinTime; // 체크인 일시
+	private LocalDateTime checkoutTime; // 체크아웃 예정 일시
 }

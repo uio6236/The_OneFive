@@ -1,32 +1,3 @@
-/* Checkin / Checkout */
-.checkin-summary-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 24px;
-}
-
-.checkin-summary-card {
-    padding: 20px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    background: #fff;
-}
-
-.checkin-summary-card span {
-    display: block;
-    color: var(--text-secondary);
-    font-size: 11px;
-}
-
-.checkin-summary-card strong {
-    display: block;
-    margin-top: 8px;
-    color: var(--navy-light);
-    font-size: 24px;
-}
-
-
 /* tab */
 .checkin-tabs {
     display: flex;
@@ -65,7 +36,6 @@
 	align-items: start;
 }
 
-.checkin-list-panel,
 .checkin-detail-panel {
     background: #fff;
     border: 1px solid var(--border);
@@ -256,29 +226,6 @@
 	font-weight: 600;
 }
 
-.available-room-item input {
-    display: none;
-}
-
-.available-room-item.selected {
-    border-color: var(--blue);
-    background: var(--blue-light);
-}
-
-.available-room-item strong {
-    display: block;
-    font-size: 14px;
-}
-
-.available-room-item span,
-.available-room-item small {
-    display: block;
-    margin-top: 5px;
-    color: var(--text-secondary);
-    font-size: 9px;
-}
-
-
 /* key */
 .key-type-grid {
     display: grid;
@@ -322,17 +269,6 @@
     justify-content: flex-end;
     gap: 10px;
     margin-top: 28px;
-}
-
-
-@media (max-width: 1100px) {
-    .checkin-summary-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .checkin-layout {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* 체크인 예정 고객 테이블 */

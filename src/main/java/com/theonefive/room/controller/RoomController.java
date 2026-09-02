@@ -29,7 +29,6 @@ public class RoomController {
 	@GetMapping
 	public String roomList(@RequestParam(defaultValue = "0") int floor,
 						Model model) {
-		List<RoomDTO> allRoomList = roomService.getRoomList();
 		List<RoomDTO> roomList;
 		if (floor == 0) {roomList = roomService.getRoomList();} 
 		else {roomList = roomService.getRoomByFloor(floor);}
@@ -39,7 +38,7 @@ public class RoomController {
 		int cleaningCount = 0;
 		int inspectionCount = 0;
 		
-		for (RoomDTO room : allRoomList) {
+		for (RoomDTO room : roomList) {
 			if ("이용가능".equals(room.getStatus())) {availableCount++;} 
 			else if ("투숙중".equals(room.getStatus())) {occupiedCount++;} 
 			else if ("청소중".equals(room.getStatus())) {cleaningCount++;} 
@@ -49,7 +48,6 @@ public class RoomController {
 		model.addAttribute("roomList", roomList);
 		model.addAttribute("selectedFloor", floor);
 		
-		// model.addAttribute("totalCount", allRoomList.size());
 		model.addAttribute("availableCount", availableCount);
 		model.addAttribute("occupiedCount", occupiedCount);
 		model.addAttribute("cleaningCount", cleaningCount);
@@ -87,6 +85,7 @@ public class RoomController {
 		return roomService.getRoomDetail(roomId);
 	}
 	
+	// 객실 정비 요청
 	@PostMapping("/{roomId}/maintenance")
 	@ResponseBody
 	public boolean requestMaintenance(
