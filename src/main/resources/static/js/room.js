@@ -29,6 +29,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     const room = await response.json();
 					console.log(room);
+					const maintenanceRequestBtn = document.querySelector("#maintenanceRequestBtn");
+					if (room.status === "투숙중") {
+						maintenanceRequestBtn.disabled = true;
+						maintenanceRequestBtn.textContent = "투숙중 정비 요청 불가";
+					} else {
+						maintenanceRequestBtn.disabled = false;
+						maintenanceRequestBtn.textContent = "객실 정비 요청";
+					}
                     // 상세 정보 입력
                     document.querySelector("#detailFloor").textContent = room.floor + "F";
                     document.querySelector("#detailRoomNum").textContent = room.roomNum + "호";
@@ -84,15 +92,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
     });
-	const maintenanceRequestBtn =
-		document.querySelector("#maintenanceRequestBtn");
-
+	
+	
 	maintenanceRequestBtn.addEventListener("click", async function () {
 		if (!selectedRoomId) {
 			alert("객실을 먼저 선택해주세요.");
 			return;
 		}
-
+	
 		const note = document.querySelector("#detailMemo").value.trim();
 
 		if (note === "") {
