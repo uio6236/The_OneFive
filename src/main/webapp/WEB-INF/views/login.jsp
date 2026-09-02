@@ -28,6 +28,7 @@
     <section class="auth-brand">
         <div class="auth-brand-overlay">
             <a href="/" class="auth-logo">
+
 				<span class="auth-logo-icon">
 					<img src="${pageContext.request.contextPath}/images/common/hotel-icon.png"
 						alt="The OneFive 로고">
