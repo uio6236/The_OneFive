@@ -39,5 +39,4 @@ public class ReservationDTO {
     
     private String guestName;
     private String guestPhone;
-    private String guestEmail;
 }
