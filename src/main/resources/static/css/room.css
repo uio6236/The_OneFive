@@ -432,7 +432,10 @@
 	font-weight: 600;
 	text-align: right;
 }
-
+#maintenanceRequestBtn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
 /* Memo */
 .room-detail-memo {
     margin-top: 18px;
