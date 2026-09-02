@@ -219,6 +219,13 @@
     </section>
 
 </div>
-
+<script>
+    // 컨트롤러에서 넘어온 errorMessage 확인
+    const errorMessage = "${errorMessage}";
+    
+    if (errorMessage && errorMessage.trim() !== "") {
+        alert(errorMessage);
+    }
+</script>
 </body>
 </html>

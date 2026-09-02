@@ -39,7 +39,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public EmployeeDTO code(String code, String password) throws IllegalStateException {
-		// 아이디를 기준으로 회원 정보 조회
+		// 사번을 기준으로 회원 정보 조회
 		EmployeeDTO employee = adminMapper.selectEmployeeByCode(code);
 		
 		// 조회된 정보 중 암호문과 전달된 평문이 일지하는지 확인
