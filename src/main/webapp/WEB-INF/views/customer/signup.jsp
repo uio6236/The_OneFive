@@ -154,12 +154,12 @@
                     <label for="loginId" class="form-label">
                         아이디
                     </label>
-					
-                    <input type="text" id="loginId" name="loginId" class="form-control" 
+				<div class="input-with-btn">
+                    <input type="text" id="loginId"   name="loginId" class="form-control" 
 					placeholder="아이디를 입력하세요" required>
 					
 					<button type="button" id="check-id-btn" class="btn btn-outline">중복확인</button>
-					
+					</div>
 					<p id="check-id-result" class="form-tip"></p>
                 </div>
 
@@ -221,6 +221,7 @@
                         type="tel"
                         id="phone"
                         name="phone"
+
                         class="form-control"
                         placeholder="010-0000-0000"
                         required

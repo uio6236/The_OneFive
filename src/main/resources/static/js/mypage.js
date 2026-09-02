@@ -6,6 +6,7 @@ const mypageForm = document.querySelector('.mypage-form-buttons').closest('form'
 mypageForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
+	const currentPassword = document.querySelector('[name="currentPassword"]').value;
     const newPassword = document.querySelector('[name="newPassword"]').value;
     const newPasswordCheck = document.querySelector('[name="newPasswordCheck"]').value;
 
@@ -13,11 +14,16 @@ mypageForm.addEventListener('submit', function (e) {
         alert('신규 비밀번호가 일치하지 않습니다.');
         return;
     }
+	
+	if (currentPassword && newPassword && currentPassword === newPassword) {
+	        alert('현재 비밀번호와 동일한 비밀번호로는 변경할 수 없습니다.');
+	        return;
+	    }
 
     const payload = {
         name: document.querySelector('[name="name"]').value,
         phone: document.querySelector('[name="phone"]').value,
-        password: document.querySelector('[name="currentPassword"]').value,
+        password: currentPassword,
         newPassword: newPassword
     };
 

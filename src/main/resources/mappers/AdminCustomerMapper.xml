@@ -58,8 +58,7 @@
 
     <update id="updateCustomerByAdmin" parameterType="CustomerDTO">
         UPDATE CUSTOMER
-        SET MEMBERSHIP_GRADE = #{membershipGrade},
-            MEMO = #{memo}
+        SET  MEMO = #{memo}
         WHERE ID = #{id}
     </update>
 

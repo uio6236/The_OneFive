@@ -386,6 +386,20 @@
 
     font-weight: 600;
 }
+.text-link-danger {
+    color: var(--danger);
+
+    font-weight: 600;
+
+    background: none;   /* 버튼 기본 배경 제거 */
+    border: none;        /* 버튼 기본 테두리 제거 */
+    padding: 0;           /* 버튼 기본 여백 제거 */
+    cursor: pointer;
+}
+
+.text-link-danger:hover {
+    text-decoration: underline;
+}
 
 .auth-submit {
     width: 100%;
@@ -1136,3 +1150,77 @@
 
     text-overflow: ellipsis;
 }
+.admin-customer-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+
+/* 왼쪽 고객 목록 */
+.admin-customer-list {
+    flex: 1;
+    min-width: 0;
+}
+
+
+/* 오른쪽 고객 정보 패널 */
+.customer-detail-panel {
+    width: 320px;
+    flex-shrink: 0;
+
+    padding: 24px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    box-sizing: border-box;
+}
+
+
+/* 패널 제목 */
+.customer-detail-panel h3 {
+    margin: 0 0 8px;
+
+    font-size: 18px;
+}
+
+
+/* 패널 설명 */
+.customer-detail-panel > p {
+    margin: 0 0 24px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* 입력 영역 */
+.customer-detail-panel .form-group {
+    margin-bottom: 18px;
+}
+
+
+/* label */
+.customer-detail-panel label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* 버튼 영역 */
+.customer-detail-panel .admin-mypage-action-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+
+    margin-top: 20px;
+}
+
