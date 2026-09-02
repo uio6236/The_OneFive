@@ -39,6 +39,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             return "이름에는 숫자나 특수문자를 입력할 수 없습니다.";
         }
  
+        if (dto.getName().length() < 2 || dto.getName().length() > 10) {
+            return "이름은 2자 이상 10자 이하로 입력해주세요.";
+        }
+ 
         if (!StringUtils.hasText(dto.getPhone()) || !PHONE_PATTERN.matcher(dto.getPhone()).matches()) {
             return "연락처에는 숫자와 '-'만 입력할 수 있습니다.";
         }
