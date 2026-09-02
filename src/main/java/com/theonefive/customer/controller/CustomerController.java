@@ -159,7 +159,7 @@ public class CustomerController {
     public String myPage(HttpSession session, Model model) {
         String loginId = (String) session.getAttribute("loginId");
         if(loginId == null) {
-            return "redirect:login";
+            return "redirect:/login";
         }
         CustomerDTO customer = customerService.getCustomerByLoginId(loginId);
         model.addAttribute("customer", customer);
