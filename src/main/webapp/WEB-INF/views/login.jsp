@@ -38,6 +38,7 @@
             <a href="/" class="auth-logo">
                 <span class="auth-logo-icon">
                     ▣
+
                 </span>
 
                 <div>
