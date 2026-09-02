@@ -50,33 +50,19 @@
 						<table class="checkin-table">
 							<thead>
 								<tr>
-									<th>객실</th>
 									<th>고객명</th>
 									<th>예약번호</th>
+									<th>객실타입</th>									
 									<th>인원</th>
-									<th>객실상태</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="checkin" items="${checkinList}">
 									<tr class="checkin-row" data-reservation-id="${checkin.reservationId}">
-										<td>
-											<c:choose>
-												<c:when test="${not empty checkin.roomNum}">${checkin.roomNum}호</c:when>
-												<c:otherwise>미배정</c:otherwise>
-											</c:choose>
-										</td>
 										<td>${checkin.guestName}</td>
 										<td>${checkin.reservationCode}</td>
+										<td>${checkin.roomTypeName}</td>
 										<td>${checkin.guestCount}명</td>
-										<td>
-											<c:choose>
-												<c:when test="${not empty checkin.roomStatus}">
-													<span class="room-state">${checkin.roomStatus}</span>
-												</c:when>
-												<c:otherwise>-</c:otherwise>
-											</c:choose>
-										</td>
 									</tr>
 								</c:forEach>
 								<c:if test="${empty checkinList}">
@@ -97,33 +83,19 @@
 						<table class="checkin-table">
 							<thead>
 								<tr>
-									<th>객실</th>
 									<th>고객명</th>
 									<th>예약번호</th>
+									<th>객실타입</th>									
 									<th>인원</th>
-									<th>객실상태</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="checkin" items="${pastCheckinList}">
 									<tr class="past-checkin-row" data-reservation-id="${checkin.reservationId}">
-										<td>
-											<c:choose>
-												<c:when test="${not empty checkin.roomNum}">${checkin.roomNum}호</c:when>
-												<c:otherwise>미배정</c:otherwise>
-											</c:choose>
-										</td>
-										<td>${checkin.guestName}</td>
-										<td>${checkin.reservationCode}</td>
-										<td>${checkin.guestCount}명</td>
-										<td>
-											<c:choose>
-												<c:when test="${not empty checkin.roomStatus}">
-													<span class="room-state">${checkin.roomStatus}</span>
-												</c:when>
-												<c:otherwise>-</c:otherwise>
-											</c:choose>
-										</td>
+											<td>${checkin.guestName}</td>
+											<td>${checkin.reservationCode}</td>
+											<td>${checkin.roomTypeName}</td>
+											<td>${checkin.guestCount}명</td>
 									</tr>
 								</c:forEach>
 
