@@ -153,7 +153,7 @@
                         사번
                     </label>
 
-                    <input type="text" id="code" name="code" 
+                    <input type="text" id="code" name="code" value="${savedLoginCode}"
 					class="form-control" placeholder="사번을 입력하세요" required />
 
                 </div>
@@ -174,8 +174,9 @@
                 <div class="login-option-row">
 
                     <label class="login-remember">
-                        <input type="checkbox" name="remember">
-                        로그인 상태 유지
+                        <input type="checkbox" name="rememberCode" id="rememberCode" >
+						<c:if test="${not empty savedLoginCode}"></c:if>
+                        사번 저장
                     </label>
 
                 </div>

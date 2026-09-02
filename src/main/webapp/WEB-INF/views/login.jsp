@@ -153,7 +153,7 @@
                         아이디
                     </label>
 
-                    <input type="text" id="loginId" name="loginId" 
+                    <input type="text" id="loginId" name="loginId" value="${savedLoginId}"
 					class="form-control" placeholder="아이디를 입력하세요" required />
 
                 </div>
@@ -165,7 +165,7 @@
                         비밀번호
                     </label>
 
-                    <input type="password" id="password" name="password"
+                    <input type="password" id="password" name="password" 
 					 class="form-control" placeholder="비밀번호를 입력하세요" required>
 
                 </div>
@@ -175,6 +175,7 @@
 
 				    <label class="login-remember">
 				        <input type="checkbox" name="rememberId" id="rememberId">
+						<c:if test="${not empty savedLoginId}"></c:if>
 				        아이디 저장
 				    </label>
 
