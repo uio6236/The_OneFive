@@ -148,23 +148,32 @@
 
 					</div>
 
-                    <div id="cardFields">
-                        <div class="form-group">
-                            <label for="cardNumber" class="form-label">카드 번호</label>
-                            <input type="text" id="cardNumber" name="cardNumber" class="form-control" placeholder="0000 - 0000 - 0000 - 0000">
-                        </div>
+					<div id="cardFields">
+					    <div class="form-group">
+					        <label for="cardNumber" class="form-label">카드 번호</label>
+					        <input type="text" id="cardNumber" name="cardNumber" class="form-control"
+					               placeholder="0000 - 0000 - 0000 - 0000"
+					               required pattern="\d{4} - \d{4} - \d{4} - \d{4}"
+					               title="카드번호 16자리를 입력해 주세요.">
+					    </div>
 
-                        <div class="payment-contact-row">
-                            <div class="form-group">
-                                <label for="expiry" class="form-label">유효 기간</label>
-                                <input type="text" id="expiry" name="expiry" class="form-control" placeholder="MM / YY">
-                            </div>
-                            <div class="form-group">
-                                <label for="cvc" class="form-label">CVC 번호</label>
-                                <input type="password" id="cvc" name="cvc" class="form-control" placeholder="카드 뒤 3자리 숫자">
-                            </div>
-                        </div>
-                    </div>
+					    <div class="payment-contact-row">
+					        <div class="form-group">
+					            <label for="expiry" class="form-label">유효 기간</label>
+					            <input type="text" id="expiry" name="expiry" class="form-control"
+					                   placeholder="MM / YY"
+					                   required pattern="(0[1-9]|1[0-2]) / \d{2}"
+					                   title="MM / YY 형식으로 입력해 주세요.">
+					        </div>
+					        <div class="form-group">
+					            <label for="cvc" class="form-label">CVC 번호</label>
+					            <input type="password" id="cvc" name="cvc" class="form-control"
+					                   placeholder="카드 뒤 3자리 숫자"
+					                   required pattern="\d{3}"
+					                   title="숫자 3자리를 입력해 주세요.">
+					        </div>
+					    </div>
+					</div>
 
                     <div id="accountFields" style="display:none;">
                         <div class="form-group">
