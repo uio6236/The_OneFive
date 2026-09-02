@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function fillDetail(data) {
         document.querySelector('#detailCode').textContent = data.code;
         document.querySelector('#detailGuestName').textContent = data.guestName;
+		document.querySelector('#detailBookerName').textContent = data.bookerName || '-';
+		document.querySelector('#detailBookerPhone').textContent = data.bookerPhone || '-';
 		document.querySelector('#detailTypeName').textContent = data.typeName;
         document.querySelector('#detailCheckin').textContent = formatDate(data.checkin);
         document.querySelector('#detailCheckout').textContent = formatDate(data.checkout);
