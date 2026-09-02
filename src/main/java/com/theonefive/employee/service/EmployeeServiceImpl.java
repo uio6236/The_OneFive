@@ -56,6 +56,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return null;
     }
  
+    // 비밀번호 정책: 영문과 숫자를 모두 포함한 8자 이상
+    private static final java.util.regex.Pattern PASSWORD_POLICY_PATTERN =
+            java.util.regex.Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d).{8,}$");
+ 
     @Override
     public String changePassword(Long id, String currentPassword, String newPassword, String newPasswordCheck) {
  
@@ -67,6 +71,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         // 새 비밀번호 확인이 안 맞으면 실패
         if (!StringUtils.hasText(newPassword) || !newPassword.equals(newPasswordCheck)) {
             return "새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.";
+        }
+ 
+        // 비밀번호 정책(길이/복잡도)에 안 맞으면 실패
+        if (!PASSWORD_POLICY_PATTERN.matcher(newPassword).matches()) {
+            return "비밀번호는 영문과 숫자를 포함하여 8자 이상이어야 합니다.";
         }
  
         // 현재 저장된(암호화된) 비밀번호를 가져와서 BCrypt로 비교
