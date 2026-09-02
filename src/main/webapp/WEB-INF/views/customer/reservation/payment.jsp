@@ -112,14 +112,14 @@
 
                     <div class="form-group">
                         <label for="customerName" class="form-label">예약자 성함</label>
-                        <input type="text" id="customerName" name="customerName" class="form-control" placeholder="홍길동" required>
+                        <input type="text" id="customerName" name="guestName" class="form-control" placeholder="홍길동" required>
                     </div>
 
                     <div class="payment-contact-row">
 
                         <div class="form-group">
                             <label for="phone" class="form-label">연락처</label>
-                            <input type="tel" id="phone" name="phone" class="form-control" placeholder="010-1234-5678" required>
+                            <input type="tel" id="phone" name="guestPhone" class="form-control" placeholder="010-1234-5678" required>
                         </div>
 
                         <div class="form-group">
