@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,8 @@ import com.theonefive.admin.model.dto.EmployeeDTO;
 import com.theonefive.admin.service.AdminService;
 import com.theonefive.common.dto.ApiResponse;
 
-
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -68,7 +70,13 @@ public class AdminController {
 
     // 로그인 페이지 보여주기 (GET 요청: http://localhost:8080/customer/login)
     @GetMapping("/adminLogin")
-    public String loginForm() {
+    public String loginForm(@CookieValue(value = "rememberCode", required = false) String rememberCode, // required=false: 쿠키가 없는(한번도 저장 안 한) 사용자도 에러 없이 접근 가능하게
+            Model model) {
+    	
+    	 if (rememberCode != null) { // 이전에 "아이디 저장"을 체크해서 쿠키가 남아있는 경우
+             model.addAttribute("savedLoginCode", rememberCode); // JSP의 아이디 입력창 value로 뿌려주기 위해 모델에 담음
+         }
+
         // /WEB-INF/views/customer/login.jsp 파일 연결
         return "admin/adminLogin";
     }
@@ -77,14 +85,31 @@ public class AdminController {
     @PostMapping("/adminLogin")
     public String login(@RequestParam("code") String code, 
                         @RequestParam("password") String password, 
+                        @RequestParam(value = "rememberCode", required = false) String rememberCode, // 체크박스: 체크시 "on" 전달, 미체크시 파라미터 자체가 안 넘어와서 null
                         HttpSession session, 
+                        HttpServletResponse response, // 쿠키를 실제로 브라우저에 내려보내려면 응답 객체가 필요함
                         Model model) {
+
         try {
             // 아이디와 비밀번호로 로그인 검증 실행
             EmployeeDTO loginAdmin = adminService.code(code, password);
             
             // 로그인 성공 시 세션(Session)에 회원 정보 저장 (로그인 상태 유지)
             session.setAttribute("loginAdmin", loginAdmin);
+            
+            // ================= 아이디 저장(쿠키) 처리 =================
+            if (rememberCode != null) { // 체크박스를 체크하고 로그인한 경우
+                Cookie cookie = new Cookie("rememberCode", code); // 쿠키 이름은 체크박스 name과 통일, 값은 방금 로그인한 아이디
+                cookie.setMaxAge(60 * 60 * 24 * 30); // 30일(초 단위) 동안 브라우저에 보관되도록 설정
+                cookie.setPath("/"); // "/login" 뿐 아니라 사이트 전체에서 쿠키를 읽을 수 있게 경로를 루트로 지정
+                response.addCookie(cookie); // 응답에 실어서 브라우저로 전송 -> 브라우저가 저장
+            } else { // 체크박스를 체크하지 않고 로그인한 경우
+                Cookie cookie = new Cookie("rememberCode", null); // 기존에 저장돼 있었을 수 있는 쿠키를 지우기 위해 같은 이름으로 다시 생성
+                cookie.setMaxAge(0); // maxAge=0을 주면 브라우저가 즉시 해당 쿠키를 삭제함
+                cookie.setPath("/"); // 삭제 대상 쿠키를 정확히 찾도록 저장할 때와 동일한 path 지정
+                response.addCookie(cookie);
+            }
+
             
             return "redirect:/admin/mypage"; // 로그인 성공 후 메인 페이지로 이동
         } catch (IllegalStateException e) {

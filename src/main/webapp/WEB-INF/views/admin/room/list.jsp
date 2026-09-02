@@ -345,24 +345,50 @@
 				                <strong id="detailTypeName"></strong>
 				            </div>
 				            <div class="room-detail-info-item">
-				                <span>층</span>
-				                <strong id="detailFloorInfo"></strong>
-				            </div>
-				            <div class="room-detail-info-item">
 				                <span>현재 상태</span>
 				                <strong id="detailStatusText"></strong>
 				            </div>
 				        </div>
+						<div class="room-detail-stay">
+							<span class="room-detail-section-title">현재 투숙 정보</span>
 
-				        <div class="room-detail-memo">
-				            <span>객실 메모</span>
-				            <p id="detailMemo">등록된 메모가 없습니다.</p>
-				        </div>
-				        <div class="room-detail-actions">
-				            <button type="button" class="btn btn-primary">
-				                객실 정비
-				            </button>
-				        </div>
+							<div id="stayInfo">
+								<div class="room-detail-info-item">
+									<span>투숙객</span>
+									<strong id="detailGuestName"></strong>
+								</div>
+
+								<div class="room-detail-info-item">
+									<span>투숙 인원</span>
+									<strong id="detailGuestCount"></strong>
+								</div>
+
+								<div class="room-detail-info-item">
+									<span>체크인</span>
+									<strong id="detailCheckinTime"></strong>
+								</div>
+
+								<div class="room-detail-info-item">
+									<span>체크아웃 예정</span>
+									<strong id="detailCheckoutTime"></strong>
+								</div>
+							</div>
+
+							<p id="emptyStayInfo">
+								현재 투숙 중인 고객이 없습니다.
+							</p>
+						</div>
+						<div class="room-detail-memo">
+							<span>정비 요청 내용</span>
+							<textarea id="detailMemo"
+								placeholder="객실 정비 내용을 입력하세요."></textarea>
+						</div>
+
+						<div class="room-detail-actions">
+							<button type="button" class="btn btn-primary" id="maintenanceRequestBtn">
+								객실 정비 요청
+							</button>
+						</div>
 				    </div>
 				</aside>
 			</div>

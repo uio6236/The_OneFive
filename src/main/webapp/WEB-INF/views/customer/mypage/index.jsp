@@ -224,7 +224,7 @@
                         </span>
 
                         <strong>
-                            1건
+                          ${unansweredCount}건
                         </strong>
 
                     </div>
@@ -284,8 +284,8 @@
 					                </td>
 					                <td>
 					                    <c:choose>
-					                        <c:when test="${r.status == '예약완료'}">
-					                            <span class="badge badge-confirmed">예약완료</span>
+					                        <c:when test="${r.status == '예약확정'}">
+					                            <span class="badge badge-confirmed">예약확정</span>
 					                        </c:when>
 					                        <c:when test="${r.status == '예약취소'}">
 					                            <span class="badge badge-canceled">예약취소</span>
@@ -298,9 +298,18 @@
 					                        </c:otherwise>
 					                    </c:choose>
 					                </td>
-					                <td>
-					                    <a href="<c:url value='/customer/reservation/detail/${r.reservationId}'/>">상세 보기</a>
-					                </td>
+									<td>
+									<c:if test="${r.status == '예약확정'}">
+									    <form action="<c:url value='/customer/reservation/${r.reservationId}/cancel'/>"
+									          method="post" style="display:inline;">
+									        <button type="submit" class="text-link-danger"
+									                onclick="return confirm('이 예약을 취소하시겠습니까?');">
+									            예약 취소
+									        </button>
+											
+									    </form>
+									</c:if>
+									</td>
 					            </tr>
 					        </c:forEach>
 					    </c:otherwise>

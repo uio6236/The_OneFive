@@ -23,21 +23,37 @@
             <div class="housekeeping-layout">
             <div class="housekeeping-main-col">
 
-            <%-- 상태별(청소대기/청소중/점검완료) 건수 카드 --%>
-            <section class="housekeeping-summary-grid">
-                <c:forEach var="sc" items="${statusCounts}">
-                    <div class="housekeeping-summary-card">
-                        <span>${sc.status}</span>
-                        <strong>${sc.count}개 객실</strong>
-                    </div>
-                </c:forEach>
-            </section>
+				<%-- 상태별(청소대기/청소중/점검완료) 건수 카드. 좌측 컬러바 + 우측 아이콘박스는 nth-child로 색상 자동 적용 --%>
+				<section class="housekeeping-summary-grid">
+				    <c:forEach var="sc" items="${statusCounts}">
+				        <div class="housekeeping-summary-card">
+				            <span class="summary-bar"></span>
+				            <div class="summary-text">
+				                <span>${sc.status}</span>
+				                <strong>${sc.count}개 객실</strong>
+				            </div>
+				            <div class="summary-icon">
+				                <c:choose>
+				                    <c:when test="${sc.status == '청소대기'}">
+				                        <img src="${pageContext.request.contextPath}/images/housekeeping/red.png" alt="">
+				                    </c:when>
+				                    <c:when test="${sc.status == '청소중'}">
+				                        <img src="${pageContext.request.contextPath}/images/housekeeping/navy.png" alt="">
+				                    </c:when>
+				                    <c:otherwise>
+				                        <img src="${pageContext.request.contextPath}/images/housekeeping/blue.png" alt="">
+				                    </c:otherwise>
+				                </c:choose>
+				            </div>
+				        </div>
+				    </c:forEach>
+				</section>
 
             <%-- 층/상태 필터 폼 (GET 방식, 선택값은 selectedFloor/selectedStatus로 유지) --%>
             <form method="get" action="${pageContext.request.contextPath}/admin/housekeeping"
                   class="filter-bar housekeeping-filter">
 
-                <label class="filter-label">배정 층</label>
+                <label class="filter-label">배정 층:</label>
                 <select name="floor" class="form-control housekeeping-filter-select">
                     <option value="">전체</option>
                     <c:forEach begin="1" end="10" var="f">
@@ -45,7 +61,7 @@
                     </c:forEach>
                 </select>
 
-                <label class="filter-label">상태</label>
+                <label class="filter-label">상태:</label>
                 <select name="status" class="form-control housekeeping-filter-select">
                     <option value="">전체</option>
                     <option value="청소대기" ${selectedStatus == '청소대기' ? 'selected' : ''}>청소 대기</option>
@@ -72,7 +88,7 @@
                     <%-- 행 클릭 시 상세패널 오픈 + 선택된 행 하이라이트 --%>
                     <c:forEach var="hk" items="${list}">
                         <tr class="hk-row" data-id="${hk.id}" onclick="openDetail(${hk.id}, this)">
-                            <td>${hk.roomNum}호</td>
+                            <td>${hk.roomNum}</td>
                             <td>${hk.floor}층</td>
                             <td>${hk.typeName}</td>
                             <td>
@@ -118,18 +134,18 @@
 
                 <%-- 진행 단계 스텝바 (3단계). 현재 위치는 JS가 STATUS+COMPLETED_AT 조합으로 계산 --%>
                 <div class="housekeeping-status-flow" id="statusFlow">
-                    <div class="status-flow-item" data-step="청소대기"><span>01</span><strong>청소 대기</strong></div>
+                    <div class="status-flow-item" data-step="청소대기"><span>1</span><strong>청소 대기</strong></div>
                     <div class="status-flow-line"></div>
-                    <div class="status-flow-item" data-step="청소중"><span>02</span><strong>청소 중</strong></div>
+                    <div class="status-flow-item" data-step="청소중"><span>2</span><strong>청소 중</strong></div>
                     <div class="status-flow-line"></div>
-                    <div class="status-flow-item" data-step="점검완료"><span>03</span><strong>점검 완료</strong></div>
+                    <div class="status-flow-item" data-step="점검완료"><span>3</span><strong>점검 완료</strong></div>
                 </div>
 
                 <%-- 담당자 드롭다운: 페이지 로드 시 loadEmployees()가 옵션을 채움 --%>
+                <label class="housekeeping-assign-label">담당자</label>
                 <div class="housekeeping-assign-row">
-                    <label class="form-label">담당자</label>
                     <select class="form-control" id="p-employeeSelect"></select>
-                    <button type="button" class="btn btn-outline" id="p-assignBtn" onclick="changeEmployee()">담당자 배정</button>
+                    <button type="button" id="p-assignBtn" onclick="changeEmployee()">담당자 배정</button>
                 </div>
 
                 <div class="housekeeping-note">
@@ -168,6 +184,8 @@ function callApi(url, method, body) {
 // 행 클릭 시 상세정보 조회 + 상세패널/스텝바/액션버튼 갱신
 function openDetail(id, rowEl) {
     currentId = id;
+	sessionStorage.setItem('hkSelectedId', id); // 새로고침 후에도 같은 행을 다시 열기 위해 기억
+
 
     document.querySelectorAll('.hk-row').forEach(function(tr) {
         tr.classList.remove('selected');
@@ -258,9 +276,13 @@ function loadEmployees() {
 
 // 담당자 드롭다운 준비가 끝난 뒤 첫 번째 행을 자동으로 선택해서 상세패널을 채움
 loadEmployees().then(function() {
-    var firstRow = document.querySelector('.hk-row');
-    if (firstRow) {
-        openDetail(Number(firstRow.getAttribute('data-id')), firstRow);
+    var savedId = sessionStorage.getItem('hkSelectedId');
+    var targetRow = savedId ? document.querySelector('.hk-row[data-id="' + savedId + '"]') : null;
+    if (!targetRow) {
+        targetRow = document.querySelector('.hk-row');
+    }
+    if (targetRow) {
+        openDetail(Number(targetRow.getAttribute('data-id')), targetRow);
     }
 });
 
@@ -300,7 +322,7 @@ function renderTable(list) {
 
     tbody.innerHTML = list.map(function(hk) {
         return '<tr class="hk-row" data-id="' + hk.id + '" onclick="openDetail(' + hk.id + ', this)">' +
-            '<td>' + hk.roomNum + '호</td>' +
+            '<td>' + hk.roomNum + '</td>' +
             '<td>' + hk.floor + '층</td>' +
             '<td>' + escapeHtml(hk.typeName) + '</td>' +
             '<td><span class="badge ' + badgeClass(hk.status) + '">' + hk.status + '</span></td>' +

@@ -1,11 +1,15 @@
 package com.theonefive.room.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +29,6 @@ public class RoomController {
 	@GetMapping
 	public String roomList(@RequestParam(defaultValue = "0") int floor,
 						Model model) {
-		List<RoomDTO> allRoomList = roomService.getRoomList();
 		List<RoomDTO> roomList;
 		if (floor == 0) {roomList = roomService.getRoomList();} 
 		else {roomList = roomService.getRoomByFloor(floor);}
@@ -35,7 +38,7 @@ public class RoomController {
 		int cleaningCount = 0;
 		int inspectionCount = 0;
 		
-		for (RoomDTO room : allRoomList) {
+		for (RoomDTO room : roomList) {
 			if ("이용가능".equals(room.getStatus())) {availableCount++;} 
 			else if ("투숙중".equals(room.getStatus())) {occupiedCount++;} 
 			else if ("청소중".equals(room.getStatus())) {cleaningCount++;} 
@@ -45,7 +48,6 @@ public class RoomController {
 		model.addAttribute("roomList", roomList);
 		model.addAttribute("selectedFloor", floor);
 		
-		// model.addAttribute("totalCount", allRoomList.size());
 		model.addAttribute("availableCount", availableCount);
 		model.addAttribute("occupiedCount", occupiedCount);
 		model.addAttribute("cleaningCount", cleaningCount);
@@ -71,6 +73,7 @@ public class RoomController {
 		
 		model.addAttribute("pageTitle", "객실 현황");
 		model.addAttribute("pageDescription", "호텔 전체 객실 상태 확인");
+		model.addAttribute("today", new SimpleDateFormat("yyyy년 M월 d일 EEEE", Locale.KOREAN).format(new Date()));
 		
 		return "admin/room/list";
 	}
@@ -80,5 +83,15 @@ public class RoomController {
 	@ResponseBody
 	public RoomDTO roomDetail(@PathVariable int roomId) {
 		return roomService.getRoomDetail(roomId);
+	}
+	
+	// 객실 정비 요청
+	@PostMapping("/{roomId}/maintenance")
+	@ResponseBody
+	public boolean requestMaintenance(
+			@PathVariable int roomId,
+			@RequestParam(required = false) String note) {
+
+		return roomService.requestMaintenance(roomId, note);
 	}
 }

@@ -40,4 +40,6 @@ public interface  InquiryMapper {
  
     // 고객 문의 등록
     int insertInquiry(InquiryDTO dto);
+    
+    int countUnansweredInquiry(@Param("guestId") Long guestId);
 }

@@ -1,6 +1,9 @@
 package com.theonefive.checkin.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +42,7 @@ public class CheckinController {
 		
 		model.addAttribute("pageTitle", "체크인 / 체크아웃");
 		model.addAttribute("pageDescription", "금일 객실 입퇴실 처리 및 신속 체크인을 지원합니다");
+		model.addAttribute("today", new SimpleDateFormat("yyyy년 M월 d일 EEEE", Locale.KOREAN).format(new Date()));
 		
 		return "admin/checkin/list";
 	}

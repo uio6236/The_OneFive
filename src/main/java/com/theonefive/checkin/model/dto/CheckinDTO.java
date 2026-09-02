@@ -23,8 +23,6 @@ public class CheckinDTO {
     private LocalDateTime checkinTime; // 실제 체크인 시간
     private LocalDateTime checkoutTime; // 실제 체크아웃 시간
     private String keyType; // 키 발급 유형
-    private Integer checkinEmployee; // 체크인 담당 직원
-    private Integer checkoutEmployee; // 체크아웃 담당 직원
     
     private String memo; // 투숙 메모
     
