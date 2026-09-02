@@ -7,7 +7,7 @@
         class="customer-logo"
     >
 
-        <span class="customer-logo-icon">
+        <span class="customer-logo-icon" >
             ▣
         </span>
 

@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.theonefive.customer.model.dto.CustomerDTO;
 import com.theonefive.customer.service.CustomerService;
@@ -40,6 +42,13 @@ public class InquiryController {
         return (customer != null) ? Long.valueOf(customer.getId()) : null;
     }
  
+    // 세션에서 로그인한 관리자의 ID(PK)를 꺼낸다. 로그인 안 된 상태면 null.
+    private Long getLoginEmployeeId(HttpSession session) {
+        com.theonefive.admin.model.dto.EmployeeDTO loginAdmin =
+                (com.theonefive.admin.model.dto.EmployeeDTO) session.getAttribute("loginAdmin");
+        return (loginAdmin != null) ? (long) loginAdmin.getId() : null;
+    }
+ 
  
     // ===================== 관리자 =====================
  
@@ -53,7 +62,13 @@ public class InquiryController {
                              @RequestParam(required = false) String status,
                              @RequestParam(defaultValue = "latest") String sortOrder,
                              @RequestParam(defaultValue = "1") int page,
+                             HttpSession session,
                              Model model) {
+ 
+        // 로그인한 관리자가 아니면 목록/상세 자체를 볼 수 없게 차단
+        if (getLoginEmployeeId(session) == null) {
+            return "redirect:/admin/adminLogin";
+        }
  
         model.addAttribute("pageTitle", "문의 관리");
         model.addAttribute("pageDescription", "고객들이 남긴 웹 문의 및 피드백에 대해 신속하게 답변을 관리하는 제어 센터");
@@ -90,7 +105,20 @@ public class InquiryController {
  
     // 답변 등록/수정 처리 후 같은 문의를 선택한 채로 목록으로 복귀
     @PostMapping("/admin/inquiries/answer")
-    public String adminAnswer(InquiryDTO dto) {
+    public String adminAnswer(InquiryDTO dto, HttpSession session, RedirectAttributes redirectAttributes) {
+ 
+        Long employeeId = getLoginEmployeeId(session);
+        if (employeeId == null) {
+            return "redirect:/admin/adminLogin";
+        }
+ 
+        // 답변 내용이 비어있으면(공백만 있어도) 저장하지 않고 그대로 되돌아감
+        if (!StringUtils.hasText(dto.getAnswer())) {
+            redirectAttributes.addFlashAttribute("error", "답변 내용을 입력해주세요.");
+            return "redirect:/admin/inquiries?id=" + dto.getId();
+        }
+ 
+        dto.setAnsweredBy(employeeId);
         inquiryService.answerInquiry(dto);
         return "redirect:/admin/inquiries?id=" + dto.getId();
     }
