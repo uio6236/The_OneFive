@@ -15,7 +15,8 @@
 		ORDER BY R.CHECKIN ASC
 	</select>
 	<select id="selectPastCheckinList" resultType="CheckinDTO">
-		SELECT R.ID AS reservationId, R.CODE AS reservationCode, R.GUEST_ID AS guestId, R.ROOM_ID AS roomId, R.ROOM_TYPE_ID AS roomTypeId, C.NAME AS guestName, R.GUEST_COUNT AS guestCount, R.CHECKIN AS checkinTime, R.CHECKOUT AS checkoutTime, RT.NAME AS roomTypeName, RM.ROOM_NUM AS roomNum, RM.STATUS AS roomStatus, R.REQUEST AS memo
+		SELECT R.ID AS reservationId, R.CODE AS reservationCode, R.GUEST_ID AS guestId, R.ROOM_ID AS roomId, R.ROOM_TYPE_ID AS roomTypeId, C.NAME AS guestName, 
+		R.GUEST_COUNT AS guestCount, R.CHECKIN AS checkinTime, R.CHECKOUT AS checkoutTime, RT.NAME AS roomTypeName, RM.ROOM_NUM AS roomNum, RM.STATUS AS roomStatus, R.REQUEST AS memo
 		FROM RESERVATION R
 		JOIN CUSTOMER C ON R.GUEST_ID = C.ID
 		JOIN ROOM_TYPE RT ON R.ROOM_TYPE_ID = RT.ID
@@ -26,7 +27,8 @@
 		ORDER BY R.CHECKIN DESC
 	</select>
 	<select id="selectTodayCheckoutList" resultType="CheckinDTO">
-		SELECT CS.ID AS id, CS.RESERVATION_ID AS reservationId, CS.GUEST_ID AS guestId, CS.ROOM_ID AS roomId, R.ROOM_TYPE_ID AS roomTypeId, CS.CHECKIN AS checkinTime, CS.CHECKOUT AS checkoutTime, CS.KEY_TYPE AS keyType, CS.CHECKIN_EMPLOYEE AS checkinEmployee, CS.CHECKOUT_EMPLOYEE AS checkoutEmployee, CS.MEMO AS memo, C.NAME AS guestName, R.CODE AS reservationCode, RM.ROOM_NUM AS roomNum, RM.STATUS AS roomStatus, RT.NAME AS roomTypeName, R.GUEST_COUNT AS guestCount
+		SELECT CS.ID AS id, CS.RESERVATION_ID AS reservationId, CS.GUEST_ID AS guestId, CS.ROOM_ID AS roomId, R.ROOM_TYPE_ID AS roomTypeId, CS.CHECKIN AS checkinTime, CS.CHECKOUT AS checkoutTime, 
+		CS.KEY_TYPE AS keyType, CS.MEMO AS memo, C.NAME AS guestName, R.CODE AS reservationCode, RM.ROOM_NUM AS roomNum, RM.STATUS AS roomStatus, RT.NAME AS roomTypeName, R.GUEST_COUNT AS guestCount
 		FROM CHECKIN_STATUS CS
 		JOIN RESERVATION R ON CS.RESERVATION_ID = R.ID
 		JOIN CUSTOMER C ON CS.GUEST_ID = C.ID
@@ -37,7 +39,8 @@
 		ORDER BY R.CHECKOUT ASC
 	</select>
 	<select id="selectPastCheckoutList" resultType="CheckinDTO">
-		SELECT CS.ID AS id, CS.RESERVATION_ID AS reservationId, CS.GUEST_ID AS guestId, CS.ROOM_ID AS roomId, R.ROOM_TYPE_ID AS roomTypeId, CS.CHECKIN AS checkinTime, CS.CHECKOUT AS checkoutTime, CS.KEY_TYPE AS keyType, CS.CHECKIN_EMPLOYEE AS checkinEmployee, CS.CHECKOUT_EMPLOYEE AS checkoutEmployee, CS.MEMO AS memo, C.NAME AS guestName, R.CODE AS reservationCode, RM.ROOM_NUM AS roomNum, RM.STATUS AS roomStatus, RT.NAME AS roomTypeName, R.GUEST_COUNT AS guestCount
+		SELECT CS.ID AS id, CS.RESERVATION_ID AS reservationId, CS.GUEST_ID AS guestId, CS.ROOM_ID AS roomId, R.ROOM_TYPE_ID AS roomTypeId, CS.CHECKIN AS checkinTime, CS.CHECKOUT AS checkoutTime, 
+		CS.KEY_TYPE AS keyType, CS.MEMO AS memo, C.NAME AS guestName, R.CODE AS reservationCode, RM.ROOM_NUM AS roomNum, RM.STATUS AS roomStatus, RT.NAME AS roomTypeName, R.GUEST_COUNT AS guestCount
 		FROM CHECKIN_STATUS CS
 		JOIN RESERVATION R ON CS.RESERVATION_ID = R.ID
 		JOIN CUSTOMER C ON CS.GUEST_ID = C.ID
@@ -48,7 +51,8 @@
 		ORDER BY R.CHECKOUT DESC
 	</select>
 	<select id="selectCheckinDetail" parameterType="int" resultType="CheckinDTO">
-		SELECT CS.ID AS id, R.ID AS reservationId, R.CODE AS reservationCode, R.GUEST_ID AS guestId, NVL(CS.ROOM_ID, R.ROOM_ID) AS roomId, R.ROOM_TYPE_ID AS roomTypeId, C.NAME AS guestName, R.GUEST_COUNT AS guestCount, R.CHECKIN AS checkinTime, R.CHECKOUT AS checkoutTime, RT.NAME AS roomTypeName, RM.ROOM_NUM AS roomNum, CS.KEY_TYPE AS keyType, CS.CHECKIN_EMPLOYEE AS checkinEmployee, CS.CHECKOUT_EMPLOYEE AS checkoutEmployee, NVL(CS.MEMO, R.REQUEST) AS memo
+		SELECT CS.ID AS id, R.ID AS reservationId, R.CODE AS reservationCode, R.GUEST_ID AS guestId, NVL(CS.ROOM_ID, R.ROOM_ID) AS roomId, R.ROOM_TYPE_ID AS roomTypeId, C.NAME AS guestName, 
+		R.GUEST_COUNT AS guestCount, R.CHECKIN AS checkinTime, R.CHECKOUT AS checkoutTime, RT.NAME AS roomTypeName, RM.ROOM_NUM AS roomNum, CS.KEY_TYPE AS keyType, NVL(CS.MEMO, R.REQUEST) AS memo
 		FROM RESERVATION R
 		JOIN CUSTOMER C ON R.GUEST_ID = C.ID
 		JOIN ROOM_TYPE RT ON R.ROOM_TYPE_ID = RT.ID
@@ -57,13 +61,12 @@
 		WHERE R.ID = #{reservationId}
 	</select>
 	<insert id="insertCheckin" parameterType="CheckinDTO">
-		INSERT INTO CHECKIN_STATUS (ID, RESERVATION_ID, GUEST_ID, ROOM_ID, CHECKIN, KEY_TYPE, CHECKIN_EMPLOYEE, MEMO)
-		VALUES (CHECKIN_SEQ.NEXTVAL, #{reservationId}, #{guestId}, #{roomId}, SYSDATE, #{keyType}, #{checkinEmployee}, #{memo})
+		INSERT INTO CHECKIN_STATUS (ID, RESERVATION_ID, GUEST_ID, ROOM_ID, CHECKIN, KEY_TYPE, MEMO)
+		VALUES (CHECKIN_SEQ.NEXTVAL, #{reservationId}, #{guestId}, #{roomId}, SYSDATE, #{keyType}, #{memo})
 	</insert>
 	<update id="updateCheckout" parameterType="CheckinDTO">
 		UPDATE CHECKIN_STATUS
-		SET CHECKOUT = SYSDATE,
-			CHECKOUT_EMPLOYEE = #{checkoutEmployee}
+		SET CHECKOUT = SYSDATE
 		WHERE ID = #{id}
 		AND CHECKOUT IS NULL
 	</update>
