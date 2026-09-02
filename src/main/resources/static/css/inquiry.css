@@ -1,329 +1,340 @@
 /* ======================================================
    Admin Inquiry
 ====================================================== */
-
+ 
 .inquiry-summary-grid {
     display: grid;
-
+ 
     grid-template-columns: repeat(3, 1fr);
-
+ 
     gap: 16px;
-
+ 
     margin-bottom: 22px;
 }
-
+ 
 .inquiry-summary-card {
     padding: 20px;
-
+ 
     background: #fff;
-
+ 
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
 }
-
+ 
 .inquiry-summary-card span {
     display: block;
-
+ 
     color: var(--text-secondary);
-
+ 
     font-size: 11px;
 }
-
+ 
 .inquiry-summary-card strong {
     display: block;
-
+ 
     margin-top: 8px;
-
+ 
     color: var(--navy-light);
-
+ 
     font-size: 24px;
 }
-
-
-/* ---------- filter ---------- */
-
+ 
+ 
+/* 답변 등록/수정 실패 메시지 (빈 답변 등) */
+.inquiry-message {
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+ 
+.inquiry-message.error {
+    background: #fdecec;
+    color: var(--danger);
+}
+ 
 .inquiry-filter {
     margin-bottom: 22px;
 }
-
+ 
 .inquiry-filter-select {
     width: 150px;
 }
-
-
+ 
+ 
 /* ---------- layout ---------- */
-
+ 
 .inquiry-layout {
     display: grid;
-
+ 
     grid-template-columns:
         minmax(420px, 1.6fr)
         minmax(0, 1fr);
-
+ 
     gap: 22px;
-
+ 
     align-items: start;
 }
-
-
+ 
+ 
 .inquiry-list-panel,
 .inquiry-detail-panel {
     background: #fff;
-
+ 
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
 }
-
-
+ 
+ 
 /* ---------- 문의 목록 ---------- */
-
+ 
 .inquiry-panel-title {
     display: flex;
-
+ 
     align-items: center;
     justify-content: space-between;
-
+ 
     padding: 20px;
-
+ 
     border-bottom: 1px solid var(--border);
 }
-
+ 
 .inquiry-panel-title h2 {
     margin: 0;
-
+ 
     font-size: 16px;
 }
-
+ 
 .inquiry-panel-title span {
     color: var(--text-secondary);
-
+ 
     font-size: 10px;
 }
-
-
+ 
+ 
 .inquiry-list {
     padding: 10px;
 }
-
+ 
 .inquiry-list-item {
     width: 100%;
-
+ 
     padding: 15px;
-
+ 
     border: 1px solid transparent;
     border-radius: 9px;
-
+ 
     background: transparent;
-
+ 
     text-align: left;
-
+ 
     cursor: pointer;
 }
-
+ 
 .inquiry-list-item + .inquiry-list-item {
     margin-top: 6px;
 }
-
+ 
 .inquiry-list-item:hover {
     background: #f8fafc;
 }
-
+ 
 .inquiry-list-item.active {
     border-color: #cadcf5;
-
+ 
     background: var(--blue-light);
 }
-
+ 
 .inquiry-list-top {
     display: flex;
-
+ 
     align-items: center;
     justify-content: space-between;
-
+ 
     gap: 10px;
 }
-
+ 
 .inquiry-list-top strong {
     overflow: hidden;
-
+ 
     font-size: 11px;
-
+ 
     white-space: nowrap;
-
+ 
     text-overflow: ellipsis;
 }
-
+ 
 .inquiry-list-item p {
     margin: 8px 0;
-
+ 
     overflow: hidden;
-
+ 
     color: var(--text-secondary);
-
+ 
     font-size: 9px;
-
+ 
     white-space: nowrap;
-
+ 
     text-overflow: ellipsis;
 }
-
+ 
 .inquiry-list-bottom {
     display: flex;
-
+ 
     justify-content: space-between;
-
+ 
     color: var(--text-muted);
-
+ 
     font-size: 8px;
 }
-
-
+ 
+ 
 /* ---------- 상세 ---------- */
-
+ 
 .inquiry-detail-panel {
     padding: 26px;
 }
-
+ 
 .inquiry-detail-header {
     padding-bottom: 20px;
-
+ 
     border-bottom: 1px solid var(--border);
 }
-
+ 
 .inquiry-detail-header h2 {
     margin: 10px 0 4px;
-
+ 
     font-size: 21px;
 }
-
+ 
 .inquiry-detail-header p {
     margin: 0;
-
+ 
     color: var(--text-secondary);
-
+ 
     font-size: 13px;
 }
-
-
+ 
+ 
 .inquiry-customer-info {
     display: grid;
-
+ 
     grid-template-columns: repeat(3, 1fr);
-
+ 
     gap: 1px;
-
+ 
     margin-top: 20px;
-
+ 
     overflow: hidden;
-
+ 
     border: 1px solid var(--border);
     border-radius: 9px;
-
+ 
     background: var(--border);
 }
-
+ 
 .inquiry-customer-info > div {
     padding: 14px;
-
+ 
     background: #fff;
 }
-
+ 
 .inquiry-customer-info span {
     display: block;
-
+ 
     margin-bottom: 5px;
-
+ 
     color: var(--text-secondary);
-
+ 
     font-size: 12px;
 }
-
+ 
 .inquiry-customer-info strong {
     font-size: 15px;
 }
-
-
+ 
+ 
 /* 문의 내용 */
-
+ 
 .inquiry-content-box {
     margin-top: 20px;
-
+ 
     padding: 20px;
-
+ 
     border-radius: 10px;
-
+ 
     background: #f7f9fc;
 }
-
+ 
 .inquiry-content-box > span {
     display: block;
-
+ 
     margin-bottom: 10px;
-
+ 
     color: var(--text-secondary);
-
+ 
     font-size: 13px;
 }
-
+ 
 .inquiry-content-box p {
     margin: 0;
-
+ 
     color: var(--text-primary);
-
+ 
     font-size: 16px;
-
+ 
     line-height: 1.8;
 }
-
-
+ 
+ 
 /* 답변 */
-
+ 
 .inquiry-answer-area {
     margin-top: 22px;
 }
-
+ 
 .inquiry-action-row {
     display: flex;
-
+ 
     justify-content: flex-end;
-
+ 
     gap: 10px;
-
+ 
     margin-top: 20px;
 }
-
-
+ 
+ 
 @media (max-width: 1050px) {
-
+ 
     .inquiry-layout {
         grid-template-columns: 1fr;
     }
-
+ 
     .inquiry-summary-grid {
         grid-template-columns: 1fr;
     }
-
+ 
 }
-
+ 
 /* ===== 관리자 문의 목록 - 테이블형 (기존 카드 리스트보다 정돈된 레이아웃) ===== */
-
+ 
 .inquiry-table-wrapper {
     overflow-x: auto;
 }
-
+ 
 .inquiry-table {
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
     font-size: 14px;
 }
-
+ 
 .inquiry-table th:nth-child(1), .inquiry-table td:nth-child(1) { width: 20%; }
 .inquiry-table th:nth-child(2), .inquiry-table td:nth-child(2) { width: 32%; }
 .inquiry-table th:nth-child(3), .inquiry-table td:nth-child(3) { width: 16%; }
 .inquiry-table th:nth-child(4), .inquiry-table td:nth-child(4) { width: 16%; }
 .inquiry-table th:nth-child(5), .inquiry-table td:nth-child(5) { width: 16%; }
-
+ 
 .inquiry-table thead th {
     text-align: left;
     padding: 14px 18px;
@@ -334,33 +345,33 @@
     border-bottom: 1px solid var(--border);
     white-space: nowrap;
 }
-
+ 
 .inquiry-table tbody tr {
     cursor: pointer;
     transition: background 0.1s;
 }
-
+ 
 .inquiry-table tbody tr:hover {
     background: var(--background);
 }
-
+ 
 .inquiry-table tbody tr.active {
     background: var(--blue-light);
 }
-
+ 
 .inquiry-table td {
     padding: 16px 18px;
     border-bottom: 1px solid var(--border);
     color: var(--text-primary);
     vertical-align: middle;
 }
-
+ 
 .inquiry-table td.inquiry-table-no {
     color: var(--text-secondary);
     font-size: 13px;
     white-space: nowrap;
 }
-
+ 
 .inquiry-table td.inquiry-table-title {
     max-width: 260px;
     overflow: hidden;
@@ -368,7 +379,7 @@
     white-space: nowrap;
     font-weight: 500;
 }
-
+ 
 .inquiry-table td.inquiry-table-date {
     color: var(--text-secondary);
     font-size: 13px;

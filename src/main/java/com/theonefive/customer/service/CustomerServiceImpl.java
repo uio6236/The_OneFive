@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.theonefive.customer.model.dto.CustomerDTO;
 import com.theonefive.customer.model.mapper.CustomerMapper;
@@ -18,7 +19,15 @@ public class CustomerServiceImpl implements CustomerService {
 	private final PasswordEncoder passwordEncoder;
 	
 	public void signup(CustomerDTO customer) throws IOException {
-		
+		 // 아이디 형식 체크
+	    if (!customer.getLoginId().matches("^[a-zA-Z0-9]{4,20}$")) {
+	        throw new IllegalStateException("아이디는 영문과 숫자만 사용해서 4~20자로 입력해주세요.");
+	    }
+
+	    // 전화번호 형식 체크 — 010-1234-5678 형식만 허용
+	    if (!customer.getPhone().matches("^01[0-9]-\\d{3,4}-\\d{4}$")) {
+	        throw new IllegalStateException("휴대폰 번호 형식이 올바르지 않습니다. (예: 010-1234-5678)");
+	    }
 		if(isLoginIdCheck(customer.getLoginId())) {
 			throw new IllegalStateException("이미 사용 중인 아이디입니다.");
 		}
@@ -55,6 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
+	@Transactional
 	public boolean updateCustomerInfo(CustomerDTO update) {
 		CustomerDTO current = customerMapper.selectCustomerByLoginId(update.getLoginId());
 		if (current == null) {
@@ -63,9 +73,15 @@ public class CustomerServiceImpl implements CustomerService {
 		customerMapper.updateCustomer(update);
 		
 		if (update.getNewPassword() != null && !update.getNewPassword().isBlank()) {
+			
 			if (update.getPassword() == null || !passwordEncoder.matches(update.getPassword(), current.getPassword())) {
 				throw new IllegalStateException("현재 비밀번호와 일치하지 않습니다.");
 			}
+			
+			if (passwordEncoder.matches(update.getNewPassword(), current.getPassword())) {
+				throw new IllegalStateException("현재 비밀번호와 동일한 비밀번호로는 변경할 수 없습니다.");
+			}
+			
 			update.setNewPassword(passwordEncoder.encode(update.getNewPassword()));
 			customerMapper.updatePassword(update);
 		}

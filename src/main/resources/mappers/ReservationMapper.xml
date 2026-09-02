@@ -28,29 +28,30 @@
     <!-- 예약 등록
          selectKey로 시퀀스에서 ID를 먼저 뽑아 dto.id에 채우고(order="BEFORE"),
          그 값을 CODE 생성(RS-날짜-ID)에도 그대로 재사용함 -->
-    <insert id="insertReservation" parameterType="ReservationDTO">
-        <selectKey keyProperty="id" resultType="long" order="BEFORE">
-            SELECT RESERVATION_SEQ.NEXTVAL FROM DUAL
-        </selectKey>
-        INSERT INTO RESERVATION (
-            ID, CODE, GUEST_ID, ROOM_TYPE_ID, ROOM_ID,
-            CHECKIN, CHECKOUT, GUEST_COUNT, STATUS,
-            ROOM_AMOUNT, DISCOUNT_AMOUNT, TOTAL_AMOUNT,
-            PAYMENT_METHOD, REQUEST, CREATED_BY, CREATED_AT
-        ) VALUES (
-            #{id},
-            TO_CHAR(SYSDATE, 'YYYYMMDD') ||
-		    LPAD(
-		        (SELECT COUNT(*) + 1 FROM RESERVATION WHERE TRUNC(CREATED_AT) = TRUNC(SYSDATE)),
-		        2, '0'
-		    ),
-            #{guestId}, #{roomTypeId}, #{roomId},
-            #{checkin}, #{checkout}, #{guestCount}, #{status},
-            #{roomAmount}, #{discountAmount}, #{totalAmount},
-            #{paymentMethod}, #{request}, #{createdBy}, SYSDATE
-        )
-    </insert>
-
+	<insert id="insertReservation" parameterType="ReservationDTO">
+	    <selectKey keyProperty="id" resultType="long" order="BEFORE">
+	        SELECT RESERVATION_SEQ.NEXTVAL FROM DUAL
+	    </selectKey>
+	    INSERT INTO RESERVATION (
+	        ID, CODE, GUEST_ID, ROOM_TYPE_ID, ROOM_ID,
+	        CHECKIN, CHECKOUT, GUEST_COUNT, STATUS,
+	        ROOM_AMOUNT, DISCOUNT_AMOUNT, TOTAL_AMOUNT,
+	        PAYMENT_METHOD, REQUEST, CREATED_BY, CREATED_AT,
+	        GUEST_NAME, GUEST_PHONE
+	    ) VALUES (
+	        #{id},
+	        TO_CHAR(SYSDATE, 'YYYYMMDD') ||
+	        LPAD(
+	            (SELECT COUNT(*) + 1 FROM RESERVATION WHERE TRUNC(CREATED_AT) = TRUNC(SYSDATE)),
+	            2, '0'
+	        ),
+	        #{guestId}, #{roomTypeId}, #{roomId},
+	        #{checkin}, #{checkout}, #{guestCount}, #{status},
+	        #{roomAmount}, #{discountAmount}, #{totalAmount},
+	        #{paymentMethod}, #{request}, #{createdBy}, SYSDATE,
+	        #{guestName}, #{guestPhone}
+	    )
+	</insert>
     <!-- 예약 취소 : 삭제(DELETE) 아니고 상태만 변경 -->
     <update id="cancelReservation" parameterType="long">
         UPDATE RESERVATION
@@ -65,8 +66,10 @@
 	        RES.ID              AS reservationId,
 	        RES.CODE            AS code,
 	        RES.STATUS          AS status,
-	        C.NAME              AS guestName,
-	        C.PHONE             AS guestPhone,
+			C.NAME              AS guestName,
+			C.PHONE             AS guestPhone,
+			RES.GUEST_NAME       AS bookerName,
+			RES.GUEST_PHONE      AS bookerPhone,
 	        RT.NAME             AS typeName,
 	        R.ROOM_NUM          AS roomNum,
 	        RES.CHECKIN         AS checkin,
@@ -78,10 +81,10 @@
 	    JOIN ROOM_TYPE RT ON RT.ID = RES.ROOM_TYPE_ID
 	    LEFT JOIN ROOM R ON R.ID = RES.ROOM_ID
 	    <where>
-	        <if test="keyword != null and keyword != ''">
-	            AND (C.NAME LIKE '%' || #{keyword} || '%'
-	                 OR RES.CODE LIKE '%' || #{keyword} || '%')
-	        </if>
+			<if test="keyword != null and keyword != ''">
+			    AND (RES.GUEST_NAME LIKE '%' || #{keyword} || '%'
+			         OR RES.CODE LIKE '%' || #{keyword} || '%')
+			</if>
 	        <if test="status != null and status != ''">
 	            AND RES.STATUS = #{status}
 	        </if>
@@ -98,8 +101,10 @@
             RES.ID              AS reservationId,
             RES.CODE            AS code,
             RES.STATUS          AS status,
-            C.NAME              AS guestName,
-            C.PHONE             AS guestPhone,
+			C.NAME              AS guestName,
+			C.PHONE             AS guestPhone,
+			RES.GUEST_NAME       AS bookerName,
+			RES.GUEST_PHONE      AS bookerPhone,
             RT.NAME             AS typeName,
             R.ROOM_NUM          AS roomNum,
             RES.CHECKIN         AS checkin,
@@ -120,8 +125,10 @@
 	        RES.ID              AS reservationId,
 	        RES.CODE            AS code,
 	        RES.STATUS          AS status,
-	        C.NAME              AS guestName,
-	        C.PHONE             AS guestPhone,
+			C.NAME              AS guestName,
+			C.PHONE             AS guestPhone,
+			RES.GUEST_NAME       AS bookerName,
+			RES.GUEST_PHONE      AS bookerPhone,
 	        RT.NAME             AS typeName,
 	        R.ROOM_NUM          AS roomNum,
 	        RES.CHECKIN         AS checkin,
@@ -188,5 +195,13 @@
 	           AND CHECKOUT &gt; TO_DATE(#{checkinDate}, 'YYYY-MM-DD'))
 	    FROM DUAL
 	</select>
+	
+	<!-- 체크아웃한 예약을 이용완료로 변경 -->
+	<update id="completeReservationByCheckinId" parameterType="int">
+	    UPDATE RESERVATION
+	    SET STATUS = '이용완료'
+	    WHERE ID = (SELECT RESERVATION_ID FROM CHECKIN_STATUS WHERE ID = #{checkinId})
+	    AND STATUS = '예약확정'
+	</update>
 </mapper>
 

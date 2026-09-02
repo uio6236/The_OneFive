@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -41,7 +42,7 @@
                    class="inquiry-list-item">
 
                     <div class="inquiry-list-top">
-                        <strong>${inq.title}</strong>
+                        <strong>${fn:escapeXml(inq.title)}</strong>
 
                         <c:choose>
                             <c:when test="${inq.status == '대기중'}">
@@ -53,7 +54,7 @@
                         </c:choose>
                     </div>
 
-                    <p>${inq.content}</p>
+                    <p>${fn:escapeXml(inq.content)}</p>
 
                     <div class="inquiry-list-bottom">
                         <span>${inq.inquiryNo}</span>

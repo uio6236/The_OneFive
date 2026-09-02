@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -41,21 +42,21 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <h2>${inquiry.title}</h2>
+                        <h2>${fn:escapeXml(inquiry.title)}</h2>
                         <p>문의번호 ${inquiry.inquiryNo} · <fmt:formatDate value="${inquiry.createdAt}" pattern="yyyy.MM.dd HH:mm"/></p>
                     </div>
                 </div>
 
                 <div class="inquiry-content-box">
                     <span>문의 내용</span>
-                    <p>${inquiry.content}</p>
+                    <p>${fn:escapeXml(inquiry.content)}</p>
                 </div>
 
                 <c:choose>
                     <c:when test="${inquiry.status == '답변완료'}">
                         <div class="inquiry-content-box">
                             <span>답변 내용</span>
-                            <p>${inquiry.answer}</p>
+                            <p>${fn:escapeXml(inquiry.answer)}</p>
                         </div>
                     </c:when>
                     <c:otherwise>

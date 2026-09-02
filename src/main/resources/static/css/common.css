@@ -329,3 +329,17 @@ textarea.form-control {
     color: #fff;
     border-color: var(--blue);
 }
+/* 중복확인 버튼 아이디 입력창 옆으로 */
+.input-with-btn {
+    display: flex;
+    gap: 8px;
+}
+
+.input-with-btn .form-control {
+    flex: 1; 
+}
+
+.input-with-btn .btn {
+    flex-shrink: 0; 
+    white-space: nowrap; 
+}

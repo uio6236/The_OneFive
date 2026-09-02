@@ -35,18 +35,16 @@
 
         <div class="auth-brand-overlay">
 
-            <a href="/" class="auth-logo">
-                <span class="auth-logo-icon">
-                    ▣
-                </span>
+			<a href="/" class="auth-logo">
+				<span class="auth-logo-icon">
+					<img src="${pageContext.request.contextPath}/images/common/hotel-icon.png" alt="The OneFive 로고">
+				</span>
 
-                <div>
-                    <strong>The OneFive</strong>
-                    <span>HOTEL & RESORT</span>
-                </div>
-
-            </a>
-
+				<div>
+					<strong>The OneFive</strong>
+					<span>HOTEL & RESORT</span>
+				</div>
+			</a>
 
             <div class="auth-brand-content">
 
@@ -135,7 +133,7 @@
             <div class="auth-form-title">
 
                 <h2>
-                    로그인
+                    관리자 로그인
                 </h2>
 
                 <p>
@@ -153,7 +151,7 @@
                         사번
                     </label>
 
-                    <input type="text" id="code" name="code" 
+                    <input type="text" id="code" name="code" value="${savedLoginCode}"
 					class="form-control" placeholder="사번을 입력하세요" required />
 
                 </div>
@@ -174,13 +172,10 @@
                 <div class="login-option-row">
 
                     <label class="login-remember">
-                        <input type="checkbox" name="remember">
-                        로그인 상태 유지
+                        <input type="checkbox" name="rememberCode" id="rememberCode" >
+						<c:if test="${not empty savedLoginCode}"></c:if>
+                        사번 저장
                     </label>
-
-					<a href="/password/reset" class="text-link"> 아이디 찾기 </a>
-					
-                    <a href="/password/reset" class="text-link"> 비밀번호 찾기 </a>
 
                 </div>
 
@@ -222,6 +217,13 @@
     </section>
 
 </div>
-
+<script>
+    // 컨트롤러에서 넘어온 errorMessage 확인
+    const errorMessage = "${errorMessage}";
+    
+    if (errorMessage && errorMessage.trim() !== "") {
+        alert(errorMessage);
+    }
+</script>
 </body>
 </html>

@@ -17,47 +17,35 @@
 
 <head>
     <meta charset="UTF-8">
-
     <title>The OneFive - 로그인</title>
-
     <link rel="stylesheet" href="/css/common.css">
-
     <link rel="stylesheet" href="/css/customer.css">
-	
 </head>
 
 <body>
-
 <div class="auth-page">
-
     <!-- 왼쪽 브랜드 영역 -->
     <section class="auth-brand">
-
         <div class="auth-brand-overlay">
-
             <a href="/" class="auth-logo">
-                <span class="auth-logo-icon">
-                    ▣
-                </span>
 
+				<span class="auth-logo-icon">
+					<img src="${pageContext.request.contextPath}/images/common/hotel-icon.png"
+						alt="The OneFive 로고">
+				</span>
                 <div>
                     <strong>The OneFive</strong>
                     <span>HOTEL & RESORT</span>
                 </div>
 
             </a>
-
-
             <div class="auth-brand-content">
-
                 <span class="auth-chip">
                     HOTEL LOGIN
                 </span>
-
                 <h1>
                     The OneFive 로그인
                 </h1>
-
                 <p>
                     호텔 통합 로그인 시스템
                 </p>
@@ -153,7 +141,7 @@
                         아이디
                     </label>
 
-                    <input type="text" id="loginId" name="loginId" 
+                    <input type="text" id="loginId" name="loginId" value="${savedLoginId}"
 					class="form-control" placeholder="아이디를 입력하세요" required />
 
                 </div>
@@ -165,7 +153,7 @@
                         비밀번호
                     </label>
 
-                    <input type="password" id="password" name="password"
+                    <input type="password" id="password" name="password" 
 					 class="form-control" placeholder="비밀번호를 입력하세요" required>
 
                 </div>
@@ -175,12 +163,9 @@
 
 				    <label class="login-remember">
 				        <input type="checkbox" name="rememberId" id="rememberId">
+						<c:if test="${not empty savedLoginId}"></c:if>
 				        아이디 저장
 				    </label>
-
-					<a href="/password/reset" class="text-link"> 아이디 찾기 </a>
-					
-                    <a href="/password/reset" class="text-link"> 비밀번호 찾기 </a>
 
                 </div>
 
@@ -222,6 +207,13 @@
     </section>
 
 </div>
-
+<script>
+    // 컨트롤러에서 넘어온 errorMessage 확인
+    const errorMessage = "${errorMessage}";
+    
+    if (errorMessage && errorMessage.trim() !== "") {
+        alert(errorMessage);
+    }
+</script>
 </body>
 </html>

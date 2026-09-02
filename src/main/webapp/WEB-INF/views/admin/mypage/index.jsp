@@ -42,7 +42,7 @@
                     <div class="mypage-card mypage-profile-card">
 
                         <div class="mypage-avatar">
-                            ${fn:substring(adminEmployee.name, 0, 1)}
+                            ${fn:substring(employee.name, 0, 1)}
                         </div>
 
                         <h2>${employee.name}</h2>
@@ -64,7 +64,8 @@
 
                                 <div class="mypage-form-group">
                                     <label for="name">이름</label>
-                                    <input type="text" id="name" name="name" value="${employee.name}">
+                                    <input type="text" id="name" name="name" value="${employee.name}"
+                                           pattern="[가-힣a-zA-Z\s]+" title="숫자나 특수문자는 입력할 수 없습니다." required>
                                 </div>
 
                                 <div class="mypage-form-group">
@@ -79,7 +80,8 @@
 
                                 <div class="mypage-form-group">
                                     <label for="phone">연락처</label>
-                                    <input type="tel" id="phone" name="phone" value="${employee.phone}">
+                                    <input type="tel" id="phone" name="phone" value="${employee.phone}"
+                                           pattern="[0-9-]+" title="숫자와 '-'만 입력할 수 있습니다." required>
                                 </div>
 
                             </div>
