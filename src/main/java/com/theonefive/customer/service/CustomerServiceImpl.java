@@ -19,7 +19,8 @@ public class CustomerServiceImpl implements CustomerService {
 	private final PasswordEncoder passwordEncoder;
 	
 	public void signup(CustomerDTO customer) throws IOException {
-		 // 아이디 형식 체크
+		// 회원가입: 고객 비밀번호를 암호화하고 회원 정보를 등록
+		// 아이디 형식 체크
 	    if (!customer.getLoginId().matches("^[a-zA-Z0-9]{4,20}$")) {
 	        throw new IllegalStateException("아이디는 영문과 숫자만 사용해서 4~20자로 입력해주세요.");
 	    }
@@ -40,13 +41,14 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
     public boolean isLoginIdCheck(String loginId) {
+		// 로그인 ID의 중복 여부 확인
         // CustomerMapper.xml에 작성해 두신 countByLoginId를 호출하여 0보다 크면 중복으로 판단
         return customerMapper.countByLoginId(loginId) > 0;
     }
 	
 	@Override
 	public CustomerDTO login(String loginId, String password) throws IllegalStateException {
-		// 아이디를 기준으로 회원 정보 조회
+		// 로그인 처리: 아이디와 비밀번호를 검증해 로그인 고객 정보 반환
 		CustomerDTO customer = customerMapper.selectCustomerByLoginId(loginId);
 		
 		// 조회된 정보 중 암호문과 전달된 평문이 일지하는지 확인
@@ -60,12 +62,14 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public CustomerDTO getCustomerByLoginId(String loginId) {
+		// 로그인 ID를 기준으로 고객 정보 조회
 		return customerMapper.selectCustomerByLoginId(loginId);
 	}
 	
 	@Override
 	@Transactional
 	public boolean updateCustomerInfo(CustomerDTO update) {
+		// 회원 정보 및 비밀번호 수정
 		CustomerDTO current = customerMapper.selectCustomerByLoginId(update.getLoginId());
 		if (current == null) {
 			throw new IllegalStateException("존재하지 않는 회원입니다.");
@@ -87,5 +91,4 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		return true;
 	}
-	
 }

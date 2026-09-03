@@ -26,23 +26,23 @@ public class CheckinServiceImpl implements CheckinService {
 	
 	@Override
 	public List<CheckinDTO> getTodayCheckinList() {
-		// 금일 체크인 예정 목록 조회
+		// 금일 체크인 예정 고객 목록 조회
 		return checkinMapper.selectTodayCheckinList();
 	}
 	@Override
 	public List<CheckinDTO> getTodayCheckoutList() {
-		// 금일 체크아웃 예정 목록 조회
+		// 금일 체크아웃 예정 고객 목록 조회
 		return checkinMapper.selectTodayCheckoutList();
 	}
 	@Override
 	public CheckinDTO getCheckinDetail(int reservationId) {
-		// 체크인 상세
+		// 예약번호를 기준으로 체크인 상세 정보 조회
 		return checkinMapper.selectCheckinDetail(reservationId);
 	}
 	@Transactional
 	@Override
 	public boolean checkin(CheckinDTO checkin) {
-		// 체크인 처리(실제 체크인 기록 생성)
+		// 체크인 정보를 등록하고 해당 객실을 투숙중 상태로 변경
 		int checkinResult = checkinMapper.insertCheckin(checkin);
 		int roomResult = roomMapper.updateRoomStatus(checkin.getRoomId(), "투숙중");
 	    if (checkinResult == 0 || roomResult == 0) {throw new IllegalStateException("체크인 연동 처리에 실패했습니다.");}
@@ -52,7 +52,7 @@ public class CheckinServiceImpl implements CheckinService {
 	@Transactional
 	@Override
 	public boolean checkout(CheckinDTO checkin) {
-		// 체크아웃 처리
+		// 체크아웃 처리와 관련 테이블의 후속 업무를 하나의 트랜잭션으로 처리
 		int checkoutResult = checkinMapper.updateCheckout(checkin);
 		if (checkoutResult == 0) {throw new IllegalStateException("이미 체크아웃되었거나 존재하지 않는 체크인 기록입니다.");}
 		
@@ -74,12 +74,12 @@ public class CheckinServiceImpl implements CheckinService {
 	}
 	@Override
 	public List<CheckinDTO> getPastCheckinList() {
-		// 지난 체크인 미처리 목록 조회
+		// 체크인 예정일이 지났지만 아직 체크인하지 않은 고객 목록 조회
 		return checkinMapper.selectPastCheckinList();
 	}
 	@Override
 	public List<CheckinDTO> getPastCheckoutList() {
-		// 지난 체크아웃 미처리 목록 조회
+		// 체크아웃 예정일이 지났지만 아직 체크아웃하지 않은 고객 목록 조회
 		return checkinMapper.selectPastCheckoutList();
 	}
 }

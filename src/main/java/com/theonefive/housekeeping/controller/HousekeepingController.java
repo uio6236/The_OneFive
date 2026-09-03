@@ -75,7 +75,7 @@ public class HousekeepingController {
         return ResponseEntity.ok(ApiResponse.success(dto));
     }
 
-    // 선택한 작업(들)에 담당자 배정
+    // 선택한 하우스키핑 작업에 담당 직원을 배정
     @PostMapping("/api/housekeeping/assign")
     @ResponseBody
     public ResponseEntity<ApiResponse<List<Long>>> assign(@RequestBody AssignEmployeeDTO request) {
@@ -86,7 +86,7 @@ public class HousekeepingController {
         return ResponseEntity.ok(ApiResponse.success(success.size() + "건 배정 완료", success));
     }
 
-    // 청소 시작 처리
+    // 선택한 객실의 청소 작업을 시작 처리
     @PostMapping("/api/housekeeping/start")
     @ResponseBody
     public ResponseEntity<ApiResponse<List<Long>>> start(@RequestBody StatusChangeDTO request) {
@@ -97,7 +97,7 @@ public class HousekeepingController {
         return ResponseEntity.ok(ApiResponse.success(success.size() + "건 청소를 시작합니다.", success));
     }
 
-    // 청소 완료 처리
+    // 선택한 객실의 청소 완료 처리
     @PostMapping("/api/housekeeping/complete")
     @ResponseBody
     public ResponseEntity<ApiResponse<List<Long>>> complete(@RequestBody StatusChangeDTO request) {
@@ -108,7 +108,7 @@ public class HousekeepingController {
         return ResponseEntity.ok(ApiResponse.success(success.size() + "건 청소를 완료했습니다.", success));
     }
 
-    // 점검 완료 처리
+    // 객실 점검을 완료하고 객실을 이용가능 상태로 변경
     @PostMapping("/api/housekeeping/inspect")
     @ResponseBody
     public ResponseEntity<ApiResponse<List<Long>>> inspect(@RequestBody StatusChangeDTO request) {
@@ -119,7 +119,7 @@ public class HousekeepingController {
         return ResponseEntity.ok(ApiResponse.success(success.size() + "건 점검을 완료했습니다.", success));
     }
 
-    // 비고/전달사항 저장
+    // 하우스키핑 작업의 메모 내용 저장
     @PostMapping("/api/housekeeping/note")
     @ResponseBody
     public ResponseEntity<ApiResponse<Long>> saveNote(@RequestBody NoteDTO request) {
@@ -145,7 +145,7 @@ public class HousekeepingController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    // 상세패널 담당자 드롭다운을 채우기 위한 전체 직원 목록 조회
+    // 하우스키핑 담당자로 배정할 수 있는 직원 목록 조회
     @GetMapping("/api/employees")
     @ResponseBody
     public ResponseEntity<ApiResponse<List<EmployeeDTO>>> employees() {

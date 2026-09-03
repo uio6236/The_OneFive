@@ -14,7 +14,5 @@ public class AdminCustomerSearchDTO {
 	private int page = 1;
 	private int size = 8;
 	
-	public int getOffset() {
-		return (page - 1) * size;
-	}
+	public int getOffset() {return (page - 1) * size;}
 }
