@@ -198,20 +198,21 @@
 
     background: var(--blue);
 }
-
+.auth-logo-icon img {
+	width: 24px;
+	height: 24px;
+	object-fit: contain;
+}
 .auth-logo strong {
     display: block;
 
     font-size: 20px;
 }
 
-.auth-logo span {
+.auth-logo div span {
     display: block;
-
     margin-top: 2px;
-
     color: #a8b5c9;
-
     font-size: 10px;
 }
 
@@ -385,6 +386,11 @@
     color: var(--blue);
 
     font-weight: 600;
+	
+	background: none;      /* 배경색 제거 */
+	    border: none;          /* 테두리(박스) 제거 */
+	    padding: 0;            /* 기본 여백 제거 */
+	    cursor: pointer;       /* 마우스 호버 시 손가락 모양 커서 */
 }
 .text-link-danger {
     color: var(--danger);

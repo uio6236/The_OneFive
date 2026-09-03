@@ -35,18 +35,16 @@
 
         <div class="auth-brand-overlay">
 
-            <a href="/" class="auth-logo">
-                <span class="auth-logo-icon">
-                    ▣
-                </span>
+			<a href="/" class="auth-logo">
+				<span class="auth-logo-icon">
+					<img src="${pageContext.request.contextPath}/images/common/hotel-icon.png" alt="The OneFive 로고">
+				</span>
 
-                <div>
-                    <strong>The OneFive</strong>
-                    <span>HOTEL & RESORT</span>
-                </div>
-
-            </a>
-
+				<div>
+					<strong>The OneFive</strong>
+					<span>HOTEL & RESORT</span>
+				</div>
+			</a>
 
             <div class="auth-brand-content">
 
@@ -219,6 +217,13 @@
     </section>
 
 </div>
-
+<script>
+    // 컨트롤러에서 넘어온 errorMessage 확인
+    const errorMessage = "${errorMessage}";
+    
+    if (errorMessage && errorMessage.trim() !== "") {
+        alert(errorMessage);
+    }
+</script>
 </body>
 </html>

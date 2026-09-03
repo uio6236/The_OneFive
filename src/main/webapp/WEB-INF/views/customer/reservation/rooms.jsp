@@ -36,12 +36,12 @@
 
             <div class="form-group">
                 <label>체크인 날짜</label>
-                <input type="date" name="checkinDate" class="form-control" value="${condition.checkinDate}" min="${todayStr}" required>
+                <input type="date" name="checkinDate" id="checkinDate" class="form-control" value="${condition.checkinDate}" min="${todayStr}" required>
             </div>
 
             <div class="form-group">
                 <label>체크아웃 날짜</label>
-                <input type="date" name="checkoutDate" class="form-control" value="${condition.checkoutDate}" min="${tomorrowStr}" required>
+                <input type="date" name="checkoutDate" id="checkoutDate" class="form-control" value="${condition.checkoutDate}" min="${tomorrowStr}" required>
             </div>
 
             <div class="form-group">
@@ -140,6 +140,8 @@
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 </div>
+<script src="/js/reservation.js"></script>
+
 <c:if test="${paymentSuccess}">
     <script>
         alert('결제가 완료되었습니다. 예약이 확정되었습니다.');

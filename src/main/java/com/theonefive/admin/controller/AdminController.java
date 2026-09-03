@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.theonefive.admin.model.dto.EmployeeDTO;
 import com.theonefive.admin.service.AdminService;
@@ -88,7 +89,7 @@ public class AdminController {
                         @RequestParam(value = "rememberCode", required = false) String rememberCode, // 체크박스: 체크시 "on" 전달, 미체크시 파라미터 자체가 안 넘어와서 null
                         HttpSession session, 
                         HttpServletResponse response, // 쿠키를 실제로 브라우저에 내려보내려면 응답 객체가 필요함
-                        Model model) {
+                        RedirectAttributes redirectAttributes) {
 
         try {
             // 아이디와 비밀번호로 로그인 검증 실행
@@ -111,11 +112,11 @@ public class AdminController {
             }
 
             
-            return "redirect:/admin/mypage"; // 로그인 성공 후 메인 페이지로 이동
+            return "redirect:/admin/dashboard"; // 로그인 성공 후 메인 페이지로 이동
         } catch (IllegalStateException e) {
             // 로그인 실패 시 (아이디 불일치 or 비밀번호 틀림)
-            model.addAttribute("errorMessage", e.getMessage());
-            return "admin/adminLogin"; // 다시 로그인 페이지로 돌아감
+        	redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/admin/adminLogin"; // 다시 로그인 페이지로 돌아감
         }
     }
 
@@ -123,17 +124,17 @@ public class AdminController {
     // 3. 로그아웃 & 메인페이지
     // ==========================================
 
-    // 메인 페이지
-    @GetMapping("/main")
-    public String mainPage() {
-        return "customer/main"; // /WEB-INF/views/customer/main.jsp 연결
-    }
-
-    // 로그아웃
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate(); // 세션 정보 삭제 (로그아웃 처리)
-        return "redirect:/adminLogin"; // 로그인 페이지로 이동
-    }
-    
+//    // 메인 페이지
+//    @GetMapping("/main")
+//    public String mainPage() {
+//        return "admin/main"; // /WEB-INF/views/admin/main.jsp 연결
+//    }
+//
+//    // 로그아웃
+//    @GetMapping("/logout")
+//    public String logout(HttpSession session) {
+//        session.invalidate(); // 세션 정보 삭제 (로그아웃 처리)
+//        return "redirect:/admin/adminLogin"; // 로그인 페이지로 이동
+//    }
+//    
 }

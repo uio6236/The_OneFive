@@ -3,12 +3,12 @@
 <header class="customer-header">
 
     <a
-        href="/customer/main"
+        href="/customer/reservation/rooms"
         class="customer-logo"
     >
 
-        <span class="customer-logo-icon">
-            ▣
+        <span class="customer-logo-icon" >
+            <img src="${pageContext.request.contextPath}/images/common/hotel-icon.png" alt="The OneFive 로고">
         </span>
 
         <span>

@@ -432,7 +432,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 
 			alert("체크아웃이 완료되었습니다.");
-			location.href = "/admin/checkin";
+			location.href = "/admin/checkin?tab=checkout";
 		} catch (error) {
 			console.error(error);
 			alert("체크아웃 처리 중 오류가 발생했습니다.");
@@ -475,4 +475,10 @@ document.addEventListener("DOMContentLoaded", function () {
 		event.preventDefault();
 		availableRoomList.scrollLeft += event.deltaY;
 	}, { passive: false });
+	const params = new URLSearchParams(window.location.search);
+	const tab = params.get("tab");
+
+	if (tab === "checkout") {
+		checkoutTab.click();
+	}
 });

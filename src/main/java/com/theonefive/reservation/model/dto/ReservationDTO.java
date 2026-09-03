@@ -36,4 +36,7 @@ public class ReservationDTO {
     private String request;       
     private Long createdBy;       
     private Date createdAt;
+    
+    private String guestName;
+    private String guestPhone;
 }

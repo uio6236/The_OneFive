@@ -1,5 +1,7 @@
 package com.theonefive.customer.controller;
 
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.io.IOException;
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.theonefive.common.dto.ApiResponse;
 import com.theonefive.customer.model.dto.CustomerDTO;
@@ -98,7 +101,7 @@ public class CustomerController {
                         @RequestParam(value = "rememberId", required = false) String rememberId, // 체크박스: 체크시 "on" 전달, 미체크시 파라미터 자체가 안 넘어와서 null
                         HttpSession session, 
                         HttpServletResponse response, // 쿠키를 실제로 브라우저에 내려보내려면 응답 객체가 필요함
-                        Model model) {
+                        RedirectAttributes redirectAttributes) {
 
         try {
             // 아이디와 비밀번호로 로그인 검증 실행
@@ -126,7 +129,7 @@ public class CustomerController {
             
         } catch (IllegalStateException e) {
             // 로그인 실패 시 (아이디 불일치 or 비밀번호 틀림)
-            model.addAttribute("errorMessage", e.getMessage());
+        	redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/login"; // 다시 로그인 페이지로 돌아감
         }
     }
@@ -152,11 +155,11 @@ public class CustomerController {
     // 4.마이페이지 
     // ==========================================
     
-    @GetMapping("/mypage/index")                                 // ③ 메소드 내용만 교체
+    @GetMapping("/mypage/index")                                
     public String myPage(HttpSession session, Model model) {
         String loginId = (String) session.getAttribute("loginId");
         if(loginId == null) {
-            return "redirect:login";
+            return "redirect:/login";
         }
         CustomerDTO customer = customerService.getCustomerByLoginId(loginId);
         model.addAttribute("customer", customer);

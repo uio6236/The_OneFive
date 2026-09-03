@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const detailLinks = document.querySelectorAll(".room-detail-link");
     const emptyArea = document.querySelector("#roomDetailEmpty");
     const detailContent = document.querySelector("#roomDetailContent");
+	const maintenanceRequestBtn = document.querySelector("#maintenanceRequestBtn");
     detailLinks.forEach(function (link) {
         link.addEventListener("click", async function (event) {
                 // a 태그의 기본 페이지 이동 방지
@@ -28,7 +29,14 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
                     const room = await response.json();
-					console.log(room);
+					
+					if (room.status !== "이용가능") {
+						maintenanceRequestBtn.disabled = true;
+						maintenanceRequestBtn.textContent = "객실 정비 요청 불가";
+					} else {
+						maintenanceRequestBtn.disabled = false;
+						maintenanceRequestBtn.textContent = "객실 정비 요청";
+					}
                     // 상세 정보 입력
                     document.querySelector("#detailFloor").textContent = room.floor + "F";
                     document.querySelector("#detailRoomNum").textContent = room.roomNum + "호";
@@ -84,15 +92,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
     });
-	const maintenanceRequestBtn =
-		document.querySelector("#maintenanceRequestBtn");
-
+	
+	
 	maintenanceRequestBtn.addEventListener("click", async function () {
 		if (!selectedRoomId) {
 			alert("객실을 먼저 선택해주세요.");
 			return;
 		}
-
+	
 		const note = document.querySelector("#detailMemo").value.trim();
 
 		if (note === "") {
