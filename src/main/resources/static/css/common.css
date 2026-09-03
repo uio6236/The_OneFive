@@ -144,7 +144,7 @@ ol {
     border-color: var(--blue);
 }
 
-.btn-outline:hover {
+.btn-outline:hover:not(:disabled) {
     background: var(--blue-light);
 }
 
