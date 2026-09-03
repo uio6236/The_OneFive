@@ -38,7 +38,7 @@
 
 			        <div class="search-box">
 			            <input type="text" name="keyword" class="form-control"
-			                   placeholder="예약번호 또는 고객명을 검색하세요" value="${condition.keyword}">
+			                   placeholder="예약번호 또는 예약자명을 검색하세요" value="${condition.keyword}">
 			        </div>
 
 
@@ -73,6 +73,8 @@
                     <tr>
                         <th>예약번호</th>
                         <th>고객명</th>
+						<th>예약자명</th>
+						<th>전화번호(예약자)</th>
                         <th>객실 타입</th>
                         <th>체크인</th>
                         <th>체크아웃</th>
@@ -98,7 +100,8 @@
                             <td>
                                     ${r.guestName}
                             </td>
-
+							<td>${empty r.bookerName ? '-' : r.bookerName}</td>
+							<td>${empty r.bookerPhone ? '-' : r.bookerPhone}</td>
 
                             <td>
                                     ${r.typeName}
@@ -186,6 +189,12 @@
 
                         <dt>고객명</dt>
                         <dd id="detailGuestName"></dd>
+						
+						<dt>예약자명</dt>
+						<dd id="detailBookerName"></dd>
+
+						<dt>전화번호(예약자)</dt>
+						<dd id="detailBookerPhone"></dd>
 
 						<dt>객실 타입</dt>
 						<dd id="detailTypeName"></dd>
