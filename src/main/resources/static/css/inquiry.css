@@ -1,4 +1,4 @@
-y · CSS
+
 /* ======================================================
    Admin Inquiry
 ====================================================== */
@@ -137,10 +137,7 @@ y · CSS
 .inquiry-list-item + .inquiry-list-item {
     margin-top: 6px;
 }
- 
-.inquiry-list-item:hover {
-    background: var(--background);
-}
+
  
 .inquiry-list-item.active {
     border-color: #cadcf5;
@@ -312,11 +309,9 @@ y · CSS
     .inquiry-layout {
         grid-template-columns: 1fr;
     }
- 
-    .inquiry-summary-grid {
-        grid-template-columns: 1fr;
-    }
- 
+	.inquiry-summary-grid {
+	    grid-template-columns: 1fr;
+	}
 }
  
 /* ===== 관리자 문의 목록 - 테이블형 (기존 카드 리스트보다 정돈된 레이아웃) ===== */
