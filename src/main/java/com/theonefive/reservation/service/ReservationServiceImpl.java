@@ -48,8 +48,13 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public void cancelReservation(Long id) {
-		 reservationMapper.cancelReservation(id);
-		
+	    int affectedRows = reservationMapper.cancelReservation(id);
+
+	    // 매퍼의 UPDATE는 STATUS='예약확정'인 건만 반영되도록 조건이 걸려있음.
+	    // 0건이면 이미 취소/이용완료된 예약이거나 존재하지 않는 id라는 뜻이므로 실패로 처리.
+	    if (affectedRows == 0) {
+	        throw new IllegalStateException("이미 취소되었거나 이용완료된 예약이거나, 존재하지 않는 예약입니다. id=" + id);
+	    }
 	}
 
 	@Override

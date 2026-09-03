@@ -217,7 +217,7 @@
 
 					<div class="detail-panel-buttons">
 					    <form id="cancelForm" method="post" style="display:inline;">
-					        <button type="submit" class="btn btn-danger"
+					        <button type="submit" id="cancelBtn" class="btn btn-danger"
 					                onclick="return confirm('이 예약을 취소하시겠습니까?');">
 					            예약 취소
 					        </button>
