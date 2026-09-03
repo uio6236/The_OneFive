@@ -91,13 +91,24 @@
     <!-- ===== 고객 ===== -->
  
     <!-- 로그인한 고객 본인의 문의 목록만 조회 -->
-    <select id="selectInquiryListByGuest" resultMap="inquiryResultMap" parameterType="long">
+    <select id="selectInquiryListByGuest" resultMap="inquiryResultMap">
         SELECT
             I.ID, I.INQUIRY_NO, I.GUEST_ID, I.TITLE, I.CONTENT,
             I.STATUS, I.ANSWER, I.ANSWERED_BY, I.ANSWERED_AT, I.CREATED_AT
         FROM INQUIRY I
         WHERE I.GUEST_ID = #{guestId}
         ORDER BY I.CREATED_AT DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+    </select>
+ 
+    <!-- 본인 문의 전체 건수 -->
+    <select id="selectInquiryCountByGuest" resultType="int">
+        SELECT COUNT(*) FROM INQUIRY WHERE GUEST_ID = #{guestId}
+    </select>
+ 
+    <!-- 본인 문의 중 아직 답변 안 된(대기중) 건수 -->
+    <select id="selectUnansweredCountByGuest" resultType="int">
+        SELECT COUNT(*) FROM INQUIRY WHERE GUEST_ID = #{guestId} AND STATUS = '대기중'
     </select>
  
     <!-- 본인 문의인지 GUEST_ID까지 같이 확인하며 상세 조회 -->
@@ -124,13 +135,6 @@
             #{guestId}, #{title}, #{content}
         )
     </insert>
- 
- <select id="countUnansweredInquiry" resultType="int">
-    SELECT COUNT(*)
-    FROM INQUIRY
-    WHERE GUEST_ID = #{guestId}
-      AND STATUS = '대기중'
-</select>
  
 </mapper>
 	 
