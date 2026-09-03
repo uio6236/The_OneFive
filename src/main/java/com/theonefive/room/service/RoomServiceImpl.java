@@ -47,7 +47,7 @@ public class RoomServiceImpl implements RoomService{
 	public boolean requestMaintenance(int roomId, String note) {
 		RoomDTO room = roomMapper.selectRoomById(roomId);
 		if (room == null) {throw new IllegalStateException("객실 정보를 찾을 수 없습니다.");}
-		if ("투숙중".equals(room.getStatus())) {throw new IllegalStateException("투숙 중인 객실은 정비 요청을 할 수 없습니다.");}
+		if (!"이용가능".equals(room.getStatus())) {throw new IllegalStateException("이용 가능한 객실만 정비 요청을 할 수 있습니다.");}
 		int activeCount = housekeepingMapper.countActiveCleaningRequest((long) roomId);
 		if (activeCount > 0) {throw new IllegalStateException("이미 진행 중인 객실 정비 요청이 있습니다.");}
 		

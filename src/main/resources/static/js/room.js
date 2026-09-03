@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const detailLinks = document.querySelectorAll(".room-detail-link");
     const emptyArea = document.querySelector("#roomDetailEmpty");
     const detailContent = document.querySelector("#roomDetailContent");
+	const maintenanceRequestBtn = document.querySelector("#maintenanceRequestBtn");
     detailLinks.forEach(function (link) {
         link.addEventListener("click", async function (event) {
                 // a 태그의 기본 페이지 이동 방지
@@ -28,11 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
                     const room = await response.json();
-					console.log(room);
-					const maintenanceRequestBtn = document.querySelector("#maintenanceRequestBtn");
-					if (room.status === "투숙중") {
+					
+					if (room.status !== "이용가능") {
 						maintenanceRequestBtn.disabled = true;
-						maintenanceRequestBtn.textContent = "투숙중 정비 요청 불가";
+						maintenanceRequestBtn.textContent = "객실 정비 요청 불가";
 					} else {
 						maintenanceRequestBtn.disabled = false;
 						maintenanceRequestBtn.textContent = "객실 정비 요청";
