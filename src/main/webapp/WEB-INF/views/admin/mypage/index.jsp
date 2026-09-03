@@ -65,7 +65,8 @@
                                 <div class="mypage-form-group">
                                     <label for="name">이름</label>
                                     <input type="text" id="name" name="name" value="${employee.name}"
-                                           pattern="[가-힣a-zA-Z\s]+" title="숫자나 특수문자는 입력할 수 없습니다." required>
+                                           pattern="[가-힣a-zA-Z\s]{2,10}" minlength="2" maxlength="10"
+                                           title="한글/영문 2~10자, 숫자나 특수문자는 입력할 수 없습니다." required>
                                 </div>
 
                                 <div class="mypage-form-group">
@@ -115,7 +116,9 @@
                                 <div class="mypage-form-group">
                                     <label for="newPassword">새 비밀번호</label>
                                     <input type="password" id="newPassword" name="newPassword"
-                                           placeholder="새로운 비밀번호 입력">
+                                           placeholder="새로운 비밀번호 입력"
+                                           pattern="(?=.*[A-Za-z])(?=.*\d).{8,}" minlength="8"
+                                           title="영문과 숫자를 포함하여 8자 이상 입력해주세요.">
                                 </div>
 
                                 <div class="mypage-form-group">
