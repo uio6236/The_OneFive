@@ -163,7 +163,11 @@ ol {
     color: var(--danger);
     border-color: var(--danger);
 }
-
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
 /* ---------- 입력창 ---------- */
 
 .form-group {
