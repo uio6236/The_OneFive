@@ -5,7 +5,7 @@ y · CSS
  
 .inquiry-summary-grid {
     display: grid;
- 
+ 	
     grid-template-columns: repeat(3, 1fr);
  
     gap: 16px;
@@ -15,7 +15,7 @@ y · CSS
  
 .inquiry-summary-card {
     padding: 20px;
- 
+ 	
     background: #fff;
  
     border: 1px solid var(--border);
@@ -313,9 +313,7 @@ y · CSS
         grid-template-columns: 1fr;
     }
  
-    .inquiry-summary-grid {
-        grid-template-columns: 1fr;
-    }
+
  
 }
  
@@ -387,4 +385,10 @@ y · CSS
     color: var(--text-secondary);
     font-size: 13px;
     white-space: nowrap;
+}
+.inquiry-summary-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 16px;
+	margin-bottom: 22px;
 }
