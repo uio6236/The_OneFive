@@ -23,30 +23,56 @@
             <div class="housekeeping-layout">
             <div class="housekeeping-main-col">
 
-				<%-- 상태별(청소대기/청소중/점검완료) 건수 카드. 좌측 컬러바 + 우측 아이콘박스는 nth-child로 색상 자동 적용 --%>
+				<%-- [수정] 상단 카드 3개를 컨트롤러의 statusCounts(필터 미반영) 대신
+				     이미 필터링되어 내려온 list를 직접 세서 표시 → 표 목록과 카드가 항상 일치 --%>
+				<c:set var="waitingCount" value="0"/>
+				<c:set var="progressCount" value="0"/>
+				<c:set var="doneCount" value="0"/>
+				<c:forEach var="hk" items="${list}">
+				    <c:choose>
+				        <c:when test="${hk.status == '청소대기'}">
+				            <c:set var="waitingCount" value="${waitingCount + 1}"/>
+				        </c:when>
+				        <c:when test="${hk.status == '청소중'}">
+				            <c:set var="progressCount" value="${progressCount + 1}"/>
+				        </c:when>
+				        <c:otherwise>
+				            <c:set var="doneCount" value="${doneCount + 1}"/>
+				        </c:otherwise>
+				    </c:choose>
+				</c:forEach>
+
 				<section class="housekeeping-summary-grid">
-				    <c:forEach var="sc" items="${statusCounts}">
-				        <div class="housekeeping-summary-card">
-				            <span class="summary-bar"></span>
-				            <div class="summary-text">
-				                <span>${sc.status}</span>
-				                <strong>${sc.count}개 객실</strong>
-				            </div>
-				            <div class="summary-icon">
-				                <c:choose>
-				                    <c:when test="${sc.status == '청소대기'}">
-				                        <img src="${pageContext.request.contextPath}/images/housekeeping/red.png" alt="">
-				                    </c:when>
-				                    <c:when test="${sc.status == '청소중'}">
-				                        <img src="${pageContext.request.contextPath}/images/housekeeping/navy.png" alt="">
-				                    </c:when>
-				                    <c:otherwise>
-				                        <img src="${pageContext.request.contextPath}/images/housekeeping/blue.png" alt="">
-				                    </c:otherwise>
-				                </c:choose>
-				            </div>
+				    <div class="housekeeping-summary-card">
+				        <span class="summary-bar"></span>
+				        <div class="summary-text">
+				            <span>청소대기</span>
+				            <strong>${waitingCount}개 객실</strong>
 				        </div>
-				    </c:forEach>
+				        <div class="summary-icon">
+				            <img src="${pageContext.request.contextPath}/images/housekeeping/red.png" alt="">
+				        </div>
+				    </div>
+				    <div class="housekeeping-summary-card">
+				        <span class="summary-bar"></span>
+				        <div class="summary-text">
+				            <span>청소중</span>
+				            <strong>${progressCount}개 객실</strong>
+				        </div>
+				        <div class="summary-icon">
+				            <img src="${pageContext.request.contextPath}/images/housekeeping/navy.png" alt="">
+				        </div>
+				    </div>
+				    <div class="housekeeping-summary-card">
+				        <span class="summary-bar"></span>
+				        <div class="summary-text">
+				            <span>점검완료</span>
+				            <strong>${doneCount}개 객실</strong>
+				        </div>
+				        <div class="summary-icon">
+				            <img src="${pageContext.request.contextPath}/images/housekeeping/blue.png" alt="">
+				        </div>
+				    </div>
 				</section>
 
             <%-- 층/상태 필터 폼 (GET 방식, 선택값은 selectedFloor/selectedStatus로 유지) --%>
@@ -56,7 +82,8 @@
                 <label class="filter-label">배정 층:</label>
                 <select name="floor" class="form-control housekeeping-filter-select">
                     <option value="">전체</option>
-                    <c:forEach begin="1" end="10" var="f">
+                    <%-- [수정] 배정 층 옵션 10층 → 5층 --%>
+                    <c:forEach begin="1" end="5" var="f">
                         <option value="${f}" ${selectedFloor == f ? 'selected' : ''}>${f}층</option>
                     </c:forEach>
                 </select>
@@ -141,11 +168,11 @@
                     <div class="status-flow-item" data-step="점검완료"><span>3</span><strong>점검 완료</strong></div>
                 </div>
 
-                <%-- 담당자 드롭다운: 페이지 로드 시 loadEmployees()가 옵션을 채움 --%>
+                <%-- 담당자 드롭다운: 페이지 로드 시 loadEmployees()가 옵션을 채움
+                     [수정] 배정 버튼 삭제 - 청소대기 상태에서는 "청소 시작" 버튼이 배정까지 같이 처리함 --%>
                 <label class="housekeeping-assign-label">담당자</label>
                 <div class="housekeeping-assign-row">
                     <select class="form-control" id="p-employeeSelect"></select>
-                    <button type="button" id="p-assignBtn" onclick="changeEmployee()">담당자 배정</button>
                 </div>
 
                 <div class="housekeeping-note">
@@ -232,8 +259,9 @@ function openDetail(id, rowEl) {
         // 상태별로 액션 버튼 텍스트/클릭 동작(다음 단계 API)을 다르게 설정
         var btn = document.getElementById('p-actionBtn');
         if (hk.status === '청소대기') {
+            // [수정] 청소 시작 버튼 한 번으로 담당자 배정 + 청소 시작을 같이 처리
             btn.textContent = '청소 시작'; btn.disabled = false;
-            btn.onclick = function() { runAction('start'); };
+            btn.onclick = function() { startCleaningWithAssign(); };
         } else if (hk.status === '청소중' && !hk.completedAt) {
             btn.textContent = '청소 완료 처리'; btn.disabled = false;
             btn.onclick = function() { runAction('complete'); };
@@ -245,9 +273,9 @@ function openDetail(id, rowEl) {
         }
 
         // 점검완료 건은 담당자 변경 불가
+        // [수정] 담당자 배정 버튼 삭제로 select만 비활성화 처리
         var isInspected = (hk.status === '점검완료');
         select.disabled = isInspected;
-        document.getElementById('p-assignBtn').disabled = isInspected;
     });
 }
 
@@ -256,6 +284,21 @@ function runAction(step) {
     callApi(ctx + '/api/housekeeping/' + step, 'POST', { ids: [currentId] }).then(function(result) {
         alert(result.message);
         if (result.success) location.reload();
+    });
+}
+
+// [신규] 청소 시작 버튼 클릭 1회로 담당자 배정 + 청소 시작을 순서대로 처리
+// 담당자 드롭다운이 비어있으면 배정 단계는 건너뛰고 바로 청소 시작만 진행
+function startCleaningWithAssign() {
+    var employeeId = document.getElementById('p-employeeSelect').value;
+
+    var assignStep = employeeId
+        ? callApi(ctx + '/api/housekeeping/assign', 'POST', { ids: [currentId], employeeId: Number(employeeId) })
+        : Promise.resolve({ success: true });
+
+    assignStep.then(function(assignResult) {
+        if (!assignResult.success) { alert(assignResult.message); return; }
+        runAction('start');
     });
 }
 
@@ -285,14 +328,6 @@ loadEmployees().then(function() {
         openDetail(Number(targetRow.getAttribute('data-id')), targetRow);
     }
 });
-
-// 담당자 배정: 드롭다운에서 고른 값을 그대로 서버에 전달
-function changeEmployee() {
-    var employeeId = document.getElementById('p-employeeSelect').value;
-    if (!employeeId) { alert('배정할 담당자를 선택하세요.'); return; }
-    callApi(ctx + '/api/housekeeping/assign', 'POST', { ids: [currentId], employeeId: Number(employeeId) })
-        .then(function(result) { alert(result.message); if (result.success) location.reload(); });
-}
 
 // 비고 저장
 function saveNote() {
@@ -337,11 +372,17 @@ function renderTable(list) {
     }
 }
 
-// 폴링용 카드 렌더링: statusCounts는 항상 고정 순서로 내려오므로 인덱스로 매칭
-function renderSummary(counts) {
+// [수정] 폴링용 카드 렌더링: 서버 statusCounts(필터 미반영) 대신
+// 필터링되어 내려온 list를 직접 세서 카드에 반영 (표 목록과 항상 일치)
+function renderSummary(list) {
+    var counts = { '청소대기': 0, '청소중': 0, '점검완료': 0 };
+    list.forEach(function(hk) {
+        if (counts[hk.status] !== undefined) counts[hk.status]++;
+    });
+    var order = ['청소대기', '청소중', '점검완료'];
     var cards = document.querySelectorAll('.housekeeping-summary-card strong');
-    counts.forEach(function(sc, i) {
-        if (cards[i]) cards[i].textContent = sc.count + '개 객실';
+    order.forEach(function(status, i) {
+        if (cards[i]) cards[i].textContent = counts[status] + '개 객실';
     });
 }
 
@@ -357,7 +398,8 @@ function pollList() {
     callApi(url, 'GET').then(function(result) {
         if (!result.success) return; // 실패 시 알림 없이 다음 주기에 재시도
         renderTable(result.data.list);
-        renderSummary(result.data.statusCounts);
+        // [수정] statusCounts 대신 필터링된 list를 그대로 넘겨서 카드 집계
+        renderSummary(result.data.list);
     });
 }
 
