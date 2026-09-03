@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var detailEmpty = document.querySelector('#detailEmpty');
     var detailContent = document.querySelector('#detailContent');
     var cancelForm = document.querySelector('#cancelForm');
+	var cancelBtn = document.querySelector('#cancelBtn');
  
     var contextPath = document.body.dataset.contextPath || '';
  
@@ -46,6 +47,16 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#detailStatus').textContent = data.status;
         document.querySelector('#detailTotalAmount').textContent =
             Number(data.totalAmount).toLocaleString() + '원';
+			
+			if (cancelBtn) {
+			    if (data.status === '예약확정') {
+			        cancelBtn.disabled = false;
+			        cancelBtn.textContent = '예약 취소';
+			    } else {
+			        cancelBtn.disabled = true;
+			        cancelBtn.textContent = '취소 불가';
+			    }
+			}
     }
  
     // 서버에서 넘어온 날짜(ISO 문자열)를 yyyy.MM.dd로 간단 변환

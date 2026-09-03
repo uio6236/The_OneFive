@@ -1,10 +1,11 @@
+
 /* ======================================================
    Admin Inquiry
 ====================================================== */
  
 .inquiry-summary-grid {
     display: grid;
- 
+ 	
     grid-template-columns: repeat(3, 1fr);
  
     gap: 16px;
@@ -14,7 +15,7 @@
  
 .inquiry-summary-card {
     padding: 20px;
- 
+ 	
     background: #fff;
  
     border: 1px solid var(--border);
@@ -129,15 +130,14 @@
     text-align: left;
  
     cursor: pointer;
+ 
+    transition: background 0.12s ease;
 }
  
 .inquiry-list-item + .inquiry-list-item {
     margin-top: 6px;
 }
- 
-.inquiry-list-item:hover {
-    background: #f8fafc;
-}
+
  
 .inquiry-list-item.active {
     border-color: #cadcf5;
@@ -157,7 +157,7 @@
 .inquiry-list-top strong {
     overflow: hidden;
  
-    font-size: 11px;
+    font-size: 16px;
  
     white-space: nowrap;
  
@@ -171,7 +171,7 @@
  
     color: var(--text-secondary);
  
-    font-size: 9px;
+    font-size: 14px;
  
     white-space: nowrap;
  
@@ -185,7 +185,7 @@
  
     color: var(--text-muted);
  
-    font-size: 8px;
+    font-size: 13px;
 }
  
  
@@ -309,11 +309,9 @@
     .inquiry-layout {
         grid-template-columns: 1fr;
     }
- 
-    .inquiry-summary-grid {
-        grid-template-columns: 1fr;
-    }
- 
+	.inquiry-summary-grid {
+	    grid-template-columns: 1fr;
+	}
 }
  
 /* ===== 관리자 문의 목록 - 테이블형 (기존 카드 리스트보다 정돈된 레이아웃) ===== */

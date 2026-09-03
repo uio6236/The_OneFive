@@ -164,9 +164,9 @@ public class CustomerController {
         CustomerDTO customer = customerService.getCustomerByLoginId(loginId);
         model.addAttribute("customer", customer);
 
-        model.addAttribute("reservationList", reservationService.findByGuestId(customer.getId()));   // ⬅ 이 한 줄만 추가
+        model.addAttribute("reservationList", reservationService.findByGuestId(customer.getId())); 
 
-        int unansweredCount = inquiryService.countUnansweredInquiry(customer.getId()); // 추가
+        int unansweredCount = inquiryService.countUnansweredInquiry(customer.getId()); 
         model.addAttribute("unansweredCount", unansweredCount);
         
         return "customer/mypage/index";

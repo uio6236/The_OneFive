@@ -128,12 +128,20 @@ public class InquiryController {
  
     // 내 문의 목록
     @GetMapping("/customer/inquiries")
-    public String customerList(HttpSession session, Model model) {
+    public String customerList(@RequestParam(defaultValue = "1") int page, HttpSession session, Model model) {
         Long guestId = getLoginGuestId(session);
         if (guestId == null) {
             return "redirect:/login";
         }
-        model.addAttribute("myInquiries", inquiryService.getMyInquiryList(guestId));
+ 
+        model.addAttribute("myInquiries", inquiryService.getMyInquiryList(guestId, page, PAGE_SIZE));
+ 
+        int totalCount = inquiryService.getMyInquiryCount(guestId);
+        int totalPages = (int) Math.ceil(totalCount / (double) PAGE_SIZE);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", Math.max(totalPages, 1));
+        model.addAttribute("totalCount", totalCount);
+ 
         return "customer/inquiry/list";   // -> /WEB-INF/views/customer/inquiry/list.jsp
     }
  
