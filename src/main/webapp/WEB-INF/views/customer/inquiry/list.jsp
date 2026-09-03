@@ -70,6 +70,32 @@
 
         </div>
 
+        <!-- 페이지네이션 -->
+        <c:if test="${totalPages > 1}">
+        <div class="admin-table-bottom">
+
+            <span>전체 ${totalCount}건 중 ${(currentPage - 1) * 10 + 1}-${(currentPage - 1) * 10 + fn:length(myInquiries)} 표시</span>
+
+            <div class="pagination">
+
+                <c:if test="${currentPage > 1}">
+                    <a href="${pageContext.request.contextPath}/customer/inquiries?page=${currentPage - 1}">&lsaquo;</a>
+                </c:if>
+
+                <c:forEach begin="1" end="${totalPages}" var="p">
+                    <a href="${pageContext.request.contextPath}/customer/inquiries?page=${p}"
+                       class="${p == currentPage ? 'active' : ''}">${p}</a>
+                </c:forEach>
+
+                <c:if test="${currentPage < totalPages}">
+                    <a href="${pageContext.request.contextPath}/customer/inquiries?page=${currentPage + 1}">&rsaquo;</a>
+                </c:if>
+
+            </div>
+
+        </div>
+        </c:if>
+
     </main>
 
 </div>
