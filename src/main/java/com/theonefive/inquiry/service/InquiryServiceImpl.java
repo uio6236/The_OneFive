@@ -2,21 +2,17 @@ package com.theonefive.inquiry.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.theonefive.inquiry.model.dto.InquiryDTO;
 import com.theonefive.inquiry.model.mapper.InquiryMapper;
-
-import lombok.RequiredArgsConstructor;
  
-@RequiredArgsConstructor
 @Service
 public class InquiryServiceImpl implements InquiryService {
  
-   
- 
-    
-    private final InquiryMapper inquiryMapper;
+    @Autowired
+    private InquiryMapper inquiryMapper;
  
     // ===== 관리자 =====
  
@@ -44,8 +40,14 @@ public class InquiryServiceImpl implements InquiryService {
     // ===== 고객 =====
  
     @Override
-    public List<InquiryDTO> getMyInquiryList(Long guestId) {
-        return inquiryMapper.selectInquiryListByGuest(guestId);
+    public List<InquiryDTO> getMyInquiryList(Long guestId, int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        return inquiryMapper.selectInquiryListByGuest(guestId, offset, pageSize);
+    }
+ 
+    @Override
+    public int getMyInquiryCount(Long guestId) {
+        return inquiryMapper.selectInquiryCountByGuest(guestId);
     }
  
     @Override
@@ -57,9 +59,10 @@ public class InquiryServiceImpl implements InquiryService {
     public void submitInquiry(InquiryDTO dto) {
         inquiryMapper.insertInquiry(dto);
     }
-    
+ 
     @Override
-    public int countUnansweredInquiry(Long guestId) {
-    	return inquiryMapper.countUnansweredInquiry(guestId);
+    public int countUnansweredInquiry(long guestId) {
+        return inquiryMapper.selectUnansweredCountByGuest(guestId);
     }
 }
+ 
