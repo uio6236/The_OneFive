@@ -26,12 +26,12 @@ public class CheckinServiceImpl implements CheckinService {
 	
 	@Override
 	public List<CheckinDTO> getTodayCheckinList() {
-		// 금일 체크인 예정
+		// 금일 체크인 예정 목록 조회
 		return checkinMapper.selectTodayCheckinList();
 	}
 	@Override
 	public List<CheckinDTO> getTodayCheckoutList() {
-		// 금일 체크아웃 예정
+		// 금일 체크아웃 예정 목록 조회
 		return checkinMapper.selectTodayCheckoutList();
 	}
 	@Override
@@ -42,15 +42,11 @@ public class CheckinServiceImpl implements CheckinService {
 	@Transactional
 	@Override
 	public boolean checkin(CheckinDTO checkin) {
-		// 체크인 처리
+		// 체크인 처리(실제 체크인 기록 생성)
 		int checkinResult = checkinMapper.insertCheckin(checkin);
 		int roomResult = roomMapper.updateRoomStatus(checkin.getRoomId(), "투숙중");
-	    if (checkinResult == 0 || roomResult == 0) {
-	        throw new IllegalStateException(
-	                "체크인 연동 처리에 실패했습니다."
-	        );
-	    }
-
+	    if (checkinResult == 0 || roomResult == 0) {throw new IllegalStateException("체크인 연동 처리에 실패했습니다.");}
+	    
 	    return true;
 	}
 	@Transactional
@@ -78,10 +74,12 @@ public class CheckinServiceImpl implements CheckinService {
 	}
 	@Override
 	public List<CheckinDTO> getPastCheckinList() {
+		// 지난 체크인 미처리 목록 조회
 		return checkinMapper.selectPastCheckinList();
 	}
 	@Override
 	public List<CheckinDTO> getPastCheckoutList() {
+		// 지난 체크아웃 미처리 목록 조회
 		return checkinMapper.selectPastCheckoutList();
 	}
 }
