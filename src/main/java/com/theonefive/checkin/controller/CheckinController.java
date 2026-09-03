@@ -27,9 +27,9 @@ public class CheckinController {
 	private final CheckinService checkinService;
 	private final RoomService roomService;
 	
-	// 체크인 체크아웃 화면
 	@GetMapping
 	public String checkinlist(Model model) {
+		// 체크인 체크아웃 목록 조회
 		List<CheckinDTO> checkinList = checkinService.getTodayCheckinList();
 		List<CheckinDTO> pastCheckinList = checkinService.getPastCheckinList();
 		List<CheckinDTO> checkoutList = checkinService.getTodayCheckoutList();
@@ -47,30 +47,30 @@ public class CheckinController {
 		return "admin/checkin/list";
 	}
 	
-	// 체크인 상세
 	@GetMapping("/detail")
 	@ResponseBody
 	public CheckinDTO checkinDetail(@RequestParam int reservationId) {
+		// 체크인 상세 정보 조회
 		return checkinService.getCheckinDetail(reservationId);
 	}
 	
-	// 체크인 가능 객실 조회
 	@GetMapping("/available-rooms")
 	@ResponseBody
 	public List<RoomDTO> availableRooms(@RequestParam int roomTypeId) {
+		// 체크인 가능 객실 조회
 		return roomService.getAvailableRooms(roomTypeId);
 	}
 	
-	// 체크인
 	@PostMapping
 	public String checkin(CheckinDTO checkin) {
+		// 체크인 처리(실제 체크인 기록 생성)
 		checkinService.checkin(checkin);
 		return "redirect:/admin/checkin";
 	}
-	
-	// 체크아웃
+
 	@PostMapping("/checkout")
 	public String checkout(CheckinDTO checkin) {
+		// 체크아웃 처리
 		checkinService.checkout(checkin);
 		return "redirect:/admin/checkin";
 	}
