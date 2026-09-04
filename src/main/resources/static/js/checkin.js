@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 				row.classList.add("active");
 
-				detailGuestName.textContent = checkin.guestName;
+				detailGuestName.textContent = checkin.guestName+"("+checkin.guestNameR+")";
 				detailReservationCode.textContent = "예약번호 " + checkin.reservationCode;
 				detailRoomType.textContent = checkin.roomTypeName;
 				detailGuestCount.textContent = checkin.guestCount + "명";
@@ -346,7 +346,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				});
 				row.classList.add("active");
 
-				detailGuestName.textContent = checkout.guestName;
+				detailGuestName.textContent = checkout.guestName+"("+checkout.guestNameR+")";
 				detailReservationCode.textContent = "예약번호 " + checkout.reservationCode;
 				detailRoomType.textContent = checkout.roomTypeName;
 				detailGuestCount.textContent = checkout.guestCount + "명";

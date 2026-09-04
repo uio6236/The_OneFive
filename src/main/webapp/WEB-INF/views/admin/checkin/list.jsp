@@ -51,6 +51,7 @@
 							<thead>
 								<tr>
 									<th>고객명</th>
+									<th>예약자명</th>
 									<th>예약번호</th>
 									<th>객실타입</th>									
 									<th>인원</th>
@@ -60,6 +61,7 @@
 								<c:forEach var="checkin" items="${checkinList}">
 									<tr class="checkin-row" data-reservation-id="${checkin.reservationId}">
 										<td>${checkin.guestName}</td>
+										<td>${checkin.guestNameR}</td>
 										<td>${checkin.reservationCode}</td>
 										<td>${checkin.roomTypeName}</td>
 										<td>${checkin.guestCount}명</td>
@@ -84,6 +86,7 @@
 							<thead>
 								<tr>
 									<th>고객명</th>
+									<th>예약자명</th>
 									<th>예약번호</th>
 									<th>객실타입</th>									
 									<th>인원</th>
@@ -93,6 +96,7 @@
 								<c:forEach var="checkin" items="${pastCheckinList}">
 									<tr class="past-checkin-row" data-reservation-id="${checkin.reservationId}">
 											<td>${checkin.guestName}</td>
+											<td>${checkin.guestNameR}</td>
 											<td>${checkin.reservationCode}</td>
 											<td>${checkin.roomTypeName}</td>
 											<td>${checkin.guestCount}명</td>
@@ -118,6 +122,7 @@
 								<tr>
 									<th>객실</th>
 									<th>고객명</th>
+									<th>예약자명</th>
 									<th>예약번호</th>
 									<th>인원</th>
 									<th>객실상태</th>
@@ -131,6 +136,7 @@
 										data-checkin-id="${checkout.id}">
 										<td>${checkout.roomNum}호</td>
 										<td>${checkout.guestName}</td>
+										<td>${checkin.guestNameR}</td>
 										<td>${checkout.reservationCode}</td>
 										<td>${checkout.guestCount}명</td>
 										<td>
@@ -161,6 +167,7 @@
 								<tr>
 									<th>객실</th>
 									<th>고객명</th>
+									<th>예약자명</th>
 									<th>예약번호</th>
 									<th>인원</th>
 									<th>객실상태</th>
@@ -173,6 +180,7 @@
 										data-checkin-id="${checkout.id}">
 										<td>${checkout.roomNum}호</td>
 										<td>${checkout.guestName}</td>
+										<td>${checkin.guestNameR}</td>
 										<td>${checkout.reservationCode}</td>
 										<td>${checkout.guestCount}명</td>
 										<td>
