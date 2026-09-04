@@ -14,13 +14,12 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
-
 		private final AdminMapper adminMapper;
-		
 		private final PasswordEncoder passwordEncoder;
+		
 	@Override
 	public void signup(EmployeeDTO employee) throws IOException {
-		
+		// 관리자 비밀번호를 암호화하고 계정 등록
 		if(isCodeCheck(employee.getCode())) {
 			throw new IllegalStateException("이미 사용 중인 사번입니다.");
 		}
@@ -33,12 +32,14 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
     public boolean isCodeCheck(String code) {
+		// 사번과 비밀번호를 검증해 관리자 로그인 정보 반환
         // CustomerMapper.xml에 작성해 두신 countByLoginId를 호출하여 0보다 크면 중복으로 판단
         return adminMapper.countByCode(code) > 0;
     }
 	
 	@Override
 	public EmployeeDTO code(String code, String password) throws IllegalStateException {
+		// 관리자 사번의 중복 여부 확인
 		// 사번을 기준으로 회원 정보 조회
 		EmployeeDTO employee = adminMapper.selectEmployeeByCode(code);
 		
@@ -46,8 +47,6 @@ public class AdminServiceImpl implements AdminService {
 		if (employee == null || !passwordEncoder.matches(password, employee.getPassword())) {
 			throw new IllegalStateException("사번 또는 비밀번호가 일치하지 않습니다.");
 		}
-		
 		return employee;
-	
 	}
 }

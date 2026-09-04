@@ -22,16 +22,19 @@ public class HousekeepingServiceImpl implements HousekeepingService {
 
     @Override
     public List<HousekeepingDTO> getList(HousekeepingSearchConditionDTO condition) {
+    	// 조건에 따른 하우스키핑 작업 목록 조회
         return housekeepingMapper.selectList(condition);
     }
 
     @Override
     public HousekeepingDTO getDetail(Long id) {
+        // 하우스키핑 작업 상세 정보 조회    
         return housekeepingMapper.selectById(id);
     }
 
     @Override
     public List<StatusCountDTO> getStatusCount() {
+        // 하우스키핑 상태별 작업 건수 조회
         // 상태별 건수 카드 3개(청소대기/청소중/점검완료)를 항상 이 순서로 고정
         // GROUP BY는 0건인 상태를 결과에서 아예 빼버리므로, 화면에 "0개 객실"이라고
         // 보여주기 위해 빈 상태는 여기서 0으로 직접 채워 넣는다
@@ -53,6 +56,7 @@ public class HousekeepingServiceImpl implements HousekeepingService {
 
     @Override
     public List<Long> assignEmployee(List<Long> ids, Long employeeId) {
+    	
         // 여러 건을 한 번에 배정하되, 하나가 실패해도 나머지는 계속 처리
         // (전체 중단 대신 성공한 id만 모아서 반환)
         List<Long> success = new ArrayList<>();
@@ -74,6 +78,7 @@ public class HousekeepingServiceImpl implements HousekeepingService {
 
     @Override
     public List<Long> startCleaning(List<Long> ids) {
+        // 선택한 작업을 청소중으로 변경하고 객실 상태를 청소중으로 변경
         List<Long> success = new ArrayList<>();
         for (Long id : ids) {
             HousekeepingDTO target = housekeepingMapper.selectById(id);
@@ -94,6 +99,7 @@ public class HousekeepingServiceImpl implements HousekeepingService {
 
     @Override
     public List<Long> completeCleaning(List<Long> ids) {
+        // 청소 완료 시간을 기록하고 객실 상태를 점검중으로 변경
         List<Long> success = new ArrayList<>();
         for (Long id : ids) {
             HousekeepingDTO target = housekeepingMapper.selectById(id);
@@ -115,6 +121,7 @@ public class HousekeepingServiceImpl implements HousekeepingService {
 
     @Override
     public List<Long> inspect(List<Long> ids) {
+        // 점검 완료 처리 후 객실 상태를 이용가능으로 변경
         List<Long> success = new ArrayList<>();
         for (Long id : ids) {
             HousekeepingDTO target = housekeepingMapper.selectById(id);
@@ -136,11 +143,13 @@ public class HousekeepingServiceImpl implements HousekeepingService {
 
     @Override
     public void updateNote(Long id, String note) {
+        // 하우스키핑 작업 메모 수정
         housekeepingMapper.updateNote(id, note);
     }
 
     @Override
     public List<EmployeeDTO> getEmployees() {
+        // 담당자 배정 드롭다운을 채우기 위한 전체 직원 목록 조회
         return employeeMapper.selectAll();
     }
 }

@@ -25,21 +25,17 @@ import com.theonefive.reservation.service.ReservationService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
-/*
- * 고객용 예약(객실조회 ~ 결제) 화면 이동을 담당할 컨트롤러
- */
+/* 고객용 예약(객실조회 ~ 결제) 화면 이동을 담당할 컨트롤러 */
 @Controller
 @RequestMapping("/customer/reservation")
 @RequiredArgsConstructor
 public class ReservationController {
-
     private final ReservationService service;
     private final CustomerService service1;
 
-
-    
- // ReservationController.detail()
+    // ReservationController.detail()
     @GetMapping("/detail")
+    // 선택한 객실 타입과 예약 조건의 상세 정보를 조회
     public String detail(@RequestParam Long roomTypeId,
                           @RequestParam(required = false) String checkinDate,
                           @RequestParam(required = false) String checkoutDate,
@@ -59,7 +55,7 @@ public class ReservationController {
     
     @GetMapping("/rooms")
     public String rooms(@ModelAttribute RoomSearchDTO condition, Model model) {
-
+    	// 날짜와 인원 조건에 맞는 예약 가능한 객실 타입 목록 조회
         if (condition.getCheckinDate() == null || condition.getCheckinDate().isEmpty()) {
             condition.setCheckinDate(LocalDate.now().toString());
         }
@@ -82,11 +78,11 @@ public class ReservationController {
     @GetMapping("/availability")
     @ResponseBody
     public int checkAvailability(@ModelAttribute RoomSearchDTO condition) {
+    	// 입력한 조건에 해당하는 예약 가능 객실 수 확인
         return service.countAvailableRooms(condition);
     }
     
-    
-    //---------------------------------------결제
+    // 결제 
     // URL : [GET] /customer/reservation/payment
     @GetMapping("/payment")
     public String payment(@RequestParam Long roomTypeId,
@@ -96,7 +92,7 @@ public class ReservationController {
                            @RequestParam(required = false, defaultValue = "0") Integer childCount,
                            HttpSession session,
                            Model model) {
-
+    	// 예약 결제 화면에 객실 및 고객 정보를 전달
         RoomTypeListDTO roomType = service.findRoomTypeDetail(roomTypeId);
 
         long nights = ChronoUnit.DAYS.between(
@@ -134,11 +130,12 @@ public class ReservationController {
 
         return "customer/reservation/payment";
     }
+    
     @PostMapping("/complete")
     public String complete(@ModelAttribute ReservationDTO dto,
                             HttpSession session,
                             RedirectAttributes redirectAttr) {
-
+    	// 고객 예약 정보를 DB에 등록하고 예약 완료 처리
         // 로그인 확인
         String loginId = (String) session.getAttribute("loginId");
         if (loginId == null) {
@@ -165,8 +162,10 @@ public class ReservationController {
         redirectAttr.addFlashAttribute("paymentSuccess", true);
         return "redirect:/customer/reservation/rooms";
     }
+    
     @PostMapping("/{id}/cancel")
     public String cancel(@PathVariable Long id, HttpSession session, RedirectAttributes redirectAttr) {
+    	// 로그인 고객의 예약을 취소 처리
         Long guestId = (Long) session.getAttribute("loginGuestId");
         if (guestId == null) {
             return "redirect:/login";

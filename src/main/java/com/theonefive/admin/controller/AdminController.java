@@ -25,21 +25,19 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/admin") // URL에 기본적으로 /customer가 붙도록 설정
 @RequiredArgsConstructor // final로 선언된 customerService를 자동으로 주입(DI)
 public class AdminController {
-
     private final AdminService adminService;
-
-    // ==========================================
+    
     // 1. 회원가입 기능
-    // ==========================================
-
-    // 회원가입 페이지 보여주기 (GET 요청: http://localhost:8080/admin/adminSignup)
+    // 관리자 회원가입 화면 출력
+    // GET 요청: http://localhost:8080/admin/adminSignup
     @GetMapping("/adminSignup")
     public String signupForm() {
         // /WEB-INF/views/admin/adminSignup.jsp 파일 연결
         return "admin/adminSignup";
     }
 
-    // 회원가입 버튼 클릭 시 처리 (POST 요청: Form 태그 데이터 전송)
+    // 회원가입 버튼 클릭 시 처리: 관리자 계정 등록 처리
+    // POST 요청: Form 태그 데이터 전송
     @PostMapping("/adminSignup")
     public String signup(EmployeeDTO employee, Model model) throws IOException {
         // JSP Form의 name값들이 EmployeeDTO 필드명과 일치하므로 자동으로 employee 객체에 담김
@@ -53,27 +51,22 @@ public class AdminController {
         }
     }
 
-    // 아이디 중복 체크 (AJAX 요청용, 화면 페이지가 아닌 true/false 값만 반환)
+    // 관리자 사번의 중복 여부 확인 (AJAX 요청용, 화면 페이지가 아닌 true/false 값만 반환)
     @ResponseBody
     @GetMapping("/checkCode")
     public ApiResponse<Boolean> checkCode(@RequestParam("code")String code) {
-    	
     	boolean isDuplicate = adminService.isCodeCheck(code);
-    	
     	String message = isDuplicate ? "이미 사용 중인 사번입니다." : "사용 가능한 사번 입니다.";
-    	
+
         return ApiResponse.success(message, isDuplicate); // true면 중복된 아이디
     }
 
-    // ==========================================
     // 2. 로그인 기능
-    // ==========================================
-
-    // 로그인 페이지 보여주기 (GET 요청: http://localhost:8080/customer/login)
+    // 관리자 로그인 화면 출력 및 저장된 사번 쿠키 전달
+    // GET 요청: http://localhost:8080/customer/login
     @GetMapping("/adminLogin")
     public String loginForm(@CookieValue(value = "rememberCode", required = false) String rememberCode, // required=false: 쿠키가 없는(한번도 저장 안 한) 사용자도 에러 없이 접근 가능하게
             Model model) {
-    	
     	 if (rememberCode != null) { // 이전에 "아이디 저장"을 체크해서 쿠키가 남아있는 경우
              model.addAttribute("savedLoginCode", rememberCode); // JSP의 아이디 입력창 value로 뿌려주기 위해 모델에 담음
          }
@@ -82,7 +75,7 @@ public class AdminController {
         return "admin/adminLogin";
     }
 
-    // 로그인 버튼 클릭 시 처리 (POST 요청)
+    // 로그인 버튼 클릭 시 처리: 관리자 로그인 인증 후 세션과 사번 저장 쿠키 처리 (POST 요청)
     @PostMapping("/adminLogin")
     public String login(@RequestParam("code") String code, 
                         @RequestParam("password") String password, 
@@ -110,7 +103,6 @@ public class AdminController {
                 cookie.setPath("/"); // 삭제 대상 쿠키를 정확히 찾도록 저장할 때와 동일한 path 지정
                 response.addCookie(cookie);
             }
-
             
             return "redirect:/admin/dashboard"; // 로그인 성공 후 메인 페이지로 이동
         } catch (IllegalStateException e) {
@@ -119,22 +111,4 @@ public class AdminController {
             return "redirect:/admin/adminLogin"; // 다시 로그인 페이지로 돌아감
         }
     }
-
-    // ==========================================
-    // 3. 로그아웃 & 메인페이지
-    // ==========================================
-
-//    // 메인 페이지
-//    @GetMapping("/main")
-//    public String mainPage() {
-//        return "admin/main"; // /WEB-INF/views/admin/main.jsp 연결
-//    }
-//
-//    // 로그아웃
-//    @GetMapping("/logout")
-//    public String logout(HttpSession session) {
-//        session.invalidate(); // 세션 정보 삭제 (로그아웃 처리)
-//        return "redirect:/admin/adminLogin"; // 로그인 페이지로 이동
-//    }
-//    
 }
