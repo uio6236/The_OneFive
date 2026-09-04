@@ -133,7 +133,6 @@
                                 <th>고객명</th>
                                 <th>예약번호</th>
                                 <th>인원</th>
-                                <th>객실상태</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,9 +147,6 @@
                                     <td>${guest.guestName}</td>
                                     <td>${guest.reservationCode}</td>
                                     <td>${guest.guestCount}명</td>
-                                    <td>
-                                        <span class="badge-room-status">${guest.roomStatus}</span>
-                                    </td>
                                 </tr>
                             </c:forEach>
 
