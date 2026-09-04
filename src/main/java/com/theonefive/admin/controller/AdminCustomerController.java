@@ -22,9 +22,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor // final로 선언된 adminCustomerService를 생성자로 자동 주입(DI)
 @RequestMapping("/admin/customers")
 public class AdminCustomerController {
-
     private final AdminCustomerService adminCustomerService;
-
+    
+    // 검색 조건에 맞는 고객 목록과 총 고객 수 조회
     // 목록 + 검색 + 페이징 화면
     @GetMapping
     public String list(AdminCustomerSearchDTO search, Model model) {
@@ -43,26 +43,21 @@ public class AdminCustomerController {
         return "admin/customer/list"; // /WEB-INF/views/admin/customer/list.jsp
     }
 
-
     // 고객 수정 처리
     @PostMapping("/{id}")
-//    @ResponseBody
     public String update(
             @PathVariable Long id,
             CustomerDTO dto) {
-
         dto.setId(id);
-
         adminCustomerService.updateCustomer(dto);
 
         return "redirect:/admin/customers";
     }
     
+    // 선택한 고객의 상세 정보 조회
     @GetMapping("/{id}")
     @ResponseBody
     public CustomerDTO getCustomer(@PathVariable Long id) {
-
         return adminCustomerService.getCustomerById(id);
     }
-    
 }

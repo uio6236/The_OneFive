@@ -35,26 +35,26 @@ public class CustomerController {
     private final ReservationService reservationService;
     private final InquiryService inquiryService; 
 
-    
-    // ==========================================
-    // 1. 회원가입 기능
-    // ==========================================
+    // 회원가입 기능
     @GetMapping("")
     public String home() {
+    	// 고객 사이트의 기본 페이지로 이동
         return "redirect:/login";
     }
-    // 회원가입 페이지 보여주기 (GET 요청: http://localhost:8080/customer/signup)
+    
+    // 고객 회원가입 화면 출력 
+    // GET 요청: http://localhost:8080/customer/signup
     @GetMapping("customer/signup")
     public String signupForm() {
         // /WEB-INF/views/customer/signup.jsp 파일 연결
         return "customer/signup";
     }
 
-    // 회원가입 버튼 클릭 시 처리 (POST 요청: Form 태그 데이터 전송)
+    // 입력받은 고객 정보를 이용해 회원가입 처리
+    // POST 요청: Form 태그 데이터 전송
     @PostMapping("customer/signup")
     public String signup(CustomerDTO customer, Model model) throws IOException {
         // JSP Form의 name값들이 CustomerDTO 필드명과 일치하므로 자동으로 customer 객체에 담김
-    	
         try {
             customerService.signup(customer); // 회원가입 로직 실행 (중복검사 + 암호화 + DB저장)
             return "redirect:/login"; // 가입 성공 시 로그인 페이지로 자동 이동
@@ -77,10 +77,8 @@ public class CustomerController {
         return ApiResponse.success(message, isDuplicate); // true면 중복된 아이디
     }
 
-    // ==========================================
     // 2. 로그인 기능
-    // ==========================================
-
+    // 고객 로그인 화면 출력 및 저장된 아이디 쿠키 전달
     // 로그인 페이지 보여주기 (GET 요청: http://localhost:8080/customer/login)
     @GetMapping("login")
     public String loginForm(@CookieValue(value = "rememberId", required = false) String rememberId, // required=false: 쿠키가 없는(한번도 저장 안 한) 사용자도 에러 없이 접근 가능하게
@@ -95,6 +93,7 @@ public class CustomerController {
     }
 
     // 로그인 버튼 클릭 시 처리 (POST 요청)
+    // 고객 로그인 인증 후 세션과 아이디 저장 쿠키 처리
     @PostMapping("login")
     public String login(@RequestParam("loginId") String loginId, 
                         @RequestParam("password") String password, 
@@ -134,27 +133,17 @@ public class CustomerController {
         }
     }
     
-    // ==========================================
-    // 3. 로그아웃 & 메인페이지
-    // ==========================================
-/*
-    // 메인 페이지
-    @GetMapping("/main")
-    public String mainPage() {
-        return "customer/main"; // /WEB-INF/views/customer/main.jsp 연결
-    }
-*/
-    // 로그아웃
+
+    // 3. 로그아웃
+    // 고객 로그인 세션을 종료하고 로그인 페이지로 이동
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // 세션 정보 삭제 (로그아웃 처리)
         return "redirect:/login"; // 로그인 페이지로 이동
     }
-    
-    // ==========================================
+
     // 4.마이페이지 
-    // ==========================================
-    
+    // 로그인 고객의 정보를 조회해 마이페이지에 전달
     @GetMapping("/mypage/index")                                
     public String myPage(HttpSession session, Model model) {
         String loginId = (String) session.getAttribute("loginId");
@@ -172,6 +161,7 @@ public class CustomerController {
         return "customer/mypage/index";
     }
     
+    // 로그인 고객의 개인정보 또는 비밀번호 수정
     @PostMapping("/mypage/update")
     @ResponseBody
     public ApiResponse<?> updateMyPage(@RequestBody CustomerDTO form, HttpSession session) {

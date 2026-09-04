@@ -8,24 +8,24 @@ import com.theonefive.checkin.model.dto.CheckinDTO;
 
 @Mapper
 public interface CheckinMapper {
-	// 금일 체크인 예정 목록 조회
+	// 금일 체크인 예정 예약 목록 조회
 	List<CheckinDTO> selectTodayCheckinList();
 	
-	// 금일 체크아웃 예정 목록 조회
+	// 금일 체크아웃 예정 투숙객 목록 조회
 	List<CheckinDTO> selectTodayCheckoutList();
 	
-	// 지난 체크인 미처리 목록 조회
+	// 지난 미처리 체크인 예약 목록 조회
 	List<CheckinDTO> selectPastCheckinList();
 
-	// 지난 체크아웃 미처리 목록 조회
+	// 지난 미처리 체크아웃 목록 조회
 	List<CheckinDTO> selectPastCheckoutList();
 	
-	// 체크인 상세 정보 조회
+	// 예약 ID를 기준으로 체크인 상세 정보 조회
 	CheckinDTO selectCheckinDetail(int reservationId);
 	
-	// 체크인 처리(실제 체크인 기록 생성)
+	// 체크인 상태 테이블에 체크인 정보 등록
 	int insertCheckin(CheckinDTO checkin);
 	
-	// 체크아웃 처리
+	// 체크인 기록에 실제 체크아웃 시간 등록
 	int updateCheckout(CheckinDTO checkin);
 }

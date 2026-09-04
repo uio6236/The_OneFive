@@ -20,31 +20,32 @@ public class RoomServiceImpl implements RoomService{
 	
 	@Override
 	public List<RoomDTO> getRoomList() {
-		// 전체 객실 조회
+		// 전체 객실 목록 조회
 		return roomMapper.selectRoomList();
 	}
 
 	@Override
 	public RoomDTO getRoomDetail(int roomId) {
-		// 객실 상세 조회
+		// 객실 ID를 기준으로 상세 정보 조회
 		return roomMapper.selectRoomById(roomId);
 	}
 
 	@Override
 	public List<RoomDTO> getRoomByFloor(int floor) {
-		// 층별 조회
+		// 선택한 층의 객실 목록 조회
 		return roomMapper.selectRoomByFloor(floor);
 	}
 
 	@Override
 	public List<RoomDTO> getAvailableRooms(int roomTypeId) {
-		// 체크인 가능 객실 조회
+		// 객실 타입에 맞는 이용 가능한 객실 목록 조회
 		return roomMapper.selectAvailableRooms(roomTypeId);
 	}
 
 	@Transactional
 	@Override
 	public boolean requestMaintenance(int roomId, String note) {
+		// 이용 가능한 객실의 상태를 변경하고 하우스키핑 정비 요청을 생성
 		RoomDTO room = roomMapper.selectRoomById(roomId);
 		if (room == null) {throw new IllegalStateException("객실 정보를 찾을 수 없습니다.");}
 		if (!"이용가능".equals(room.getStatus())) {throw new IllegalStateException("이용 가능한 객실만 정비 요청을 할 수 있습니다.");}

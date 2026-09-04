@@ -60,7 +60,7 @@ public class AdminReservationController {
 	 }
 
 
-    // 예약 취소 처리
+	// 관리자가 선택한 예약을 취소 처리
     // URL : [POST] /admin/reservations/{id}/cancel
     @PostMapping("/{id}/cancel")
     public String cancel(@PathVariable Long id, RedirectAttributes redirectAttr) {

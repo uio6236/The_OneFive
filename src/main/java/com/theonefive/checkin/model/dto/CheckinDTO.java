@@ -27,6 +27,7 @@ public class CheckinDTO {
     private String memo; // 투숙 메모
     
     private String guestName; // 고객명
+    private String guestNameR; // 예약자명
     private String reservationCode; // 예약 번호
     private String roomNum; // 객실 번호
     private String roomTypeName; // 객실 타입명

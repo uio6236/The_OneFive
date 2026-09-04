@@ -25,10 +25,10 @@ import lombok.RequiredArgsConstructor;
 public class RoomController {
 	private final RoomService roomService;
 	
-	// 객실 현황
 	@GetMapping
 	public String roomList(@RequestParam(defaultValue = "0") int floor,
 						Model model) {
+		// 전체 또는 층별 객실 목록과 객실 상태 통계를 조회
 		List<RoomDTO> roomList;
 		if (floor == 0) {roomList = roomService.getRoomList();} 
 		else {roomList = roomService.getRoomByFloor(floor);}
@@ -78,20 +78,19 @@ public class RoomController {
 		return "admin/room/list";
 	}
 	
-	// 객실 상세
 	@GetMapping("/{roomId}")
 	@ResponseBody
 	public RoomDTO roomDetail(@PathVariable int roomId) {
+		// 선택한 객실의 상세 정보와 현재 투숙 정보를 조회
 		return roomService.getRoomDetail(roomId);
 	}
 	
-	// 객실 정비 요청
 	@PostMapping("/{roomId}/maintenance")
 	@ResponseBody
 	public boolean requestMaintenance(
 			@PathVariable int roomId,
 			@RequestParam(required = false) String note) {
-
+		// 선택한 객실의 정비 요청을 등록
 		return roomService.requestMaintenance(roomId, note);
 	}
 }
