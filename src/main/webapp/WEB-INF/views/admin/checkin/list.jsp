@@ -136,7 +136,7 @@
 										data-checkin-id="${checkout.id}">
 										<td>${checkout.roomNum}호</td>
 										<td>${checkout.guestName}</td>
-										<td>${checkin.guestNameR}</td>
+										<td>${checkout.guestNameR}</td>
 										<td>${checkout.reservationCode}</td>
 										<td>${checkout.guestCount}명</td>
 										<td>
@@ -180,7 +180,7 @@
 										data-checkin-id="${checkout.id}">
 										<td>${checkout.roomNum}호</td>
 										<td>${checkout.guestName}</td>
-										<td>${checkin.guestNameR}</td>
+										<td>${checkout.guestNameR}</td>
 										<td>${checkout.reservationCode}</td>
 										<td>${checkout.guestCount}명</td>
 										<td>
