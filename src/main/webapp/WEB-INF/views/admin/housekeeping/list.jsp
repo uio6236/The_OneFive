@@ -83,7 +83,7 @@
                 <select name="floor" class="form-control housekeeping-filter-select">
                     <option value="">전체</option>
                     <%-- [수정] 배정 층 옵션 10층 → 5층 --%>
-                    <c:forEach begin="1" end="5" var="f">
+                    <c:forEach begin="2" end="5" var="f">
                         <option value="${f}" ${selectedFloor == f ? 'selected' : ''}>${f}층</option>
                     </c:forEach>
                 </select>
